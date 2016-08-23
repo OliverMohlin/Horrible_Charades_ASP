@@ -10,13 +10,10 @@
     <script type="text/javascript">
         $(function () {
             var hub = $.connection.gameHub; //Saves connection in "hub"-variable
-            hub.client.hello = function (message) {     //Assigns hello() to client
-                $("#result").append("<li>" + message + "</li>");
+            hub.client.hello = function (textToWrite) {     //Assigns hello() to client
+                $("#result").append("<li>" + textToWrite + "</li>");
             };
 
-            $.connection.hub.start().done(function () { //Opens connection to the Hub
-                hub.server.hello();                     //Calls hello() from Hub
-            })
 
             var writeText = function () {
                 hub.server.hello($("#TeamName").val());
@@ -26,6 +23,9 @@
                 hub.server.hello($("#TeamName").val());
             }
 
+            $.connection.hub.start().done(function () { //Opens connection to the Hub
+                hub.server.hello("Welcome to Horrible Charades");                     //Calls hello() from Hub
+            })
         })
 
     </script>
@@ -33,9 +33,7 @@
 <body>
     <h1>Index</h1>
     <div>
-        <ul id="result">
-
-        </ul>
+        <ul id="result"></ul>
     </div>
     <form id="TeamNameForm">
         <input type="text" placeholder="Team Name" id="TeamName" value="hej" />
