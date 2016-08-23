@@ -8,9 +8,9 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-        public void Hello()
+        public void Hello(string textToWrite)
         {
-            Clients.All.hello(DateTime.Now.ToString("T"));
+            Clients.All.hello(textToWrite);
         }
     }
 }
