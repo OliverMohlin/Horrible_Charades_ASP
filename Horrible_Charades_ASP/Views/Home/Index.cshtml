@@ -1,42 +1,42 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-
-    <script src="~/Scripts/jquery-3.1.0.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
-    <script src="/signalr/hubs/"></script>
-
-
-    <script type="text/javascript">
-        $(function () {
-            var hub = $.connection.gameHub; //Saves connection in "hub"-variable
-            hub.client.hello = function (teamName, conId, connectedClients) {     //Assigns hello() to client
-                $("#connectedTeams").append("<li> ConnectedClients: " + connectedClients + " TeamName: " + teamName + " ConnectionId: " + conId + "</li>");
-            };
-
-            $(function () {
-                hub.server.hello($("#TeamName").val());
-            });
-
-            document.getElementById("buttonClick").onclick = function () {
-                hub.server.createTeam($("#TeamName").val());
-            }
-
-            $.connection.hub.start().done(function () {                         //Opens connection to the Hub        
-            })
-        })
-
-    </script>
 </head>
 <body>
     <h1>Index</h1>
     <div>
-        <ul id="connectedTeams"></ul>
+        <ul id="result"></ul>
     </div>
     <form id="TeamNameForm">
-        <input type="text" placeholder="Team Name" id="TeamName" />
-        <input type="button" id="buttonClick" onclick="createTeam()" value="Submit">
+        <input type="text" placeholder="Team Name" id="TeamName" value="hej" />
+        <input type="button" id="submitButton" value="Submit">
+        <br />
+        <br />
+        <input type="button" id="getNounButton" value="Klicka för substantiv" />
     </form>
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="~/signalr/hubs/"></script>
+    <script type="text/javascript">
+        $(function () {
+            var hub = $.connection.gameHub; //Saves connection in "hub"-variable
+            hub.client.hello = function (textToWrite) {     //Assigns hello() to client
+                $("#result").append("<li>" + textToWrite + "</li>");
+            };
 
+            $("#getNounButton").click(function () {
+                hub.server.getNoun();
+            });
+
+            $("#submitButton").click(function () {
+                var text = $("#TeamName").val();
+                hub.server.hello(text);
+            });
+
+            $.connection.hub.start().done(function () {                         //Opens connection to the Hub
+                hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+            })
+        })
+    </script>
 </body>
 </html>

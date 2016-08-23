@@ -6,19 +6,28 @@ using System.Web;
 
 namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp byt namespace
 {
-    public static class DatabaseUtils
+    public class DatabaseUtils
     {
-        public static string GetNoun()
+        NounContext _nounContext;
+        public DatabaseUtils(NounContext nouncontext)
+        {
+            _nounContext = nouncontext;
+        }
+        public string GetNoun()
+        {
+            var qResult = _nounContext.Nouns
+                .SingleOrDefault(n => n.ID == 1);
+
+            return qResult.Description;
+            //Todo: Kolla databas efter ett adjektiv och returnerar den
+            //return "temp";
+        }
+        public string GetAdjective()
         {
             //Todo: Kolla databas efter ett adjektiv och returnerar den
             return "temp";
         }
-        public static string GetAdjective()
-        {
-            //Todo: Kolla databas efter ett adjektiv och returnerar den
-            return "temp";
-        }
-        public static string GetVerb()
+        public string GetVerb()
         {
             //Todo: Kolla databas efter ett verb och returnerar den
             return "temp";
