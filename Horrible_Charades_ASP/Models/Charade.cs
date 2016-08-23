@@ -11,6 +11,7 @@ namespace Horrible_Charades_ASP.Models
         {
             Adjective = new List<string>();
             Verb = new List<string>();
+            Noun = databaseutils.getNoun();
             //Todo: sätt noun direkt med ett substantiv från databasen.
             //Todo: sätt ID på ett vettigt sätt :) (vet inte hur vi ska använda detta än)
         }
@@ -19,13 +20,6 @@ namespace Horrible_Charades_ASP.Models
         public string Noun { get; set; }
         public List<string> Adjective { get; set; }
         public List<string> Verb { get; set; }
-        public void GetAdjective()
-        {
-            //Todo: Kolla databas efter ett adjektiv och lägg till i Listan "adjective"
-        }
-        public void GetVerb()
-        {
-            //Todo: Kolla databas efter ett verb och lägg till i Listan "verb"
-        }
+
     }
 }
