@@ -1,9 +1,29 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
+
+    <script src="~/Scripts/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+    <script src="/signalr/hubs/"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            var hub = $.connection.gameHub; //Saves connection in "hub"-variable
+            hub.client.hello = function (message) {     //Assigns hello() to client
+                console.log("Hub Client" + hub.client.hello);
+                $("#result").append("<strong>" + message + "</strong>");
+            };
+
+            $.connection.hub.start().done(function () { //Opens connection to the Hub
+                hub.server.hello();                     //Calls hello() from Hub
+            })
+        })
+    </script>
 </head>
 <body>
     <h1>Index</h1>
     <div id="result"></div>
+
 </body>
 </html>
