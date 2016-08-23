@@ -8,7 +8,7 @@ namespace Horrible_Charades_ASP
     {
         public void Configuration(IAppBuilder app)
         {
-
+            app.MapSignalR();
         }
     }
 }
