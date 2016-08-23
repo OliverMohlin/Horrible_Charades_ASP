@@ -7,10 +7,10 @@ namespace Horrible_Charades_ASP.Models
 {
     public class Team
     {
-        public Team(string name, string hash)
+        public Team(string name/*, string hash*/)
         {
             Name = name;
-            Hash = hash;
+            //Hash = hash;
             Id = Guid.NewGuid().ToString("d");
         }
         public string ConnectionID { get; set; }

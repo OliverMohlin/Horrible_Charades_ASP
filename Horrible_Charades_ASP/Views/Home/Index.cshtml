@@ -10,20 +10,19 @@
     <script type="text/javascript">
         $(function () {
             var hub = $.connection.gameHub; //Saves connection in "hub"-variable
-            hub.client.hello = function (textToWrite) {     //Assigns hello() to client
-                $("#result").append("<li>" + textToWrite + "</li>");
+            hub.client.hello = function (teamName, conId, connectedClients) {     //Assigns hello() to client
+                $("#connectedTeams").append("<li> ConnectedClients: " + connectedClients + " TeamName: " + teamName + " ConnectionId: " + conId + "</li>");
             };
 
-            var writeText = function () {
+            $(function () {
                 hub.server.hello($("#TeamName").val());
-            }
+            });
 
             document.getElementById("buttonClick").onclick = function () {
-                hub.server.hello($("#TeamName").val());
+                hub.server.createTeam($("#TeamName").val());
             }
 
-            $.connection.hub.start().done(function () {                         //Opens connection to the Hub
-                hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+            $.connection.hub.start().done(function () {                         //Opens connection to the Hub        
             })
         })
 
@@ -32,11 +31,11 @@
 <body>
     <h1>Index</h1>
     <div>
-        <ul id="result"></ul>
+        <ul id="connectedTeams"></ul>
     </div>
     <form id="TeamNameForm">
-        <input type="text" placeholder="Team Name" id="TeamName" value="hej" />
-        <input type="button" id="buttonClick" onclick="writeText()" value="Submit">
+        <input type="text" placeholder="Team Name" id="TeamName" />
+        <input type="button" id="buttonClick" onclick="createTeam()" value="Submit">
     </form>
 
 </body>
