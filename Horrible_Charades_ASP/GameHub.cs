@@ -23,7 +23,7 @@ namespace Horrible_Charades_ASP
             var team = GameState.Instance.CreateTeam(teamName);
             team.ConnectionID = Context.ConnectionId;
             int connectedClients = GameState.Instance.ReturnNumberOfClients();
-            Clients.All.hello(team.Name, team.ConnectionID, connectedClients);
+            Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
         }
 
         public void getNoun()
