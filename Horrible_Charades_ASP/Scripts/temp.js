@@ -6,7 +6,7 @@
 
     hub.client.teamsJoined = function (teamName, conId, connectedClients) {
         $("#teams").append("TeamName: " + teamName + "<br /> ConnectionId: " + conId + "<br /> ConnectedClients: " + connectedClients + "<br /> <br />");
-    }
+    };
 
     $("#getNounButton").click(function () {
         hub.server.getNoun();
@@ -22,5 +22,5 @@
 
     $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
-    })
-})
+    });
+});

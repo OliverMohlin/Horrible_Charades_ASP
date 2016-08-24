@@ -2,7 +2,7 @@
 //Creating the module
 (function () {
     angular.module("mainContent", ["ngRoute"])
-    .config(function($routeProvider) {
+    .config(function ($routeProvider) {
 
         $routeProvider
             .when("/", {
@@ -29,11 +29,23 @@
             templateUrl: "Scripts/js/views/PreCharadeActor.tpl.html"
         })
 
+         .when("/PreCharadeParticipant", {
+             controller: "contentController",
+             controllerAs: "vm",
+             templateUrl: "Scripts/js/views/PreCharadeParticipant.tpl.html"
+         })
+
         .when("/CharadeActor", {
             controller: "contentController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/CharadeActor.tpl.html"
         })
+
+         .when("/CharadeParticipant", {
+             controller: "contentController",
+             controllerAs: "vm",
+             templateUrl: "Scripts/js/views/CharadeParticipant.tpl.html"
+         })
 
         .when("/Score", {
             controller: "contentController",
@@ -49,4 +61,4 @@
 
         $routeProvider.otherwise({ redirectTo: "/" });
     });
-})(); 
+})();
