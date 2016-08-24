@@ -10,9 +10,9 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-        // TODO: Kolla varför GameHub säger att _dbUtils alltid kommer att vara null ?!
         DatabaseUtils _dbUtils = new DatabaseUtils(
             new Models.CharadeContext());
+        Charade _charade = new Charade();
 
         /// <summary>
         /// This function calls the method Hello on Client-Side, with something to write out
@@ -49,8 +49,14 @@ namespace Horrible_Charades_ASP
         public void GetCharade()
         {
             Word noun = _dbUtils.GetNoun();
-            Charade charade = new Charade(noun.Description);
-            Clients.All.printCharade(charade);
+            _charade.Noun = noun.Description;
+            Clients.All.printCharade(_charade);
+        }
+
+        public void UpdateCharade()
+        {
+            _charade.Adjective.Add(_dbUtils.GetAdjective().Description);
+            Clients.All.printCharade(_charade);
         }
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen

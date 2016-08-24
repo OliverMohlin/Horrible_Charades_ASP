@@ -10,7 +10,8 @@
 
     //Gets charade from GameHub and pushes out to #Charade
     hub.client.printCharade = function (charade) {
-        $("#Charade").append(charade.Noun)
+        $("#Charade").append(charade.Noun !== null ? charade.Noun + " " : charade.Adjective[0] + " ")
+
     };
 
     $("#getNounButton").click(function () {

@@ -15,6 +15,10 @@
             hub.server.getCharade();
         }
 
+        vm.getAdjective = function () {
+            hub.server.updateCharade();
+        }
+
         vm.createTeam = function () {
             console.log(vm.Team.Name);
             hub.server.createTeam(vm.Team.Name);
