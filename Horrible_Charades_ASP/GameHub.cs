@@ -25,7 +25,7 @@ namespace Horrible_Charades_ASP
         /// Creates a new team if the device don't have a team. 
         /// </summary>
         /// <param name="teamName"></param>
-        public void createTeam(string teamName)
+        public void createTeam(string teamName) //To-do: validera team-name
         {
             var team = GameState.Instance.GetTeam(Context.ConnectionId);
             if (team != null)

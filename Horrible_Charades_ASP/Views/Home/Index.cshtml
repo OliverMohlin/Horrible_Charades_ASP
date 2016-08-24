@@ -1,62 +1,18 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
+﻿<body>
     <h1>Index</h1>
-    <div>
-        <ul id="result"></ul>
+    <div id="content" data-ng-app="mainContent">
+        <div data-ng-view></div>
     </div>
-    <form id="TeamNameForm">
-        <input type="text" placeholder="Team Name" id="TeamName"/>
-        <input type="button" id="submitButton" value="Submit">
-        <br />
-        <br />
-        <input type="button" id="getNounButton" value="Klicka för substantiv" />
-        <br />
-        <input type="button" id="getAdjectiveButton" value="Klicka för substantiv" />
-        <br />
-        <input type="button" id="getVerbButton" value="Klicka för substantiv" />
-        <br />
-        <br />
-        <div id="teams">
-        </div>
-    </form>
-    <script src="~/Scripts/jquery-3.1.0.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.1.js"></script>
+
+    @*--------------Libs------------------*@
+    <script src="~/Scripts/libs/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/libs/jquery.signalR-2.2.1.js"></script>
+    <script src="~/Scripts/libs/angular.js"></script>
+    <script src="~/Scripts/libs/angular-route.js"></script>
     <script src="~/signalr/hubs/"></script>
-    <script type="text/javascript">
-        $(function () {
-            var hub = $.connection.gameHub; //Saves connection in "hub"-variable
-            hub.client.hello = function (textToWrite) {     //Assigns hello() to client
-                $("#result").append("<li>" + textToWrite + "</li>");
-            };
 
-            hub.client.teamsJoined = function (teamName, conId, connectedClients) {
-                $("#teams").append("TeamName: " + teamName + "<br /> ConnectionId: " + conId  + "<br /> ConnectedClients: " + connectedClients + "<br /> <br />");
-            }
-
-            $("#getNounButton").click(function () {
-                hub.server.getNoun();
-            });
-
-            $("#getAdjectiveButton").click(function () {
-                hub.server.getAdjective();
-            });
-
-            $("#getVerbButton").click(function () {
-                hub.server.getVerb();
-            });
-
-            $("#submitButton").click(function () {
-                var text = $("#TeamName").val();
-                hub.server.createTeam(text);
-            });
-
-            $.connection.hub.start().done(function () {                         //Opens connection to the Hub
-                hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
-            })
-        })
-    </script>
+    @*--------------Scripts------------------*@
+    <script src="~/Scripts/temp.js"></script>
+    <script src="~/Scripts/js/angular/mainContent.js"></script>
+    <script src="~/Scripts/js/angular/contentController.js"></script>
 </body>
-</html>
