@@ -19,6 +19,7 @@ namespace Horrible_Charades_ASP.Models
         public string WhosTurn { get; set; }
         public string GameCode { get; set; }
         public string GameState { get; set; }
+        public int ID { get; set; }
 
         //Genererar en kod som användare skriver in för att komma in på samma spel
         private string GenerateCode()

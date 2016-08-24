@@ -14,9 +14,13 @@
         <br />
         <input type="button" id="getNounButton" value="Klicka för substantiv" />
         <br />
-        <input type="button" id="getAdjectiveButton" value="Klicka för substantiv" />
+        <input type="button" id="getAdjectiveButton" value="Klicka för Adjectiv" />
         <br />
-        <input type="button" id="getVerbButton" value="Klicka för substantiv" />
+        <div>
+            <ul id="incorrectGuesses"></ul>
+        </div>
+        <br />
+        <input type="button" id="getVerbButton" value="Klicka för Verb" />
         <br />
         <br />
         <div id="teams">
@@ -31,6 +35,16 @@
             hub.client.hello = function (textToWrite) {     //Assigns hello() to client
                 $("#result").append("<li>" + textToWrite + "</li>");
             };
+
+            hub.client.incorrectGuesses = function (tmpList) {
+                //alert("Jag hittade ett ord!")
+                tmpList.forEach(WriteIncorrectAnswers)
+            }
+
+            function WriteIncorrectAnswers (item) {
+                //alert("Nu vill jag skriva ut felaktiga ord!")
+                $("#incorrectGuesses").append("<li>" + item + "</li> <br />")
+            }
 
             hub.client.teamsJoined = function (teamName, conId, connectedClients) {
                 $("#teams").append("TeamName: " + teamName + "<br /> ConnectionId: " + conId  + "<br /> ConnectedClients: " + connectedClients + "<br /> <br />");

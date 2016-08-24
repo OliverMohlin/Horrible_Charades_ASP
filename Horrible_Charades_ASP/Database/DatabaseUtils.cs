@@ -15,34 +15,85 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             _charadeContext = nouncontext;
         }
         /// <summary>
-        /// Hämtar ut ett en slumpad siffra bland antalet
+        /// Hämtar ett Noun baserat på framslumpat ID.
         /// </summary>
-        /// <returns></returns>
-        public string GetNoun()
+        /// <returns>random Word</returns>
+        public Word GetNoun()
         {
-            var nounCount = RandomUtils.ReturnValue(_charadeContext.Nouns.Count()+1);
+            var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() + 1);
             var qResult = _charadeContext.Nouns
-                .SingleOrDefault(n => n.ID == nounCount);
+                .SingleOrDefault(n => n.ID == nounID);
 
-            return qResult.Description;
+            return qResult;
 
         }
-        public string GetAdjective()
+
+        /// <summary>
+        /// Hämtar ett Adjective baserat på framslumpat ID.
+        /// </summary>
+        /// <returns>random Word</returns>
+        public Word GetAdjective()
         {
-            var adjectiveCount = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() + 1);
+            var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() + 1);
             var qResult = _charadeContext.Adjectives
-            .SingleOrDefault(n => n.ID == adjectiveCount);
+            .SingleOrDefault(n => n.ID == adjectiveID);
 
-            return qResult.Description;
+            return qResult;
         }
-        public string GetVerb()
+
+        /// <summary>
+        /// Hämtar ett Verb baserat på framslumpat ID.
+        /// </summary>
+        /// <returns>random Word</returns>
+        public Word GetVerb()
         {
-            var verbCount = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() + 1);
+            var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() + 1);
             var qResult = _charadeContext.Verbs
-            .SingleOrDefault(n => n.ID == verbCount);
+            .SingleOrDefault(n => n.ID == verbID);
 
-            return qResult.Description;
-
+            return qResult;
         }
+        public List<string> GetIncorrectAnswers(Word inputWord)
+        {
+            List<Word> tmpList = new List<Word>();
+            List<String> newTmpList = new List<String>();
+
+            tmpList.AddRange(GetAllNounWords(inputWord.CategoryID));
+            tmpList.AddRange(GetAllAdjectiveWords(inputWord.CategoryID));
+            tmpList.AddRange(GetAllVerbWords(inputWord.CategoryID));
+
+            tmpList.Remove(inputWord);
+
+            for (int i = 0; i < 3; i++)
+            {
+                int randomID = RandomUtils.ReturnValue(tmpList.Count - 1);
+                newTmpList.Add(tmpList[randomID].Description);
+                tmpList.Remove(tmpList[randomID]);
+            }
+
+
+            return newTmpList;
+        }
+
+        private List<Word> GetAllNounWords(int categoryID)
+        {
+            return _charadeContext.Nouns.Where(n => n.CategoryID == categoryID).ToList<Word>();
+        }
+
+        private List<Word> GetAllAdjectiveWords(int categoryID)
+        {
+            return _charadeContext.Adjectives.Where(n => n.CategoryID == categoryID).ToList<Word>();
+        }
+
+        private List<Word> GetAllVerbWords(int categoryID)
+        {
+            return _charadeContext.Verbs.Where(n => n.CategoryID == categoryID).ToList<Word>();
+        }
+
+
+
+        //.Join(_charadeContext.Categories, n => n.CategoryID, c => c.ID, (n, c) 
+
+
     }
 }
