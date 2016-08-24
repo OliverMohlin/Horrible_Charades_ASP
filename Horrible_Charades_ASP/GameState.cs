@@ -33,15 +33,34 @@ namespace Horrible_Charades_ASP
         {
             get { return _instance.Value; }
         }
-
+        /// <summary>
+        /// Returnerar en int som visar hur många devices som är connectade
+        /// </summary>
+        /// <returns></returns>
         public int ReturnNumberOfClients()
         {
             return _teams.Count();
         }
-        public Team CreateTeam(string teamName) //Todo: koppla till connectionstring istället för Teamname
+        /// <summary>
+        /// Returnerar ett team från connectade teams
+        /// </summary>
+        /// <param name="connectionId"></param>
+        /// <returns></returns>
+        internal Team GetTeam(string connectionId)
+        {
+            return _teams.Values.FirstOrDefault(t => t.ConnectionID == connectionId);
+        }
+        /// <summary>
+        /// Skapar ett team som kopplas till ConnectionId
+        /// </summary>
+        /// <param name="con_str"></param>
+        /// <param name="teamName"></param>
+        /// <returns></returns>
+        public Team CreateTeam(string con_str, string teamName) //Todo: koppla till connectionstring istället för Teamname
         {
             var team = new Team(teamName);
-            _teams[teamName] = team;
+            team.ConnectionID = con_str;
+            _teams[con_str] = team;
             return team;
         } 
     }
