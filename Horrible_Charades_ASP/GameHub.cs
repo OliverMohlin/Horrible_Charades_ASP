@@ -13,11 +13,18 @@ namespace Horrible_Charades_ASP
         DatabaseUtils _dbUtils = new DatabaseUtils(
             new Models.NounContext());
 
+        /// <summary>
+        /// This function calls the method Hello on Client-Side, with something to write out
+        /// </summary>
+        /// <param name="textToWrite"></param>
         public void Hello(string textToWrite)
         {
             Clients.All.hello(textToWrite);
-            int i = GameState.Instance.ReturnNumberOfClients();
         }
+        /// <summary>
+        /// Creates a new team if the device don't have a team. 
+        /// </summary>
+        /// <param name="teamName"></param>
         public void createTeam(string teamName)
         {
             var team = GameState.Instance.GetTeam(Context.ConnectionId);
