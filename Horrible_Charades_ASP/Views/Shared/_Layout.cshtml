@@ -2,7 +2,18 @@
 <head>
     <title></title>
 </head>
+<body>
+    @RenderBody()
+    @*--------------Libs------------------*@
+    <script src="~/Scripts/libs/jquery-3.1.0.js"></script>
+    <script src="~/Scripts/libs/jquery.signalR-2.2.1.js"></script>
+    <script src="~/Scripts/libs/angular.js"></script>
+    <script src="~/Scripts/libs/angular-route.js"></script>
+    <script src="~/signalr/hubs/"></script>
 
-@RenderBody()
-
+    @*--------------Scripts------------------*@
+    <script src="~/Scripts/temp.js"></script>
+    <script src="~/Scripts/js/angular/mainContent.js"></script>
+    <script src="~/Scripts/js/angular/contentController.js"></script>
+</body>
 </html>
