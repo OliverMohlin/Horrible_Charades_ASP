@@ -23,6 +23,12 @@
             templateUrl: "Scripts/js/views/Lobby.tpl.html"
         })
 
+        .when("/WaitingRoom", {
+            controller: "contentController",
+            controllerAs: "vm",
+            templateUrl: "Scripts/js/views/WaitingRoom.tpl.html"
+        })
+
         .when("/PreCharadeActor", {
             controller: "contentController",
             controllerAs: "vm",
