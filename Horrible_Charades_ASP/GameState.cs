@@ -38,10 +38,17 @@ namespace Horrible_Charades_ASP
         {
             return _teams.Count();
         }
-        public Team CreateTeam(string teamName) //Todo: koppla till connectionstring istället för Teamname
+
+        internal Team GetTeam(string connectionId)
+        {
+            return _teams.Values.FirstOrDefault(t => t.ConnectionID == connectionId);
+        }
+
+        public Team CreateTeam(string con_str, string teamName) //Todo: koppla till connectionstring istället för Teamname
         {
             var team = new Team(teamName);
-            _teams[teamName] = team;
+            team.ConnectionID = con_str;
+            _teams[con_str] = team;
             return team;
         } 
     }

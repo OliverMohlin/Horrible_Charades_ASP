@@ -20,10 +20,19 @@ namespace Horrible_Charades_ASP
         }
         public void createTeam(string teamName)
         {
-            var team = GameState.Instance.CreateTeam(teamName);
-            team.ConnectionID = Context.ConnectionId;
-            int connectedClients = GameState.Instance.ReturnNumberOfClients();
-            Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
+            var team = GameState.Instance.GetTeam(Context.ConnectionId);
+            if (team != null)
+            {
+                int connectedClients = GameState.Instance.ReturnNumberOfClients();
+                Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
+            }
+            else
+            {
+                team = GameState.Instance.CreateTeam(Context.ConnectionId, teamName);
+                int connectedClients = GameState.Instance.ReturnNumberOfClients();
+                Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
+
+            }
         }
 
         public void getNoun()
