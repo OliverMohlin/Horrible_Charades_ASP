@@ -11,6 +11,10 @@
 
         vm.Team = {};
 
+        vm.getCharade = function () {
+            hub.server.getCharade();
+        }
+
         vm.createTeam = function () {
             console.log(vm.Team.Name);
             hub.server.createTeam(vm.Team.Name);

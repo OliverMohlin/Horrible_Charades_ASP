@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Horrible_Charades_ASP.Database;
+using Horrible_Charades_ASP.Models;
 
 namespace Horrible_Charades_ASP
 {
@@ -40,6 +41,16 @@ namespace Horrible_Charades_ASP
                 Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
 
             }
+        }
+        /// <summary>
+        /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
+        ///  Pushes to Client-side
+        /// </summary>
+        public void GetCharade()
+        {
+            Word noun = _dbUtils.GetNoun();
+            Charade charade = new Charade(noun.Description);
+            Clients.All.printCharade(charade);
         }
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen

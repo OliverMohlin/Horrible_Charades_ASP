@@ -14,6 +14,12 @@ namespace Horrible_Charades_ASP.Models
             //Todo: sätt noun direkt med ett substantiv från databasen.
             //Todo: sätt ID på ett vettigt sätt :) (vet inte hur vi ska använda detta än)
         }
+        public Charade(string noun)
+        {
+            Adjective = new List<string>();
+            Verb = new List<string>();
+            Noun = noun;
+        }
 
         public int Id { get; set; }
         public string Noun { get; set; }

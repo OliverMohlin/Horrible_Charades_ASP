@@ -1,11 +1,16 @@
 ﻿$(function () {
-    var hub = $.connection.gameHub; //Saves connection in "hub"-variable
+    var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
     hub.client.hello = function (textToWrite) {     //Assigns hello() to client
         $("#result").append("<li>" + textToWrite + "</li>");
     };
 
     hub.client.teamsJoined = function (teamName, conId, connectedClients) {
         $("#teams").append("TeamName: " + teamName + "<br /> ConnectionId: " + conId + "<br /> ConnectedClients: " + connectedClients + "<br /> <br />");
+    };
+
+    //Gets charade from GameHub and pushes out to #Charade
+    hub.client.printCharade = function (charade) {
+        $("#Charade").append(charade.Noun)
     };
 
     $("#getNounButton").click(function () {
