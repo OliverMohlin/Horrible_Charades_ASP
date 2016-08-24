@@ -11,13 +11,18 @@ namespace Horrible_Charades_ASP
     {
         // TODO: Kolla varför GameHub säger att _dbUtils alltid kommer att vara null ?!
         DatabaseUtils _dbUtils = new DatabaseUtils(
-            new Models.NounContext());
+            new Models.CharadeContext());
 
         public void Hello(string textToWrite)
         {
             Clients.All.hello(textToWrite);
             int i = GameState.Instance.ReturnNumberOfClients();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="teamName"></param>
         public void createTeam(string teamName)
         {
             var team = GameState.Instance.CreateTeam(teamName);
@@ -25,12 +30,23 @@ namespace Horrible_Charades_ASP
             int connectedClients = GameState.Instance.ReturnNumberOfClients();
             Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
         }
-
-        public void getNoun()
+        /// <summary>
+        /// Hämtar ett slumpat Substantiv från Databasen
+        /// </summary>
+        public void GetNoun()
         {
             string noun = _dbUtils.GetNoun();
             Clients.All.hello(noun);
-
+        }
+        public void GetAdjective()
+        {
+            string adjective = _dbUtils.GetAdjective();
+            Clients.All.hello(adjective);
+        }
+        public void GetVerb()
+        {
+            string verb = _dbUtils.GetVerb();
+            Clients.All.hello(verb);
         }
     }
 }

@@ -7,11 +7,11 @@ using System.Web;
 namespace Horrible_Charades_ASP.Models
 {
     /// <summary>
-    /// Mappar mot Databasen
+    /// Mappar mot Databasen HorribleCharades
     /// </summary>
-    public class NounContext : DbContext
+    public class CharadeContext : DbContext
     {
-        public NounContext() : base("connString")
+        public CharadeContext() : base("connString")
         {
 
         }
@@ -20,5 +20,8 @@ namespace Horrible_Charades_ASP.Models
         /// Mappar mot DB-tabellen Nouns
         /// </summary>
         public DbSet<Noun> Nouns { get; set; }
+        public DbSet<Adjective> Adjectives { get; set; }
+        public DbSet<Verb> Verbs { get; set; }
+
     }
 }

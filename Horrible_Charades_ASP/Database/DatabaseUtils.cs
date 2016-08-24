@@ -1,6 +1,7 @@
 ﻿using Horrible_Charades_ASP.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -8,29 +9,40 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
 {
     public class DatabaseUtils
     {
-        NounContext _nounContext;
-        public DatabaseUtils(NounContext nouncontext)
+        CharadeContext _charadeContext;
+        public DatabaseUtils(CharadeContext nouncontext)
         {
-            _nounContext = nouncontext;
+            _charadeContext = nouncontext;
         }
+        /// <summary>
+        /// Hämtar ut ett en slumpad siffra bland antalet
+        /// </summary>
+        /// <returns></returns>
         public string GetNoun()
         {
-            var qResult = _nounContext.Nouns
-                .SingleOrDefault(n => n.ID == 1);
+            var nounCount = RandomUtils.ReturnValue(_charadeContext.Nouns.Count()+1);
+            var qResult = _charadeContext.Nouns
+                .SingleOrDefault(n => n.ID == nounCount);
 
             return qResult.Description;
-            //Todo: Kolla databas efter ett adjektiv och returnerar den
-            //return "temp";
+
         }
         public string GetAdjective()
         {
-            //Todo: Kolla databas efter ett adjektiv och returnerar den
-            return "temp";
+            var adjectiveCount = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() + 1);
+            var qResult = _charadeContext.Adjectives
+            .SingleOrDefault(n => n.ID == adjectiveCount);
+
+            return qResult.Description;
         }
         public string GetVerb()
         {
-            //Todo: Kolla databas efter ett verb och returnerar den
-            return "temp";
+            var verbCount = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() + 1);
+            var qResult = _charadeContext.Verbs
+            .SingleOrDefault(n => n.ID == verbCount);
+
+            return qResult.Description;
+
         }
     }
 }

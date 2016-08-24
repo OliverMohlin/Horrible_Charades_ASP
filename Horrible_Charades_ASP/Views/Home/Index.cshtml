@@ -14,6 +14,10 @@
         <br />
         <input type="button" id="getNounButton" value="Klicka för substantiv" />
         <br />
+        <input type="button" id="getAdjectiveButton" value="Klicka för substantiv" />
+        <br />
+        <input type="button" id="getVerbButton" value="Klicka för substantiv" />
+        <br />
         <br />
         <div id="teams">
         </div>
@@ -34,6 +38,14 @@
 
             $("#getNounButton").click(function () {
                 hub.server.getNoun();
+            });
+
+            $("#getAdjectiveButton").click(function () {
+                hub.server.getAdjective();
+            });
+
+            $("#getVerbButton").click(function () {
+                hub.server.getVerb();
             });
 
             $("#submitButton").click(function () {
