@@ -43,21 +43,36 @@ namespace Horrible_Charades_ASP
         }
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen
+        /// Hämtar även 3 felaktiga alternativ för gissande
         /// </summary>
         public void GetNoun()
         {
-            string noun = _dbUtils.GetNoun();
-            Clients.All.hello(noun);
+            var noun = _dbUtils.GetNoun();
+            List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
+            Clients.All.incorrectGuesses(tmpList);
+            Clients.All.hello(noun.Description);
         }
+        /// <summary>
+        /// Hämtar slumpat Adjective från databasen
+        ///  + 3 felaktiga alternativ för gissande
+        /// </summary>
         public void GetAdjective()
         {
-            string adjective = _dbUtils.GetAdjective();
-            Clients.All.hello(adjective);
+            var adjective = _dbUtils.GetAdjective();
+            List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
+            Clients.All.incorrectGuesses(tmpList);
+            Clients.All.hello(adjective.Description);
         }
+        /// <summary>
+        /// Hämtar slumpat verb från databasen
+        ///  + 3 felaktiga alternativ för gissande
+        /// </summary>
         public void GetVerb()
         {
-            string verb = _dbUtils.GetVerb();
-            Clients.All.hello(verb);
+            var verb = _dbUtils.GetVerb();
+            List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
+            Clients.All.incorrectGuesses(tmpList);
+            Clients.All.hello(verb.Description);
         }
     }
 }
