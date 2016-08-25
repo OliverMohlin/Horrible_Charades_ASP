@@ -71,15 +71,16 @@ namespace Horrible_Charades_ASP
 
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
+
             if (typeOfWord == "adjective")
             {
                 string adjective = GameState.Instance.GetAdjective(gameCode);
-                Clients.All.InsertCharadeHTML(_charade, "adjective");
+                Clients.All.InsertCharadeHTML(adjective, "adjective");
             }
             if (typeOfWord == "verb")
             {
-                _charade.Verb.Add(_dbUtils.GetVerb().Description);
-                Clients.All.InsertCharadeHTML(_charade, "verb");
+                string verb = GameState.Instance.GetVerb(gameCode);
+                Clients.All.InsertCharadeHTML(verb, "verb");
             }
         }
         #region gamla ordhämtningar

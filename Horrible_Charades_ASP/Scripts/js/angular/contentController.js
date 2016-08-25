@@ -34,7 +34,7 @@
         };
 
         vm.getVerb = function () {
-            hub.server.updateCharade("verb");
+            hub.server.updateCharade("verb", gameService.gameCode);
         };
 
         function writeInConsole() {

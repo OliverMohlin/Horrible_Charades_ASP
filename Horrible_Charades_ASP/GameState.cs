@@ -102,9 +102,11 @@ namespace Horrible_Charades_ASP
             return adjective.Description;
         }
 
-        internal string GetVerb()
+        internal string GetVerb(string gameCode)
         {
             var verb = _dbUtils.GetVerb();
+            Game game = GetGame(gameCode);
+            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb().Description);
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
 
             return verb.Description;
