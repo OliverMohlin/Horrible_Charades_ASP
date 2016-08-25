@@ -14,6 +14,11 @@
 
     };
 
+    hub.client.printGameCode = function (game) {
+        console.log(game)
+        $("#GCLabel").append(game.GameCode)
+    };
+
     $("#getNounButton").click(function () {
         hub.server.getNoun();
     });

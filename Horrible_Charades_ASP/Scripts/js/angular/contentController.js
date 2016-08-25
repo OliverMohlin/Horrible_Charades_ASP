@@ -10,7 +10,10 @@
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
         vm.Team = {};
-
+        vm.createGame = function () {
+            alert("Create game in ContentCtrl ")
+            hub.server.createGame();
+        }
         vm.getCharade = function () {
             hub.server.getCharade();
         }
