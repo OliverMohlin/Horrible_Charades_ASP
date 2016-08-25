@@ -27,8 +27,12 @@
         }
 
         if (typeOfWord === "verb") {
-            console.log("printing verb");
-            $("#noun").append("<div class='verb' style='display:inline'>" + " " + charadeWord + "</div>");
+            if ($('.verb').length) {
+                $("#noun").append("<div class='verb' style='display:inline'>" + " while " + charadeWord + "</div>");
+            }
+            else {
+                $("#noun").append("<div class='verb' style='display:inline'>" + "  " + charadeWord + "</div>");
+            }
         }
 
     };
