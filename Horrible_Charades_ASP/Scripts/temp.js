@@ -5,7 +5,7 @@
     };
 
     hub.client.teamsJoined = function (game) {
-        console.log(game)
+        console.log(game);
         $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
     };
 
@@ -15,43 +15,28 @@
 
     //};
 
-    hub.client.InsertCharadeHTML = function (charade, typeOfWord) {
-        //if (typeOfWord === "noun") {
-        //    console.log("printing noun");
-        //    $("#Charade").append("<div id='noun style='display:inline''>" + charade.Noun + "</div>");
-        //}
-
-        //if (typeOfWord === "adjective") {
-        //    $("#noun").prepend("<div class='adjective' style='display:inline'>" + charade.Adjective[0] + "</div>");
-        //    console.log("printing adjective");
-        //}
-
-        //if (typeOfWord === "verb") {
-        //    console.log("printing verb");
-        //    $("#noun").append("<div class='verb' style='display:inline'>" + charade.Verb[0] + "</div>");
-        //}
-
+    hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
         if (typeOfWord === "noun") {
             console.log("printing noun");
-            $("#Charade").append("<div id='noun' style='display:inline''>" + charade.Noun + "</div>");
+            $("#Charade").append("<div id='noun' style='display:inline''>" + charadeWord + "</div>");
         }
 
         if (typeOfWord === "adjective") {
-            $("#noun").prepend("<div class='adjective' style='display:inline'>" + charade.Adjective[0]+ " " + "</div>");
+            $("#noun").prepend("<div class='adjective' style='display:inline'>" + charadeWord + " " + "</div>");
             console.log("printing adjective");
         }
 
         if (typeOfWord === "verb") {
             console.log("printing verb");
-            $("#noun").append("<div class='verb' style='display:inline'>" + " " + charade.Verb[0] + "</div>");
+            $("#noun").append("<div class='verb' style='display:inline'>" + " " + charadeWord + "</div>");
         }
 
     };
 
     hub.client.printGameCode = function (game) {
-        console.log(game)
+        console.log(game);
         //vm.Team.GameCode = game.GameCode
-        $("#GameCode").append(game.GameCode)
+        $("#GameCode").append(game.GameCode);
     };
 
     $("#getNounButton").click(function () {

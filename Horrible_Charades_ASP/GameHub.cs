@@ -63,18 +63,17 @@ namespace Horrible_Charades_ASP
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side
         /// </summary>
-        public void GetCharade()
+        public void GetCharade(string gameCode)
         {
-            Word noun = _dbUtils.GetNoun();
-            _charade.Noun = noun.Description;
-            Clients.All.InsertCharadeHTML(_charade, "noun");
+            string noun = GameState.Instance.GetNoun(gameCode);
+            Clients.All.InsertCharadeHTML(noun, "noun");
         }
 
-        public void UpdateCharade(string typeOfWord)
+        public void UpdateCharade(string typeOfWord, string gameCode)
         {
             if (typeOfWord == "adjective")
             {
-                _charade.Adjective.Add(_dbUtils.GetAdjective().Description);
+                string adjective = GameState.Instance.GetAdjective(gameCode);
                 Clients.All.InsertCharadeHTML(_charade, "adjective");
             }
             if (typeOfWord == "verb")
@@ -87,34 +86,32 @@ namespace Horrible_Charades_ASP
         /// Hämtar ett slumpat Substantiv från Databasen
         /// Hämtar även 3 felaktiga alternativ för gissande
         /// </summary>
-        public void GetNoun()
-        {
-            var noun = _dbUtils.GetNoun();
-            List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
-            Clients.All.incorrectGuesses(tmpList);
-            Clients.All.InsertCharadeHTML(noun.Description, "noun");
-        }
+        //public void GetNoun(string gameCode)
+        //{
+        //    string noun = GameState.Instance.GetNoun(gameCode);
+
+        //    //Clients.All.incorrectGuesses(tmpList);
+        //    Clients.All.InsertCharadeHTML(noun, "noun");
+        //}
         /// <summary>
         /// Hämtar slumpat Adjective från databasen
         ///  + 3 felaktiga alternativ för gissande
         /// </summary>
-        public void GetAdjective()
-        {
-            var adjective = _dbUtils.GetAdjective();
-            List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
-            Clients.All.incorrectGuesses(tmpList);
-            Clients.All.InsertCharadeHTML(adjective.Description, "adjective");
-        }
-        /// <summary>
-        /// Hämtar slumpat verb från databasen
-        ///  + 3 felaktiga alternativ för gissande
-        /// </summary>
-        public void GetVerb()
-        {
-            var verb = _dbUtils.GetVerb();
-            List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
-            Clients.All.incorrectGuesses(tmpList);
-            Clients.All.InsertCharadeHTML(verb.Description, "verb");
-        }
+        //public void GetAdjective()
+        //{
+        //    //string adjective = GameState.Instance.GetAdjective();
+        //    ////Clients.All.incorrectGuesses(tmpList);
+        //    //Clients.All.InsertCharadeHTML(adjective, "adjective");
+        //}
+        ///// <summary>
+        ///// Hämtar slumpat verb från databasen
+        /////  + 3 felaktiga alternativ för gissande
+        ///// </summary>
+        //public void GetVerb()
+        //{
+        //    string verb = GameState.Instance.GetVerb();
+        //    //Clients.All.incorrectGuesses(tmpList);
+        //    Clients.All.InsertCharadeHTML(verb, "verb");
+        //}
     }
 }

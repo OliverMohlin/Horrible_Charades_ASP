@@ -1,4 +1,5 @@
-﻿using Horrible_Charades_ASP.Models;
+﻿using Horrible_Charades_ASP.Database;
+using Horrible_Charades_ASP.Models;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System;
@@ -23,10 +24,13 @@ namespace Horrible_Charades_ASP
         public IHubConnectionContext<dynamic> Clients { get; set; }         //Todo: Funkar detta?
         public IGroupManager Groups { get; set; }                           //Används för att hålla koll på SignalR grupper
 
+
+        DatabaseUtils _dbUtils = new DatabaseUtils(new CharadeContext());
+
         public GameState(IHubContext context)
         {
             Clients = context.Clients;
-            Groups = context.Groups; 
+            Groups = context.Groups;
         }
 
         public static GameState Instance
@@ -75,6 +79,35 @@ namespace Horrible_Charades_ASP
             Game game = new Game();
             _games[game.GameCode] = game; //Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             return game;
+        }
+
+
+        // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
+        internal string GetNoun(string gameCode)
+        {
+            Word noun = _dbUtils.GetNoun();
+            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
+            Game game = GetGame(gameCode);
+            game.CurrentCharade.Noun = noun.Description;
+
+            return noun.Description;
+        }
+
+        internal string GetAdjective(string gameCode)
+        {
+            var adjective = _dbUtils.GetAdjective();
+            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
+            Game game = GetGame(gameCode);
+            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective().Description);
+            return adjective.Description;
+        }
+
+        internal string GetVerb()
+        {
+            var verb = _dbUtils.GetVerb();
+            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
+
+            return verb.Description;
         }
     }
 }
