@@ -22,6 +22,16 @@ namespace Horrible_Charades_ASP
         {
             Clients.All.hello(textToWrite);
         }
+
+        /// <summary>
+        /// This function calls the method InsertCharadeHTML on Client-Side, which inserts provided string in a <div>-tag
+        /// </summary>
+        /// <param name="htmlToWrite"></param>
+        public void InsertCharadeHTML(string htmlToWrite)
+        {
+            Clients.All.insertCharadeHTML(htmlToWrite);
+        }
+
         /// <summary>
         /// Creates a new team if the device don't have a team. 
         /// </summary>
@@ -50,13 +60,21 @@ namespace Horrible_Charades_ASP
         {
             Word noun = _dbUtils.GetNoun();
             _charade.Noun = noun.Description;
-            Clients.All.printCharade(_charade);
+            Clients.All.InsertCharadeHTML(_charade, "noun");
         }
 
-        public void UpdateCharade()
+        public void UpdateCharade(string typeOfWord)
         {
-            _charade.Adjective.Add(_dbUtils.GetAdjective().Description);
-            Clients.All.printCharade(_charade);
+            if (typeOfWord == "adjective")
+            {
+                _charade.Adjective.Add(_dbUtils.GetAdjective().Description);
+                Clients.All.InsertCharadeHTML(_charade, "adjective");
+            }
+            if (typeOfWord == "verb")
+            {
+                _charade.Verb.Add(_dbUtils.GetVerb().Description);
+                Clients.All.InsertCharadeHTML(_charade, "verb");
+            }
         }
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen
@@ -67,7 +85,7 @@ namespace Horrible_Charades_ASP
             var noun = _dbUtils.GetNoun();
             List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
             Clients.All.incorrectGuesses(tmpList);
-            Clients.All.hello(noun.Description);
+            Clients.All.InsertCharadeHTML(noun.Description, "noun");
         }
         /// <summary>
         /// Hämtar slumpat Adjective från databasen
@@ -78,7 +96,7 @@ namespace Horrible_Charades_ASP
             var adjective = _dbUtils.GetAdjective();
             List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Clients.All.incorrectGuesses(tmpList);
-            Clients.All.hello(adjective.Description);
+            Clients.All.InsertCharadeHTML(adjective.Description, "adjective");
         }
         /// <summary>
         /// Hämtar slumpat verb från databasen
@@ -89,7 +107,7 @@ namespace Horrible_Charades_ASP
             var verb = _dbUtils.GetVerb();
             List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
             Clients.All.incorrectGuesses(tmpList);
-            Clients.All.hello(verb.Description);
+            Clients.All.InsertCharadeHTML(verb.Description, "verb");
         }
     }
 }

@@ -13,11 +13,15 @@
 
         vm.getCharade = function () {
             hub.server.getCharade();
-        }
+        };
 
         vm.getAdjective = function () {
-            hub.server.updateCharade();
-        }
+            hub.server.updateCharade("adjective");
+        };
+
+        vm.getVerb = function () {
+            hub.server.updateCharade("verb");
+        };
 
         vm.createTeam = function () {
             console.log(vm.Team.Name);

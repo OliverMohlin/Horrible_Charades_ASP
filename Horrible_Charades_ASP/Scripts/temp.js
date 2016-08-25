@@ -9,8 +9,41 @@
     };
 
     //Gets charade from GameHub and pushes out to #Charade
-    hub.client.printCharade = function (charade) {
-        $("#Charade").append(charade.Noun !== null ? charade.Noun + " " : charade.Adjective[0] + " ")
+    //hub.client.printCharade = function (charade) {
+    //    $("#Charade").append(charade.Noun !== null ? charade.Noun + " " : charade.Adjective[0] + " ");
+
+    //};
+
+    hub.client.InsertCharadeHTML = function (charade, typeOfWord) {
+        //if (typeOfWord === "noun") {
+        //    console.log("printing noun");
+        //    $("#Charade").append("<div id='noun style='display:inline''>" + charade.Noun + "</div>");
+        //}
+
+        //if (typeOfWord === "adjective") {
+        //    $("#noun").prepend("<div class='adjective' style='display:inline'>" + charade.Adjective[0] + "</div>");
+        //    console.log("printing adjective");
+        //}
+
+        //if (typeOfWord === "verb") {
+        //    console.log("printing verb");
+        //    $("#noun").append("<div class='verb' style='display:inline'>" + charade.Verb[0] + "</div>");
+        //}
+
+        if (typeOfWord === "noun") {
+            console.log("printing noun");
+            $("#Charade").append("<div id='noun' style='display:inline''>" + charade.Noun + "</div>");
+        }
+
+        if (typeOfWord === "adjective") {
+            $("#noun").prepend("<div class='adjective' style='display:inline'>" + charade.Adjective[0]+ " " + "</div>");
+            console.log("printing adjective");
+        }
+
+        if (typeOfWord === "verb") {
+            console.log("printing verb");
+            $("#noun").append("<div class='verb' style='display:inline'>" + " " + charade.Verb[0] + "</div>");
+        }
 
     };
 

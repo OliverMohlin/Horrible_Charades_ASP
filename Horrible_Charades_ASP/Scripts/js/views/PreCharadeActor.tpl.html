@@ -5,14 +5,12 @@
 <br />
 <!--data-ng-init anropar funktionen vm.getCharade när p-taggen ska skrivas-->
 <p id="Charade" data-ng-init="vm.getCharade()"></p>
+<div class="container" id="charadeContainer">
+
+</div>
 <!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
 <input type="button" data-ng-click="vm.getAdjective()" value="Klicka för Adjektiv" />
 <a href="#CharadeActor">Next Phase</a>
 
-<!--<input type="button" id="getNounButton" value="Klicka för Substantiv" />
-<br />
-<input type="button" id="getAdjectiveButton" value="Klicka för Adjektiv" />
-<br />
-<input type="button" id="getVerbButton" value="Klicka för Verb" />
-<br />
-<br />-->
+<input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
+<a href="#CharadeActor">Next Phase</a>
