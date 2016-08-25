@@ -12,6 +12,7 @@ namespace Horrible_Charades_ASP.Models
         {
             GameCode = GenerateCode();
             Teams = new List<Team>();
+            CurrentCharade = new Charade();
         }
 
         public List<Team> Teams { get; set; }

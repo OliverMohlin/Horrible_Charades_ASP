@@ -82,6 +82,7 @@ namespace Horrible_Charades_ASP
                 Clients.All.InsertCharadeHTML(_charade, "verb");
             }
         }
+        #region gamla ordhämtningar
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen
         /// Hämtar även 3 felaktiga alternativ för gissande
@@ -113,5 +114,7 @@ namespace Horrible_Charades_ASP
         //    //Clients.All.incorrectGuesses(tmpList);
         //    Clients.All.InsertCharadeHTML(verb, "verb");
         //}
+        #endregion
+
     }
 }
