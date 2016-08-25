@@ -16,6 +16,7 @@ namespace Horrible_Charades_ASP.Models
         public string ConnectionID { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
+        public string GameCode { get; set; }
         public string Hash { get; set; }
         public string Group { get; set; }
         public bool isPlaying { get; set; }

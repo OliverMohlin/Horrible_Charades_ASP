@@ -23,8 +23,9 @@
         }
 
         vm.createTeam = function () {
-            console.log(vm.Team.Name);
-            hub.server.createTeam(vm.Team.Name);
+            vm.Team.gameCode = $("#GameCode").text();
+            console.log(vm.Team);
+            hub.server.createTeam(vm.Team.Name, vm.Team.gameCode);
         };
     }
 })();

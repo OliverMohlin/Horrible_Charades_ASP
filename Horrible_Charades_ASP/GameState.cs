@@ -55,15 +55,19 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        public Team CreateTeam(string teamName) //Todo: koppla till connectionstring istället för Teamname
+        public Team CreateTeam(Team team, string gameCode) //Todo: koppla till connectionstring istället för Teamname
         {
-            var team = new Team(teamName);
-            _teams[teamName] = team; //Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
-            return team;
+            Game game = GetGame(gameCode);
+            _teams[team.Name] = team;//Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
+            game.Teams.Add(team);
+            _games[game.GameCode] = game;
+            Groups.Add(team.ConnectionID, team.GameCode);
+            return team; //Todo: Ta in gameCode. Lägga till laget i game och i en grupp
         }
-        internal Game GetGame(string teamName)
+        internal Game GetGame(string gameCode)
         {
-            return new Game();//.Values.FirstOrDefault(t => t.Name == teamName);
+            var game = _games.FirstOrDefault(g => g.Key == gameCode);
+            return game.Value;//.Values.FirstOrDefault(t => t.Name == teamName);
         }
         /// <summary>
         /// Skapar ett team som kopplas till ConnectionId

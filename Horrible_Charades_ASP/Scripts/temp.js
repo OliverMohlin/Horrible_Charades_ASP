@@ -16,7 +16,8 @@
 
     hub.client.printGameCode = function (game) {
         console.log(game)
-        $("#GCLabel").append(game.GameCode)
+        //vm.Team.GameCode = game.GameCode
+        $("#GameCode").append(game.GameCode)
     };
 
     $("#getNounButton").click(function () {

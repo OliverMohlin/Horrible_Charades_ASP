@@ -11,6 +11,7 @@ namespace Horrible_Charades_ASP.Models
         public Game()
         {
             GameCode = GenerateCode();
+            Teams = new List<Team>();
         }
 
         public List<Team> Teams { get; set; }

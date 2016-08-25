@@ -32,7 +32,7 @@ namespace Horrible_Charades_ASP
         /// Creates a new team if the device don't have a team. 
         /// </summary>
         /// <param name="teamName"></param>
-        public void CreateTeam(string teamName) //To-do: validera team-name
+        public void CreateTeam(string teamName, string gameCode) //To-do: validera team-name
         {
             var team = GameState.Instance.GetTeam(teamName);
             if (team != null)
@@ -42,7 +42,10 @@ namespace Horrible_Charades_ASP
             }
             else
             {
-                team = GameState.Instance.CreateTeam(teamName);
+                team = new Team(teamName);
+                team.ConnectionID = Context.ConnectionId;
+                team.GameCode = gameCode;
+                team = GameState.Instance.CreateTeam(team, gameCode);
                 int connectedClients = GameState.Instance.ReturnNumberOfClients();
                 Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
 
