@@ -11,10 +11,10 @@
                 templateUrl: "Scripts/js/views/MainMenu.tpl.html"
             })
 
-        .when("/CreateTeam", {
+        .when("/CreateTeamHost", {
             controller: "contentController",
             controllerAs: "vm",
-            templateUrl: "Scripts/js/views/CreateTeam.tpl.html"
+            templateUrl: "Scripts/js/views/CreateTeamHost.tpl.html"
         })
 
         .when("/Lobby", {

@@ -10,7 +10,10 @@
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
         vm.Team = {};
-
+        vm.createGame = function () {
+            alert("Create game in ContentCtrl ")
+            hub.server.createGame();
+        }
         vm.getCharade = function () {
             hub.server.getCharade();
         };
@@ -24,8 +27,9 @@
         };
 
         vm.createTeam = function () {
-            console.log(vm.Team.Name);
-            hub.server.createTeam(vm.Team.Name);
+            vm.Team.gameCode = $("#GameCode").text();
+            console.log(vm.Team);
+            hub.server.createTeam(vm.Team.Name, vm.Team.gameCode);
         };
     }
 })();

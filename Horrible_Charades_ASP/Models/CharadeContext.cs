@@ -18,7 +18,7 @@ namespace Horrible_Charades_ASP.Models
         }
 
         /// <summary>
-        /// Mappar mot DB-tabellen Nouns
+        /// Mappar mot DB-tabeller
         /// </summary>
         public DbSet<Noun> Nouns { get; set; }
         public DbSet<Adjective> Adjectives { get; set; }
@@ -26,12 +26,6 @@ namespace Horrible_Charades_ASP.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Game> Games { get; set; }
 
-
-        /// <summary>
-        /// Kan tas bort, eftersom att den inte finns som tabell i databasen.
-        /// </summary>
-        //[NotMapped]
-        //public DbSet<Word> Words { get; set; }
 
     }
 }

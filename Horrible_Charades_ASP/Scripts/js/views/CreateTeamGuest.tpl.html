@@ -1,5 +1,5 @@
 ﻿<div data-ng-controller="contentController as vm">
-    <div>
+    <div data-ng-init="vm.createGame()">
         <ul id="result"></ul>
     </div>
 
@@ -7,7 +7,7 @@
     <form id="TeamNameForm" name="TeamNameForm" data-ng-submit="vm.createTeam()" novalidate>
 
         <!--Todo: Disabled om du inte joinar game-->
-        <label for="GameCode">Game Code:</label>
+        <label for="GameCode" id="GCLabel">Game Code:</label>
         <input type="text" placeholder="Game Code" id="GameCode" name="GameCode" data-ng-model="vm.Team.GameCode" required /> 
         <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
         <label for="TeamName">Team Name:</label>

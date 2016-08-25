@@ -22,7 +22,12 @@ namespace Horrible_Charades_ASP
         {
             Clients.All.hello(textToWrite);
         }
-
+        public void CreateGame() // När man trycker på New game ska man komma hit
+        {
+            Game game = new Game();
+            GameState.Instance.CreateGame(game);
+            Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
+        }
         /// <summary>
         /// This function calls the method InsertCharadeHTML on Client-Side, which inserts provided string in a <div>-tag
         /// </summary>
@@ -36,9 +41,9 @@ namespace Horrible_Charades_ASP
         /// Creates a new team if the device don't have a team. 
         /// </summary>
         /// <param name="teamName"></param>
-        public void createTeam(string teamName) //To-do: validera team-name
+        public void CreateTeam(string teamName, string gameCode) //To-do: validera team-name
         {
-            var team = GameState.Instance.GetTeam(Context.ConnectionId);
+            var team = GameState.Instance.GetTeam(teamName);
             if (team != null)
             {
                 int connectedClients = GameState.Instance.ReturnNumberOfClients();
@@ -46,7 +51,10 @@ namespace Horrible_Charades_ASP
             }
             else
             {
-                team = GameState.Instance.CreateTeam(Context.ConnectionId, teamName);
+                team = new Team(teamName);
+                team.ConnectionID = Context.ConnectionId;
+                team.GameCode = gameCode;
+                team = GameState.Instance.CreateTeam(team, gameCode);
                 int connectedClients = GameState.Instance.ReturnNumberOfClients();
                 Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
 

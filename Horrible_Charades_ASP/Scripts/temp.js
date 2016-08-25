@@ -47,6 +47,12 @@
 
     };
 
+    hub.client.printGameCode = function (game) {
+        console.log(game)
+        //vm.Team.GameCode = game.GameCode
+        $("#GameCode").append(game.GameCode)
+    };
+
     $("#getNounButton").click(function () {
         hub.server.getNoun();
     });

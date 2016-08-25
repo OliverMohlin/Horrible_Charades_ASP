@@ -10,9 +10,9 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
     public class DatabaseUtils
     {
         CharadeContext _charadeContext;
-        public DatabaseUtils(CharadeContext nouncontext)
+        public DatabaseUtils(CharadeContext context)
         {
-            _charadeContext = nouncontext;
+            _charadeContext = context;
         }
         /// <summary>
         /// Hämtar ett Noun baserat på framslumpat ID.
@@ -58,9 +58,17 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             List<Word> tmpList = new List<Word>();
             List<String> newTmpList = new List<String>();
 
-            tmpList.AddRange(GetAllNounWords(inputWord.CategoryID));
-            tmpList.AddRange(GetAllAdjectiveWords(inputWord.CategoryID));
-            tmpList.AddRange(GetAllVerbWords(inputWord.CategoryID));
+            if (inputWord is Noun)
+            {
+                tmpList.AddRange(GetAllNounWords(inputWord.CategoryID));
+            }
+            else if (inputWord is Adjective)
+            {
+                tmpList.AddRange(GetAllAdjectiveWords(inputWord.CategoryID));
+            }
+            else
+                tmpList.AddRange(GetAllVerbWords(inputWord.CategoryID));
+
 
             tmpList.Remove(inputWord);
 
