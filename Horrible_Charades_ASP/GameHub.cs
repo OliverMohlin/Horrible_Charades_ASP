@@ -24,8 +24,7 @@ namespace Horrible_Charades_ASP
         }
         public void CreateGame() // När man trycker på New game ska man komma hit
         {
-            Game game = new Game();
-            GameState.Instance.CreateGame(game);
+            Game game = GameState.Instance.CreateGame();
             Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
         }
         /// <summary>
@@ -46,14 +45,12 @@ namespace Horrible_Charades_ASP
             var team = GameState.Instance.GetTeam(teamName);
             if (team != null)
             {
-                int connectedClients = GameState.Instance.ReturnNumberOfClients();
-                Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
+                Clients.All.teamsJoined(team.Name, team.ConnectionID);
             }
             else
             {
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
-                int connectedClients = GameState.Instance.ReturnNumberOfClients();
-                Clients.All.teamsJoined(game, connectedClients);
+                Clients.All.teamsJoined(game);
 
             }
         }

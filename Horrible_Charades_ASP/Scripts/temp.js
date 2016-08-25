@@ -4,8 +4,9 @@
         $("#result").append("<li>" + textToWrite + "</li>");
     };
 
-    hub.client.teamsJoined = function (teamName, conId, connectedClients) {
-        $("#teams").append("TeamName: " + teamName + "<br /> ConnectionId: " + conId + "<br /> ConnectedClients: " + connectedClients + "<br /> <br />");
+    hub.client.teamsJoined = function (game) {
+        console.log(game)
+        $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
     };
 
     //Gets charade from GameHub and pushes out to #Charade

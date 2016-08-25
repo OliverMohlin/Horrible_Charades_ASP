@@ -34,14 +34,6 @@ namespace Horrible_Charades_ASP
             get { return _instance.Value; }
         }
         /// <summary>
-        /// Returnerar en int som visar hur många devices som är connectade
-        /// </summary>
-        /// <returns></returns>
-        public int ReturnNumberOfClients()
-        {
-            return _teams.Count();
-        }
-        /// <summary>
         /// Returnerar ett team från connectade teams
         /// </summary>
         /// <param name="teamName"></param>
@@ -78,9 +70,11 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        public void CreateGame(Game game) //Todo: koppla till connectionstring istället för Teamname
+        public Game CreateGame() //Todo: koppla till connectionstring istället för Teamname
         {
+            Game game = new Game();
             _games[game.GameCode] = game; //Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
+            return game;
         }
     }
 }
