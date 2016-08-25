@@ -51,14 +51,16 @@ namespace Horrible_Charades_ASP
             }
             else
             {
-                team = new Team(teamName);
-                team.ConnectionID = Context.ConnectionId;
-                team.GameCode = gameCode;
-                team = GameState.Instance.CreateTeam(team, gameCode);
+                Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
                 int connectedClients = GameState.Instance.ReturnNumberOfClients();
-                Clients.All.teamsJoined(team.Name, team.ConnectionID, connectedClients);
+                Clients.All.teamsJoined(game, connectedClients);
 
             }
+        }
+
+        public void JoinGame(string teamName, string gameCode)
+        {
+
         }
         /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.

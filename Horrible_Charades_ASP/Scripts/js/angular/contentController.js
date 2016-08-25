@@ -14,6 +14,17 @@
             alert("Create game in ContentCtrl ")
             hub.server.createGame();
         }
+        vm.joinGame = function () {
+            vm.Team.gameCode = $("GameCode").val();
+            alert("Join Game in contentCtrl")
+            console.log(vm.Team)
+            hub.server.joinGame(vm.Team.Name, vm.Team.gameCode);
+        }
+        vm.createTeam = function () {
+            vm.Team.gameCode = $("#GameCode").text();
+            console.log(vm.Team);
+            hub.server.createTeam(vm.Team.Name, vm.Team.gameCode);
+        };
         vm.getCharade = function () {
             hub.server.getCharade();
         };
@@ -24,12 +35,6 @@
 
         vm.getVerb = function () {
             hub.server.updateCharade("verb");
-        };
-
-        vm.createTeam = function () {
-            vm.Team.gameCode = $("#GameCode").text();
-            console.log(vm.Team);
-            hub.server.createTeam(vm.Team.Name, vm.Team.gameCode);
         };
     }
 })();
