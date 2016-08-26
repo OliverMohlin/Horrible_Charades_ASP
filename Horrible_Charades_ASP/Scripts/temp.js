@@ -11,12 +11,6 @@
         $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
     };
 
-    //Gets charade from GameHub and pushes out to #Charade
-    //hub.client.printCharade = function (charade) {
-    //    $("#Charade").append(charade.Noun !== null ? charade.Noun + " " : charade.Adjective[0] + " ");
-
-    //};
-
     //Write out and append new words to a charade in Pre-Charade(?)
     hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
         if (typeOfWord === "noun") {
