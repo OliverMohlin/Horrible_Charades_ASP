@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
 
-    //Getting the existing module
+    //Obtains the existing module
     angular.module("mainContent")
         .service("gameService", gameService);
 

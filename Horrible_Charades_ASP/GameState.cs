@@ -24,7 +24,6 @@ namespace Horrible_Charades_ASP
         public IHubConnectionContext<dynamic> Clients { get; set; }         //Todo: Funkar detta?
         public IGroupManager Groups { get; set; }                           //Används för att hålla koll på SignalR grupper
 
-
         DatabaseUtils _dbUtils = new DatabaseUtils(new CharadeContext());
 
         public GameState(IHubContext context)
@@ -80,7 +79,6 @@ namespace Horrible_Charades_ASP
             _games[game.GameCode] = game; //Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             return game;
         }
-
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
         internal string GetNoun(string gameCode)

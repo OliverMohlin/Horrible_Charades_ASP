@@ -1,5 +1,5 @@
 ﻿
-//Creating the module
+//Creates the module
 (function () {
     angular.module("mainContent", ["ngRoute"])
     .config(function ($routeProvider) {

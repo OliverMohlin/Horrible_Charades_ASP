@@ -22,11 +22,13 @@ namespace Horrible_Charades_ASP
         {
             Clients.All.hello(textToWrite);
         }
+
         public void CreateGame() // När man trycker på New game ska man komma hit
         {
             Game game = GameState.Instance.CreateGame();
             Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
         }
+        
         /// <summary>
         /// This function calls the method InsertCharadeHTML on Client-Side, which inserts provided string in a <div>-tag
         /// </summary>
@@ -59,6 +61,7 @@ namespace Horrible_Charades_ASP
         {
 
         }
+        
         /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side
@@ -83,6 +86,7 @@ namespace Horrible_Charades_ASP
                 Clients.All.InsertCharadeHTML(verb, "verb");
             }
         }
+        
         #region gamla ordhämtningar
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen
