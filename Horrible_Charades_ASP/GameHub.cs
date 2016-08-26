@@ -22,7 +22,11 @@ namespace Horrible_Charades_ASP
         {
             Clients.All.hello(textToWrite);
         }
-        public void CreateGame() // När man trycker på New game ska man komma hit
+
+        /// <summary>
+        /// This function is called when a user clicks "New Game"
+        /// </summary>
+        public void CreateGame()
         {
             Game game = GameState.Instance.CreateGame();
             Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
@@ -40,18 +44,19 @@ namespace Horrible_Charades_ASP
         /// Creates a new team if the device don't have a team. 
         /// </summary>
         /// <param name="teamName"></param>
-        public void CreateTeam(string teamName, string gameCode) //To-do: validera team-name
+        public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
             var team = GameState.Instance.GetTeam(teamName);
             if (team != null)
             {
-                Clients.All.teamsJoined(team.Name, team.ConnectionID);
+                Clients.All.teamsJoined(GameState.Instance.GetGame(gameCode));
+                //Clients.All.teamsJoined(game);
             }
             else
             {
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
                 Clients.All.teamsJoined(game);
-
+       
             }
         }
 

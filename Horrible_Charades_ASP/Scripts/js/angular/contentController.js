@@ -10,6 +10,7 @@
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
         console.log(gameService);
         vm.Team = {};
+
         vm.createGame = function () {
             hub.server.createGame();
         };
@@ -20,9 +21,8 @@
             hub.server.joinGame(vm.Team.Name, gameService.gameCode);
         };
         vm.createTeam = function () {
-            gameService.gameCode = $("#GameCode").text();
-            console.log(gameService.gameCode);
-            hub.server.createTeam(vm.Team.Name, gameService.gameCode);
+            gameService.game.gameCode = $("#GameCode").text();
+            hub.server.createTeam(gameService.game.gameCode, ($("#TeamName").val()));
         };
         vm.getCharade = function () {
             console.log(vm.Team);
@@ -37,10 +37,17 @@
             hub.server.updateCharade("verb", gameService.gameCode);
         };
 
-        function writeInConsole() {
-            $("#initiate");
-            console.log(vm.Team)
-        }
+        hub.client.teamsJoined = function (game) {
+
+            gameService.game = game;
+            $("#teams").append("TeamName: " + gameService.game.Teams[0].Name + "<br /> ConnectionId: " + gameService.game.Teams[0].ConnectionID + "<br /> ConnectedClients: ");
+            console.log(gameService);
+        };
+
+        //function writeInConsole() {
+        //    $("#initiate");
+        //    console.log(game)
+        //}
 
     }
 })();

@@ -1,13 +1,24 @@
-﻿$(function () {
+﻿
+(function (gameService) {
+
     var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
     hub.client.hello = function (textToWrite) {     //Assigns hello() to client
         $("#result").append("<li>" + textToWrite + "</li>");
     };
 
-    hub.client.teamsJoined = function (game) {
-        console.log(game);
-        $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
+    hub.client.UpdateGameState = function (game) {
+        console.log("Updating Gamestate");
+        //gameService.gameStateClient = game;
+        console.log(gameService.gameStateClient);
     };
+
+    //hub.client.teamsJoined = function (game) {
+    //    console.log(game);
+    //    console.log(gameService)
+    //    gameService.game.team = game.Teams[0].Name;
+    //    console.log(gameService.game + "is gameservice");
+    //    $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
+    //};
 
     //Gets charade from GameHub and pushes out to #Charade
     //hub.client.printCharade = function (charade) {
@@ -39,7 +50,6 @@
 
     hub.client.printGameCode = function (game) {
         console.log(game);
-        //vm.Team.GameCode = game.GameCode
         $("#GameCode").append(game.GameCode);
     };
 
@@ -55,7 +65,9 @@
         hub.server.getVerb();
     });
 
+
+
     $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
     });
-});
+})();

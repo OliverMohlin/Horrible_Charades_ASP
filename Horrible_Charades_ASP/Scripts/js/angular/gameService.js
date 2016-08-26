@@ -6,9 +6,15 @@
         .service("gameService", gameService);
 
     function gameService() {
+        var self = this;
+        self.game = {
+            team : "",
+            gameCode : ""
+        };
+        var gameStateClient;
+        console.log(self.game);
 
-        this.gameCode = "hello"
     }
-    
-    
+
+
 })();
