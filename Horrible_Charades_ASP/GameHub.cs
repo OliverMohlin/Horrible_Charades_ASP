@@ -56,12 +56,22 @@ namespace Horrible_Charades_ASP
             {
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
                 Clients.All.teamsJoined(game);
-       
+
             }
         }
 
         public void JoinGame(string teamName, string gameCode)
         {
+            Game game = GameState.Instance.GetGame(gameCode);
+            if (game == null)
+            {
+                Clients.Caller.NoGameExist(false);
+            }
+            else
+            {
+                CreateTeam(teamName, gameCode);
+                Clients.Caller.NoGameExist(true);
+            }
 
         }
         /// <summary>

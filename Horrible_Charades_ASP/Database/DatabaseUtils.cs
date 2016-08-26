@@ -53,6 +53,12 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
 
             return qResult;
         }
+
+        /// <summary>
+        /// This method retrieves incorrect alternatives to show in opponents' view during a charade.
+        /// </summary>
+        /// <param name="inputWord"></param>
+        /// <returns></returns>
         public List<string> GetIncorrectAnswers(Word inputWord)
         {
             List<Word> tmpList = new List<Word>();
@@ -83,25 +89,34 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             return newTmpList;
         }
 
+        /// <summary>
+        /// Retrieves all nouns within a given category.
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
         private List<Word> GetAllNounWords(int categoryID)
         {
             return _charadeContext.Nouns.Where(n => n.CategoryID == categoryID).ToList<Word>();
         }
 
+        /// <summary>
+        /// Retrieves all adjectives within a given category.
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
         private List<Word> GetAllAdjectiveWords(int categoryID)
         {
             return _charadeContext.Adjectives.Where(n => n.CategoryID == categoryID).ToList<Word>();
         }
 
+        /// <summary>
+        /// Retrieves all verbs.
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <returns></returns>
         private List<Word> GetAllVerbWords(int categoryID)
         {
             return _charadeContext.Verbs.Where(n => n.CategoryID == categoryID).ToList<Word>();
         }
-
-
-
-        //.Join(_charadeContext.Categories, n => n.CategoryID, c => c.ID, (n, c) 
-
-
     }
 }

@@ -12,20 +12,7 @@
         console.log(gameService.gameStateClient);
     };
 
-    //hub.client.teamsJoined = function (game) {
-    //    console.log(game);
-    //    console.log(gameService)
-    //    gameService.game.team = game.Teams[0].Name;
-    //    console.log(gameService.game + "is gameservice");
-    //    $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
-    //};
-
-    //Gets charade from GameHub and pushes out to #Charade
-    //hub.client.printCharade = function (charade) {
-    //    $("#Charade").append(charade.Noun !== null ? charade.Noun + " " : charade.Adjective[0] + " ");
-
-    //};
-
+    //Write out and append new words to a charade in Pre-Charade(?)
     hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
         if (typeOfWord === "noun") {
             console.log("printing noun");
@@ -48,19 +35,22 @@
 
     };
 
+    //Write out the GameCode in CreateTeamHost
     hub.client.printGameCode = function (game) {
         console.log(game);
         $("#GameCode").append(game.GameCode);
     };
 
+    //Adds a Noun to a charade(?)
     $("#getNounButton").click(function () {
         hub.server.getNoun();
     });
 
+    //Adds an adjective to a charade
     $("#getAdjectiveButton").click(function () {
         hub.server.getAdjective();
     });
-
+    //Adds a verb to a charade
     $("#getVerbButton").click(function () {
         hub.server.getVerb();
     });
