@@ -16,6 +16,11 @@
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/CreateTeamHost.tpl.html"
         })
+        .when("/CreateTeamGuest", {
+            controller: "contentController",
+            controllerAs: "vm",
+            templateUrl: "Scripts/js/views/CreateTeamGuest.tpl.html"
+        })
 
         .when("/Lobby", {
             controller: "contentController",

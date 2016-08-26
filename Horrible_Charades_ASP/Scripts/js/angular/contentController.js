@@ -19,7 +19,6 @@
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
             gameService.gameCode = $("#GameCode").val();
-            alert("Join Game in contentCtrl");
             console.log(gameService);
             hub.server.joinGame(vm.Team.Name, gameService.gameCode);
         };

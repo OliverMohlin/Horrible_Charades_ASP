@@ -1,18 +1,19 @@
 ﻿<div data-ng-controller="contentController as vm">
-    <div data-ng-init="vm.createGame()">
+    <div>
         <ul id="result"></ul>
     </div>
 
     <h1>Create Team</h1>
     <form id="TeamNameForm" name="TeamNameForm" data-ng-submit="vm.joinGame()" novalidate>
 
-        <!--Todo: Disabled om du inte joinar game-->
         <label for="GameCode" id="GCLabel">Game Code:</label>
         <input type="text" placeholder="Game Code" id="GameCode" name="GameCode" data-ng-model="vm.Team.GameCode" required /> 
         <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
+
         <label for="TeamName">Team Name:</label>
         <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" data-ng-model="vm.Team.Name" required />
         <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
+
         <input type="submit" id="joinGameButton" value="Submit" data-ng-disabled="TeamNameForm.$invalid">
 
 

@@ -17,6 +17,14 @@
 
     //};
 
+    hub.client.NoGameExist = function (bool) {
+        if (bool) {
+            window.location = "/#/Lobby";
+        }
+        else
+            alert("No game exist with this code");
+    }
+
     //Write out and append new words to a charade in Pre-Charade(?)
     hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
         if (typeOfWord === "noun") {
