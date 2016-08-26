@@ -35,7 +35,7 @@
             console.log(vm.Team);
             hub.server.getCharade(gameService.gameCode);
         };
-        
+
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
             hub.server.updateCharade("adjective", gameService.gameCode);

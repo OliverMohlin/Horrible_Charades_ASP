@@ -13,6 +13,7 @@ namespace Horrible_Charades_ASP.Models
             //Hash = hash;
             Id = Guid.NewGuid().ToString("d");
         }
+
         public string ConnectionID { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
