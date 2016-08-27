@@ -4,23 +4,25 @@
     </div>
 
     <h1>Create Team</h1>
-    <form id="TeamNameForm" name="TeamNameForm" data-ng-submit="vm.createTeam()" novalidate>
+    <!--<form id="TeamNameForm" name="TeamNameForm" data-ng-submit="vm.createTeam()" novalidate>-->
 
         <!--Todo: Disabled om du inte joinar game-->
         <label for="GameCode" class="GameCodeLabel">Game Code:</label>
         <label id="GameCode"></label>
         <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
         <label for="TeamName">Team Name:</label>
-        <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" data-ng-model="vm.Team.Name" required />
+        <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" required /> <!--data-ng-model="vm.Team.Name"-->
         <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
-        <input type="submit" id="createTeamButton" value="Submit" data-ng-disabled="TeamNameForm.$invalid">
+        <!--<input type="submit" id="createTeamButton" value="Submit" data-ng-disabled="TeamNameForm.$invalid">-->
+
+        <button id="createTeamButton"  data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.createTeam()">Submit</button>
 
 
         <br />
         <br />
         <div id="teams">
         </div>
-    </form>
+    <!--</form>-->
     <br />
 
     <a class="button" href="#Lobby">Next Phase</a>

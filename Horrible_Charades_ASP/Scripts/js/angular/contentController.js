@@ -25,9 +25,8 @@
 
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
-            gameService.gameCode = $("#GameCode").text();
-            console.log(gameService.gameCode);
-            hub.server.createTeam(vm.Team.Name, gameService.gameCode);
+            gameService.game.gameCode = $("#GameCode").text();
+            hub.server.createTeam(gameService.game.gameCode, ($("#TeamName").val()));
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
@@ -46,10 +45,17 @@
             hub.server.updateCharade("verb", gameService.gameCode);
         };
 
-        function writeInConsole() {
-            $("#initiate");
-            console.log(vm.Team)
-        }
+        hub.client.teamsJoined = function (game) {
+
+            gameService.game = game;
+            $("#teams").append("TeamName: " + gameService.game.Teams[0].Name + "<br /> ConnectionId: " + gameService.game.Teams[0].ConnectionID + "<br /> ConnectedClients: ");
+            console.log(gameService);
+        };
+
+        //function writeInConsole() {
+        //    $("#initiate");
+        //    console.log(game)
+        //}
 
     }
 })();
