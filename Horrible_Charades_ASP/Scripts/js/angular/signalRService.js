@@ -21,7 +21,7 @@
 
         hub.client.displayMessage = function (message) {
             alert(message)
-        }
+        };
 
         hub.client.UpdateGameState = function (game, nextView) {
             console.log("Updating Gamestate");
