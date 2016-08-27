@@ -38,13 +38,13 @@ namespace Horrible_Charades_ASP
             get { return _instance.Value; }
         }
         /// <summary>
-        /// Returnerar ett team från connectade teams
+        /// Checks if a game with the speicific gamecode already has a team with the requested name
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        internal Team GetTeam(string teamName)
+        internal Team GetTeam(string teamName, string gameCode)
         {
-            return _teams.Values.FirstOrDefault(t => t.Name == teamName);
+            return _teams.Values.FirstOrDefault(t => t.Name == teamName && t.GameCode == gameCode);
         }
         /// <summary>
         /// Skapar ett team som kopplas till ConnectionId

@@ -213,6 +213,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\HorribleCharades - Web Deploy.pubxml" />
     <Content Include="Scripts\js\angular\contentController.js" />
+    <Content Include="Scripts\js\angular\signalRService.js" />
     <Content Include="Scripts\js\angular\gameService.js" />
     <Content Include="Scripts\js\angular\mainContent.js" />
     <Content Include="Scripts\js\views\CharadeParticipant.tpl.html" />

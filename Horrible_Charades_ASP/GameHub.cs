@@ -46,31 +46,37 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
-            var team = GameState.Instance.GetTeam(teamName);
+            Team team = GameState.Instance.GetTeam(teamName, gameCode);
             if (team != null)
             {
-                Clients.All.teamsJoined(GameState.Instance.GetGame(gameCode));
+                //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
                 //Clients.All.teamsJoined(game);
+                Clients.Caller.displayMessage("There is alread a team in this game with that name");
             }
             else
             {
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
-                Clients.All.teamsJoined(game);
+                Clients.Group(game.GameCode).UpdateGameState(game, "/#/Lobby");
 
             }
         }
-
-        public void JoinGame(string teamName, string gameCode)
+        /// <summary>
+        /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
+        /// </summary>
+        /// <param name="gameCode"></param>
+        /// <param name="teamName"></param>
+        public void JoinGame(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
             if (game == null)
             {
-                Clients.Caller.NoGameExist(false);
+                //Clients.Caller.NoGameExist(false);
+                Clients.Caller.DisplayMessage("No such game exist. Revise your GameCode");
             }
             else
             {
-                CreateTeam(teamName, gameCode);
-                Clients.Caller.NoGameExist(true);
+                CreateTeam(gameCode, teamName);
+                //Clients.Caller.NoGameExist(true);
             }
 
         }

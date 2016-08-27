@@ -5,7 +5,7 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(gameService) {
+    function contentController(gameService, signalRService) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
         console.log(gameService);
@@ -18,9 +18,9 @@
 
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
-            gameService.gameCode = $("#GameCode").val();
+            //gameService.gameCode = $("#GameCode").val();
             console.log(gameService);
-            hub.server.joinGame(vm.Team.Name, gameService.gameCode);
+            hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
@@ -48,8 +48,10 @@
         hub.client.teamsJoined = function (game) {
 
             gameService.game = game;
+            signalRService.game = game;
             $("#teams").append("TeamName: " + gameService.game.Teams[0].Name + "<br /> ConnectionId: " + gameService.game.Teams[0].ConnectionID + "<br /> ConnectedClients: ");
             console.log(gameService);
+            console.log(signalRService);
         };
 
         //function writeInConsole() {

@@ -6,11 +6,7 @@
         $("#result").append("<li>" + textToWrite + "</li>");
     };
 
-    hub.client.UpdateGameState = function (game) {
-        console.log("Updating Gamestate");
-        //gameService.gameStateClient = game;
-        console.log(gameService.gameStateClient);
-    };
+
 
     //Write out and append new words to a charade in Pre-Charade(?)
     hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
@@ -36,10 +32,10 @@
     };
 
     //Write out the GameCode in CreateTeamHost
-    hub.client.printGameCode = function (game) {
-        console.log(game);
-        $("#GameCode").append(game.GameCode);
-    };
+    //hub.client.printGameCode = function (game) {
+    //    console.log(game);
+    //    $("#GameCode").append(game.GameCode);
+    //};
 
     //Adds a Noun to a charade(?)
     $("#getNounButton").click(function () {
