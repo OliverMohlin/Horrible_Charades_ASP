@@ -60,12 +60,12 @@ namespace Horrible_Charades_ASP
                 if (game.Teams.Count == 1)
                 {
                     Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyHost");
-                    //Clients.Caller.redirectToView("/#/LobbyHost");
+                    Clients.Caller.redirectToView("/#/LobbyHost");
                 }
                 else
                 {
                     Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyGuest");
-                    //Clients.Caller.redirectToView("/#/LobbyGuest");
+                    Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
 
             }

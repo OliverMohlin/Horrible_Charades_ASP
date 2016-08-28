@@ -25,9 +25,10 @@
         hub.client.updateGameState = function (game, nextView) {
             console.log("Updating Gamestate");
             gameService.game = game;
-            //console.log(gameService.game);
+            console.log(gameService.game);
+            console.log("GamestateUpdated");
             //console.log("signalRService updategameState");
-            hub.client.redirectToView(nextView);
+            //hub.client.redirectToView(nextView);
         };
         
         hub.client.redirectToView = function (nextView) {

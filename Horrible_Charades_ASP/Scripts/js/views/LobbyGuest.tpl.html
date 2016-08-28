@@ -1,16 +1,15 @@
 ﻿<h1>Lobby for Guest</h1>
-<h3>Code to join: <strong>ABCDE</strong></h3>
+<h3>Code to join: <strong> {{vm.gameData.GameCode}} </strong></h3>
 <div id="teamList">
     <ul>
-        <li>Team 1</li>
-        <li>Team 2</li>
+        <li data-ng-repeat="team in vm.gameData.Teams">{{team.Name}}</li>
     </ul>
 </div>
 
 <div id="options">
     <h3>Options</h3>
 </div>
-<button>Start Game</button>
+<p>Waiting for Host...</p>
 <br />
 <br />
 

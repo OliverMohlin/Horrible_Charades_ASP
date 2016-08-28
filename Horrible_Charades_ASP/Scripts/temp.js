@@ -53,7 +53,7 @@
 
 
 
-    $.connection.hub.start().done(function () {                         //Opens connection to the Hub
-        hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
-    });
+    //$.connection.hub.start().done(function () {                         //Opens connection to the Hub
+    //    hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+    //});
 })();
