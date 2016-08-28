@@ -7,10 +7,7 @@
 
     function gameService() {
         var self = this;
-        self.game = {
-            team : "",
-            gameCode : ""
-        };
+        self.game = {};
         var gameStateClient;
         console.log(self.game);
 

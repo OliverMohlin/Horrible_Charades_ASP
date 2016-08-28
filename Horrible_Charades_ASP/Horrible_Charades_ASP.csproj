@@ -218,13 +218,14 @@
     <Content Include="Scripts\js\angular\mainContent.js" />
     <Content Include="Scripts\js\views\CharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\CreateTeamGuest.tpl.html" />
+    <Content Include="Scripts\js\views\LobbyGuest.tpl.html" />
     <Content Include="Scripts\js\views\WaitingRoom.tpl.html" />
     <Content Include="Scripts\js\views\PreCharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\TotalScore.tpl.html" />
     <Content Include="Scripts\js\views\Score.tpl.html" />
     <Content Include="Scripts\js\views\CharadeActor.tpl.html" />
     <Content Include="Scripts\js\views\PreCharadeActor.tpl.html" />
-    <Content Include="Scripts\js\views\Lobby.tpl.html" />
+    <Content Include="Scripts\js\views\LobbyHost.tpl.html" />
     <Content Include="Scripts\js\views\MainMenu.tpl.html" />
     <Content Include="Scripts\js\views\CreateTeamHost.tpl.html" />
     <Content Include="Scripts\libs\angular-mocks.js" />

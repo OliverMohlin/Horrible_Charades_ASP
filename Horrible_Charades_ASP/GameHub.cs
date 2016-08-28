@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Horrible_Charades_ASP.Database;
 using Horrible_Charades_ASP.Models;
+using System.Threading;
 
 namespace Horrible_Charades_ASP
 {
@@ -51,12 +52,21 @@ namespace Horrible_Charades_ASP
             {
                 //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
                 //Clients.All.teamsJoined(game);
-                Clients.Caller.displayMessage("There is alread a team in this game with that name");
+                Clients.Caller.displayMessage("There is already a team in this game with that name");
             }
             else
             {
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
-                Clients.Group(game.GameCode).UpdateGameState(game, "/#/Lobby");
+                if (game.Teams.Count == 1)
+                {
+                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyHost");
+                    //Clients.Caller.redirectToView("/#/LobbyHost");
+                }
+                else
+                {
+                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyGuest");
+                    //Clients.Caller.redirectToView("/#/LobbyGuest");
+                }
 
             }
         }

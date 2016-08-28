@@ -1,0 +1,18 @@
+﻿<h1>Lobby for Host</h1>
+<h3>Code to join: <strong>ABCDE {{vm.gameData.GameCode}}</strong></h3>
+<div id="teamList">
+    <ul >
+        <li data-ng-repeat="team in vm.gameData.Teams">{{team.Name}}</li>
+    </ul>
+</div>
+
+<div id="options">
+    <h3>Options</h3>
+</div>
+<button>Start Game</button>
+<br />
+<br />
+
+
+<a href="#WaitingRoom">Next Phase</a>
+<!--<a href="#PreCharadeParticipant">Next Phase (Participant)</a>-->

@@ -9,7 +9,11 @@
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
         console.log(gameService);
-        vm.Team = {};
+        console.log("gameservice");
+        
+        vm.gameData = gameService.game;
+        console.log(vm.gameData);
+        console.log("gameData");
 
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
@@ -19,19 +23,17 @@
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
             //gameService.gameCode = $("#GameCode").val();
-            console.log(gameService);
             hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
-            gameService.game.gameCode = $("#GameCode").text();
-            hub.server.createTeam(gameService.game.gameCode, ($("#TeamName").val()));
+            gameService.game.GameCode = $("#GameCode").text();
+            hub.server.createTeam(gameService.game.GameCode, ($("#TeamName").val()));
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getCharade = function () {
-            console.log(vm.Team);
             hub.server.getCharade(gameService.gameCode);
         };
 
@@ -44,20 +46,6 @@
         vm.getVerb = function () {
             hub.server.updateCharade("verb", gameService.gameCode);
         };
-
-        hub.client.teamsJoined = function (game) {
-
-            gameService.game = game;
-            signalRService.game = game;
-            $("#teams").append("TeamName: " + gameService.game.Teams[0].Name + "<br /> ConnectionId: " + gameService.game.Teams[0].ConnectionID + "<br /> ConnectedClients: ");
-            console.log(gameService);
-            console.log(signalRService);
-        };
-
-        //function writeInConsole() {
-        //    $("#initiate");
-        //    console.log(game)
-        //}
 
     }
 })();

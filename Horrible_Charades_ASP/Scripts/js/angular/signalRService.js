@@ -15,18 +15,22 @@
 
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
-            console.log(game);
             $("#GameCode").append(game.GameCode);
         };
 
         hub.client.displayMessage = function (message) {
-            alert(message)
+            alert(message);
         };
 
-        hub.client.UpdateGameState = function (game, nextView) {
+        hub.client.updateGameState = function (game, nextView) {
             console.log("Updating Gamestate");
             gameService.game = game;
-            console.log(gameService.game);
+            //console.log(gameService.game);
+            //console.log("signalRService updategameState");
+            hub.client.redirectToView(nextView);
+        };
+        
+        hub.client.redirectToView = function (nextView) {
             window.location.href = nextView;
         };
 

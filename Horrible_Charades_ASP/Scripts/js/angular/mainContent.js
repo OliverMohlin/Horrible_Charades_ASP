@@ -22,10 +22,16 @@
             templateUrl: "Scripts/js/views/CreateTeamGuest.tpl.html"
         })
 
-        .when("/Lobby", {
+        .when("/LobbyHost", {
             controller: "contentController",
             controllerAs: "vm",
-            templateUrl: "Scripts/js/views/Lobby.tpl.html"
+            templateUrl: "Scripts/js/views/LobbyHost.tpl.html"
+        })
+
+        .when("/LobbyGuest", {
+            controller: "contentController",
+            controllerAs: "vm",
+            templateUrl: "Scripts/js/views/LobbyGuest.tpl.html"
         })
 
         .when("/WaitingRoom", {
