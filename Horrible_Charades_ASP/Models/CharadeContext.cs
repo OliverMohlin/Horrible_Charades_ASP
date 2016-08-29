@@ -24,7 +24,8 @@ namespace Horrible_Charades_ASP.Models
         public DbSet<Adjective> Adjectives { get; set; }
         public DbSet<Verb> Verbs { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Game> Games { get; set; }
+       // public DbSet<Game> Games { get; set; }
+        public DbSet<RuleChanger> RuleChangers { get; set; }
 
 
     }

@@ -1,5 +1,5 @@
 ﻿
-//Creating the module
+//Creates the module
 (function () {
     angular.module("mainContent", ["ngRoute"])
     .config(function ($routeProvider) {
@@ -34,11 +34,18 @@
             templateUrl: "Scripts/js/views/LobbyGuest.tpl.html"
         })
 
-        .when("/WaitingRoom", {
+        .when("/WaitingRoomActor", {
             controller: "contentController",
             controllerAs: "vm",
-            templateUrl: "Scripts/js/views/WaitingRoom.tpl.html"
+            templateUrl: "Scripts/js/views/WaitingRoomActor.tpl.html"
         })
+
+         .when("/WaitingRoomOpponent", {
+             controller: "contentController",
+             controllerAs: "vm",
+             templateUrl: "Scripts/js/views/WaitingRoomOpponent.tpl.html"
+         })
+
 
         .when("/PreCharadeActor", {
             controller: "contentController",

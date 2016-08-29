@@ -1,9 +1,9 @@
 ﻿namespace Horrible_Charades_ASP.Models
 {
-    public class Category
+    public class RuleChanger
     {
         public int ID { get; set; }
         public string Description { get; set; }
-        public string BelongsTo { get; set; }
+        public int Foo { get; set; }
     }
 }
