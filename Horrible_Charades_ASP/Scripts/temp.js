@@ -1,19 +1,14 @@
-﻿$(function () {
-    //Saves connection in "hub"-variable
-    var hub = $.connection.gameHub;
+﻿
+(function (gameService) {
 
-    //Assigns hello() to client
-    hub.client.hello = function (textToWrite) {
+    var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
+    hub.client.hello = function (textToWrite) {     //Assigns hello() to client
         $("#result").append("<li>" + textToWrite + "</li>");
     };
 
-    //Print TeamName, ConnectionId and connected users in CreateTeamHost
-    hub.client.teamsJoined = function (game) {
-        console.log(game);
-        $("#teams").append("TeamName: " + game.Teams[0].Name + "<br /> ConnectionId: " + game.Teams[0].ConnectionID + "<br /> ConnectedClients: " + game.Teams.length + "<br /> <br />");
-    };
 
-    //Print and append new words to a charade in Pre-Charade(?)
+
+    //Write out and append new words to a charade in Pre-Charade(?)
     hub.client.InsertCharadeHTML = function (charadeWord, typeOfWord) {
         if (typeOfWord === "noun") {
             console.log("printing noun");
@@ -36,29 +31,29 @@
 
     };
 
-    //Print the GameCode in CreateTeamHost
-    hub.client.printGameCode = function (game) {
-        console.log(game);
-        $("#GameCode").append(game.GameCode);
-    };
+    //Write out the GameCode in CreateTeamHost
+    //hub.client.printGameCode = function (game) {
+    //    console.log(game);
+    //    $("#GameCode").append(game.GameCode);
+    //};
 
-    //Displays a noun in a charade
+    //Adds a Noun to a charade(?)
     $("#getNounButton").click(function () {
         hub.server.getNoun();
     });
 
-    //Displays an adjective in a charade
+    //Adds an adjective to a charade
     $("#getAdjectiveButton").click(function () {
         hub.server.getAdjective();
     });
-
-    //Displays a verb in a charade
+    //Adds a verb to a charade
     $("#getVerbButton").click(function () {
         hub.server.getVerb();
     });
 
-    //Opens connection to the Hub and calls hello()
-    $.connection.hub.start().done(function () {
-        hub.server.hello("Welcome to Horrible Charades");
-    });
-});
+
+
+    //$.connection.hub.start().done(function () {                         //Opens connection to the Hub
+    //    hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+    //});
+})();

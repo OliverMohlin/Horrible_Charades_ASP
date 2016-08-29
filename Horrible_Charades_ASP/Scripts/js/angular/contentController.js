@@ -5,11 +5,15 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(gameService) {
+    function contentController(gameService, signalRService) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
         console.log(gameService);
-        vm.Team = {};
+        console.log("gameservice");
+        
+        vm.gameData = gameService.game;
+        console.log(vm.gameData);
+        console.log("gameData");
 
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
@@ -18,22 +22,19 @@
 
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
-            gameService.gameCode = $("#GameCode").val();
-            alert("Join Game in contentCtrl");
-            console.log(gameService);
-            hub.server.joinGame(vm.Team.Name, gameService.gameCode);
+            //gameService.gameCode = $("#GameCode").val();
+            hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
-            gameService.gameCode = $("#GameCode").text();
-            console.log(gameService.gameCode);
-            hub.server.createTeam(vm.Team.Name, gameService.gameCode);
+            gameService.game.GameCode = $("#GameCode").text();
+            console.log("requesting to create team")
+            hub.server.createTeam(gameService.game.GameCode, ($("#TeamName").val()));
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getCharade = function () {
-            console.log(vm.Team);
             hub.server.getCharade(gameService.gameCode);
         };
 
@@ -46,11 +47,6 @@
         vm.getVerb = function () {
             hub.server.updateCharade("verb", gameService.gameCode);
         };
-
-        function writeInConsole() {
-            $("#initiate");
-            console.log(vm.Team)
-        }
 
     }
 })();
