@@ -122,7 +122,11 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
 
         public List<RuleChanger> GetAllModifiers(int categoryID)
         {
-            return _charadeContext.RuleChangers.Where(n => n.CategoryID == categoryID).ToList();
+            GetAdjective();
+
+
+            var o = _charadeContext.RuleChangers.ToArray();
+            return null;
             //var tmpList = new List<RuleChanger>();
             //tmpList.AddRange(_charadeContext.Modifiers.Where(n => n.CategoryID == categoryID));
 

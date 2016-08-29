@@ -117,16 +117,17 @@ namespace Horrible_Charades_ASP
             if (categoryID == 1)
             {
                 List<RuleChanger> modifier = _dbUtils.GetAllModifiers(1);
-               
-                game.FunkUps.Add(modifier[0]);
+
+                //game.FunkUps.Add(modifier[0]);
                 return game;
             }
             else
             {
                 List<RuleChanger> modifier = _dbUtils.GetAllModifiers(2);
-                game.PowerUps.Add(modifier[0]);
+                //game.PowerUps.Add(modifier[0]);
                 return game;
             }
+
 
         }
         internal Game GetAdjective(string gameCode)
