@@ -36,21 +36,25 @@
 
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
+            console.log("preparing to Print new Word");
             if (typeOfWord === "noun") {
-                console.log("printing noun");
                 $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun + "</div>");
+                hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
-                $("#noun").prepend("<div class='adjective' style='display:inline'>" + charadeWord + " " + "</div>");
                 console.log("printing adjective");
+                $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[0] + " " + "</div>");
+                console.log("adjective printed");
+                hub.client.updateGameState(game);
             }
-
             if (typeOfWord === "verb") {
                 if ($('.verb').length) {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + " while " + charadeWord + "</div>");
+                    $("#noun").append("<div class='verb' style='display:inline'>" + " while " + game.CurrentCharade.Verb[1] + "</div>");
+                    hub.client.updateGameState(game);
                 }
                 else {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + "  " + charadeWord + "</div>");
+                    $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[0] + "</div>");
+                    hub.client.updateGameState(game);
                 }
             }
         };

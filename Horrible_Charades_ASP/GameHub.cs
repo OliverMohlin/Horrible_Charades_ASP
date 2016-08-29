@@ -98,62 +98,25 @@ namespace Horrible_Charades_ASP
         {
             Clients.Caller.foo("initiating getNoun on serverside");
             Game game = GameState.Instance.GetNoun(gameCode);
-            Clients.Caller.foo($"Have found a noun: {game.CurrentCharade.Noun}");
-            //Game game = GameState.Instance.GetGame(gameCode);
-            //Clients.Caller.foo($"Have found a game: {game} - ready to update gam");
-            //game.CurrentCharade.Noun = noun;
-            Clients.Caller.foo("Game updated on serverside");
-            // Ska inte skickas till All - enbart Aktören för charaden.
-            Clients.All.InsertCharadeHTML(game, "noun");
+            Clients.Caller.foo($"Have found a noun: {game.CurrentCharade.Noun} and updated serverside Game");
+            Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
         }
 
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-
+            Clients.Caller.foo("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                string adjective = GameState.Instance.GetAdjective(gameCode);
-                Clients.All.InsertCharadeHTML(adjective, "adjective");
+                Clients.Caller.foo("starting to find adjective");
+                Game game = GameState.Instance.GetAdjective(gameCode);
+                Clients.Caller.foo($"Have found an adjective: {game.CurrentCharade.Adjective[0]} and updated serverside Game");
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
             }
             if (typeOfWord == "verb")
             {
-                string verb = GameState.Instance.GetVerb(gameCode);
-                Clients.All.InsertCharadeHTML(verb, "verb");
+                Game game = GameState.Instance.GetVerb(gameCode);
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
             }
         }
-        #region gamla ordhämtningar
-        /// <summary>
-        /// Hämtar ett slumpat Substantiv från Databasen
-        /// Hämtar även 3 felaktiga alternativ för gissande
-        /// </summary>
-        //public void GetNoun(string gameCode)
-        //{
-        //    string noun = GameState.Instance.GetNoun(gameCode);
-
-        //    //Clients.All.incorrectGuesses(tmpList);
-        //    Clients.All.InsertCharadeHTML(noun, "noun");
-        //}
-        /// <summary>
-        /// Hämtar slumpat Adjective från databasen
-        ///  + 3 felaktiga alternativ för gissande
-        /// </summary>
-        //public void GetAdjective()
-        //{
-        //    //string adjective = GameState.Instance.GetAdjective();
-        //    ////Clients.All.incorrectGuesses(tmpList);
-        //    //Clients.All.InsertCharadeHTML(adjective, "adjective");
-        //}
-        ///// <summary>
-        ///// Hämtar slumpat verb från databasen
-        /////  + 3 felaktiga alternativ för gissande
-        ///// </summary>
-        //public void GetVerb()
-        //{
-        //    string verb = GameState.Instance.GetVerb();
-        //    //Clients.All.incorrectGuesses(tmpList);
-        //    Clients.All.InsertCharadeHTML(verb, "verb");
-        //}
-        #endregion
-
     }
 }

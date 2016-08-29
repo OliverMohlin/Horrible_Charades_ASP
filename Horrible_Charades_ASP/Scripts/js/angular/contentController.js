@@ -35,13 +35,13 @@
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
             console.log("initiating getAdjective");
-            hub.server.updateCharade("adjective", gameService.gameCode);
+            hub.server.updateCharade("adjective", gameService.game.GameCode);
         };
 
         //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
         vm.getVerb = function () {
             console.log("initiating getVerb");
-            hub.server.updateCharade("verb", gameService.gameCode);
+            hub.server.updateCharade("verb", gameService.game.GameCode);
         };
 
     }

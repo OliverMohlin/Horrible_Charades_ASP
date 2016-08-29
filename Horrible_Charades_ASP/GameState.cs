@@ -94,23 +94,23 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal string GetAdjective(string gameCode)
+        internal Game GetAdjective(string gameCode)
         {
             var adjective = _dbUtils.GetAdjective();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Game game = GetGame(gameCode);
             game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective().Description);
-            return adjective.Description;
+            return game;
         }
 
-        internal string GetVerb(string gameCode)
+        internal Game GetVerb(string gameCode)
         {
-            var verb = _dbUtils.GetVerb();
+            //var verb = _dbUtils.GetVerb();
             Game game = GetGame(gameCode);
             game.CurrentCharade.Verb.Add(_dbUtils.GetVerb().Description);
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
 
-            return verb.Description;
+            return game;
         }
     }
 }
