@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Horrible_Charades_ASP
@@ -23,7 +24,6 @@ namespace Horrible_Charades_ASP
 
         public IHubConnectionContext<dynamic> Clients { get; set; }         //Todo: Funkar detta?
         public IGroupManager Groups { get; set; }                           //Används för att hålla koll på SignalR grupper
-
 
         DatabaseUtils _dbUtils = new DatabaseUtils(new CharadeContext());
 
@@ -61,7 +61,9 @@ namespace Horrible_Charades_ASP
             _teams[team.Name] = team;//Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             game.Teams.Add(team);
             _games[game.GameCode] = game;
-            Groups.Add(team.ConnectionID, team.GameCode);
+
+            Task add = Groups.Add(team.ConnectionID, team.GameCode);
+            add.Wait();
             return game; //Todo: Ta in gameCode. Lägga till laget i game och i en grupp
         }
         internal Game GetGame(string gameCode)
@@ -80,7 +82,6 @@ namespace Horrible_Charades_ASP
             _games[game.GameCode] = game; //Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             return game;
         }
-
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
         internal Game GetNoun(string gameCode)
