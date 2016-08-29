@@ -21,22 +21,16 @@
         hub.client.displayMessage = function (message) {
             alert(message);
         };
-
-        hub.client.updateGameState = function (game, nextView) {
-            console.log("Updating Gamestate");
+    
+        hub.client.updateGameState = function (game) {
             gameService.game = game;
-            console.log(gameService.game);
-            //console.log("GamestateUpdated");
-            //console.log("signalRService updategameState");
-            hub.client.redirectToView(nextView);
         };
-        
+
         hub.client.redirectToView = function (nextView) {
-            console.log("redirecting to view")
             window.location.href = nextView;
         };
 
-        hub.client.foo = function (message) {
+        hub.client.debugMessage = function (message) {
             console.log(message);
         };
 
