@@ -17,23 +17,23 @@
         hub.client.printGameCode = function (game) {
             $("#GameCode").append(game.GameCode);
         };
-
+        //Write out a message
         hub.client.displayMessage = function (message) {
             alert(message);
         };
-
+        //Updates game on clientSide
         hub.client.updateGameState = function (game) {
             gameService.game = game;
         };
-
+        //Redirects to next view
         hub.client.redirectToView = function (nextView) {
             window.location.href = nextView;
         };
-
+        //Use this to print out a message to console.log
         hub.client.debugMessage = function (message) {
             console.log(message);
         };
-
+        //Show join game for everbody in the game
         hub.client.pushToTeamList = function (teamName) {
             $("#teamList").append("<li>" + teamName + "</li>");
         };

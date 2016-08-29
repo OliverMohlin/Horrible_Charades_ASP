@@ -20,6 +20,7 @@
             hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
+        //Calls StartCharade on Server-Side when a the host presses start
         vm.startCharade = function () {
             hub.server.startCharade(vm.gameData.GameCode);
         };
@@ -29,6 +30,7 @@
             hub.server.createTeam(gameService.game.GameCode, $("#TeamName").val());
         };
 
+        //Redirects to nextView
         vm.redirectToView = function () {
             hub.server.redirectFromWaitingRoom(gameService.game.GameCode);
         }

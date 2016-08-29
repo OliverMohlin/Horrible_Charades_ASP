@@ -11,7 +11,6 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-        Charade _charade = new Charade();
 
         /// <summary>
         /// This function calls the method Hello on Client-Side, with something to write out
@@ -67,7 +66,10 @@ namespace Horrible_Charades_ASP
     
             }
         }
-
+        /// <summary>
+        /// Shuffles and assigns which Team is going to do the charade and redirects the client
+        /// </summary>
+        /// <param name="gameCode"></param>
         public void startCharade(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
@@ -98,7 +100,10 @@ namespace Horrible_Charades_ASP
             }
 
         }
-
+        /// <summary>
+        /// Redirects the client to PreCharadeActor and PreCharadeParticipant
+        /// </summary>
+        /// <param name="gameCode"></param>
         public void RedirectFromWaitingRoom(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
