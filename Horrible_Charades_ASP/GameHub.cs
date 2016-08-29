@@ -103,10 +103,17 @@ namespace Horrible_Charades_ASP
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side
         /// </summary>
-        public void GetCharade(string gameCode)
+        public void GetNoun(string gameCode)
         {
-            string noun = GameState.Instance.GetNoun(gameCode);
-            Clients.All.InsertCharadeHTML(noun, "noun");
+            Clients.Caller.foo("initiating getNoun on serverside");
+            Game game = GameState.Instance.GetNoun(gameCode);
+            Clients.Caller.foo($"Have found a noun: {game.CurrentCharade.Noun}");
+            //Game game = GameState.Instance.GetGame(gameCode);
+            //Clients.Caller.foo($"Have found a game: {game} - ready to update gam");
+            //game.CurrentCharade.Noun = noun;
+            Clients.Caller.foo("Game updated on serverside");
+            // Ska inte skickas till All - enbart Aktören för charaden.
+            Clients.All.InsertCharadeHTML(game, "noun");
         }
 
         public void UpdateCharade(string typeOfWord, string gameCode)

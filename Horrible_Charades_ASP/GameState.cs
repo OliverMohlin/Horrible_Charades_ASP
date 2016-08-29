@@ -83,14 +83,14 @@ namespace Horrible_Charades_ASP
 
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
-        internal string GetNoun(string gameCode)
+        internal Game GetNoun(string gameCode)
         {
             Word noun = _dbUtils.GetNoun();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
             Game game = GetGame(gameCode);
             game.CurrentCharade.Noun = noun.Description;
 
-            return noun.Description;
+            return game;
         }
 
         internal string GetAdjective(string gameCode)

@@ -29,22 +29,37 @@
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             gameService.game.GameCode = $("#GameCode").text();
-            console.log("requesting to create team")
-            hub.server.createTeam(gameService.game.GameCode, ($("#TeamName").val()));
+            console.log("requesting to create team");
+            hub.server.createTeam(gameService.game.GameCode, $("#TeamName").val());
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
-        vm.getCharade = function () {
-            hub.server.getCharade(gameService.gameCode);
+        vm.getNoun = function () {
+            console.log("initiating getNoun");
+            hub.server.getNoun(gameService.game.GameCode);
         };
+
+        //// Bara javascript variant
+        //$("#charade").load = function () {
+        //    console.log("initiating getNoun");
+        //    hub.server.getNoun(gameService.gameCode);
+        //};
+
+        ////jQuery variant
+        //$("#charade").load(function () {
+        //    console.log("initiating getNoun");
+        //    hub.server.getNoun(gameService.gameCode);
+        //});
 
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
+            console.log("initiating getAdjective");
             hub.server.updateCharade("adjective", gameService.gameCode);
         };
 
         //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
         vm.getVerb = function () {
+            console.log("initiating getVerb");
             hub.server.updateCharade("verb", gameService.gameCode);
         };
 
