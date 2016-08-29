@@ -51,8 +51,6 @@ namespace Horrible_Charades_ASP
 
             if (team != null)
             {
-                //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
-                //Clients.All.teamsJoined(game);
                 Clients.Caller.displayMessage("There is already a team in this game with that name");
             }
             else
@@ -65,10 +63,16 @@ namespace Horrible_Charades_ASP
                 }
                 else {
                     Clients.Group(game.GameCode).updateGameState(game);
+                    Clients.Group(game.GameCode).pushToTeamList(teamName);
                     Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
     
             }
+        }
+
+        public void redirectToView(string gameCode, string nextView)
+        {
+            Clients.Group(gameCode).redirectToView(nextView);
         }
         /// <summary>
         /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.

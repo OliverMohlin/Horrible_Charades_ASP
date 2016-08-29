@@ -219,7 +219,8 @@
     <Content Include="Scripts\js\views\CharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\CreateTeamGuest.tpl.html" />
     <Content Include="Scripts\js\views\LobbyGuest.tpl.html" />
-    <Content Include="Scripts\js\views\WaitingRoom.tpl.html" />
+    <Content Include="Scripts\js\views\WaitingRoomActor.tpl.html" />
+    <Content Include="Scripts\js\views\WaitingRoomOpponent.tpl.html" />
     <Content Include="Scripts\js\views\PreCharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\TotalScore.tpl.html" />
     <Content Include="Scripts\js\views\Score.tpl.html" />
