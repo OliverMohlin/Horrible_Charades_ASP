@@ -34,6 +34,10 @@
             console.log(message);
         };
 
+        hub.client.pushToTeamList = function (teamName) {
+            $("#teamList").append("<li>" + teamName + "</li>");
+        }
+
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
             if (typeOfWord === "noun") {

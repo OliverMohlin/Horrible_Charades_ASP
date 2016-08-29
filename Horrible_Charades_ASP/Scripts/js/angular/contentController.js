@@ -20,6 +20,9 @@
             hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
+        vm.startGame = function () {
+            hub.server.redirectToView(vm.gameData.GameCode, "/#/WaitingRoom");
+        }
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             gameService.game.GameCode = $("#GameCode").text();
