@@ -22,11 +22,11 @@
 
         vm.startGame = function () {
             hub.server.redirectToView(vm.gameData.GameCode, "/#/WaitingRoomActor");
-        }
+        };
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             gameService.game.GameCode = $("#GameCode").text();
-            hub.server.createTeam(gameService.game.GameCode, ($("#TeamName").val()));
+            hub.server.createTeam(gameService.game.GameCode, $("#TeamName").val());
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
