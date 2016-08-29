@@ -100,6 +100,15 @@ namespace Horrible_Charades_ASP
             }
 
         }
+
+        public void RedirectFromWaitingRoom(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+        }
+
         /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side

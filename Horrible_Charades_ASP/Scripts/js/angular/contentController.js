@@ -29,6 +29,10 @@
             hub.server.createTeam(gameService.game.GameCode, $("#TeamName").val());
         };
 
+        vm.redirectToView = function () {
+            hub.server.redirectFromWaitingRoom(gameService.game.GameCode);
+        }
+
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
             console.log("initiating getNoun");
