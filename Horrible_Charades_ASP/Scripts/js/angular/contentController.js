@@ -33,7 +33,7 @@
         //Redirects to nextView
         vm.redirectToView = function () {
             hub.server.redirectFromWaitingRoom(gameService.game.GameCode);
-        }
+        };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
@@ -53,10 +53,9 @@
             hub.server.updateCharade("verb", gameService.game.GameCode);
         };
 
-        vm.getModifier = function () {
-            console.log("initiating getModifier");
-            hub.server.getModifier(gameService.game.GameCode, 1);
+        vm.getRuleChanger = function (type) {
+            console.log("initiating getRuleChanger");
+            hub.server.getRuleChanger(gameService.game.GameCode, type);
         };
-
     }
 })();

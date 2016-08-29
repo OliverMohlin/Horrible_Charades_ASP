@@ -13,6 +13,8 @@ namespace Horrible_Charades_ASP.Models
             GameCode = GenerateCode();
             Teams = new List<Team>();
             CurrentCharade = new Charade();
+            PowerUps = new List<RuleChanger>();
+            FunkUps = new List<RuleChanger>();
         }
 
         public List<Team> Teams { get; set; }
@@ -23,8 +25,8 @@ namespace Horrible_Charades_ASP.Models
         public string GameCode { get; set; }
         public string GameState { get; set; }
         public int ID { get; set; }
-        //public List<RuleChanger> PowerUps { get; set; }
-        //public List<RuleChanger> FunkUps { get; set; }
+        public List<RuleChanger> PowerUps { get; set; }
+        public List<RuleChanger> FunkUps { get; set; }
 
 
         //Genererar en kod som användare skriver in för att komma in på samma spel
