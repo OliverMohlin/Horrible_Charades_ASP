@@ -185,6 +185,7 @@
     <Compile Include="Models\Adjective.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Charade.cs" />
+    <Compile Include="Models\RuleChanger.cs" />
     <Compile Include="Models\Noun.cs" />
     <Compile Include="Models\CharadeContext.cs" />
     <Compile Include="Models\Game.cs" />

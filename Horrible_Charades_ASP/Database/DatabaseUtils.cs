@@ -13,6 +13,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         public DatabaseUtils(CharadeContext context)
         {
             _charadeContext = context;
+            _charadeContext.Database.Initialize(false);
         }
         /// <summary>
         /// Hämtar ett Noun baserat på framslumpat ID.
@@ -20,7 +21,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Word GetNoun()
         {
-            var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() + 1);
+            var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
             var qResult = _charadeContext.Nouns
                 .SingleOrDefault(n => n.ID == nounID);
 
@@ -34,7 +35,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Word GetAdjective()
         {
-            var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() + 1);
+            var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
             var qResult = _charadeContext.Adjectives
             .SingleOrDefault(n => n.ID == adjectiveID);
 
@@ -47,7 +48,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Word GetVerb()
         {
-            var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() + 1);
+            var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
             var qResult = _charadeContext.Verbs
             .SingleOrDefault(n => n.ID == verbID);
 
@@ -117,6 +118,18 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         private List<Word> GetAllVerbWords(int categoryID)
         {
             return _charadeContext.Verbs.Where(n => n.CategoryID == categoryID).ToList<Word>();
+        }
+
+        public List<RuleChanger> GetAllModifiers(int categoryID)
+        {
+            return _charadeContext.RuleChangers.Where(n => n.CategoryID == categoryID).ToList();
+            //var tmpList = new List<RuleChanger>();
+            //tmpList.AddRange(_charadeContext.Modifiers.Where(n => n.CategoryID == categoryID));
+
+            //int modifierID = RandomUtils.ReturnValue(tmpList.Count() - 1);
+            //var qResult = tmpList[modifierID];
+
+            //return qResult;
         }
     }
 }

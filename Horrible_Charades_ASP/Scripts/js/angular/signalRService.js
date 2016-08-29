@@ -21,7 +21,7 @@
         hub.client.displayMessage = function (message) {
             alert(message);
         };
-    
+
         hub.client.updateGameState = function (game) {
             gameService.game = game;
         };
@@ -62,9 +62,25 @@
                 }
             }
         };
-            $("#charade").onload = function () {
+        $("#charade").onload = function () {
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
+        };
+
+        hub.client.InsertModifierHTML = function (game, categoryID) {
+            console.log("preparing to show Modifier");
+            if (categoryID === 1) {
+                console.log("printing funkUp");
+                $("#funkUpContainer").append("<div id='funkUp' style='display:inline''>" + game.FunkUps[0] + "</div>");
+                console.log("FunkUp printed");
+                hub.client.updateGameState(game);
+            }
+            if (categoryID === 2) {
+                console.log("printing PowerUp");
+                $("#powerUpContainer").prepend("<div class='powerUp' style='display:inline'>" + game.PowerUps[0] + " " + "</div>");
+                console.log("PowerUp printed");
+                hub.client.updateGameState(game);
+            }
         };
 
         //Adds an adjective to a charade

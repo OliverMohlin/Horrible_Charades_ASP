@@ -47,5 +47,10 @@
             hub.server.updateCharade("verb", gameService.game.GameCode);
         };
 
+        vm.getModifier = function () {
+            console.log("initiating getModifier");
+            hub.server.getModifier(gameService.game.GameCode, 1);
+        };
+
     }
 })();

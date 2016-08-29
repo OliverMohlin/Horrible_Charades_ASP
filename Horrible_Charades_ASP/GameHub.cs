@@ -11,8 +11,6 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-        DatabaseUtils _dbUtils = new DatabaseUtils(
-            new Models.CharadeContext());
         Charade _charade = new Charade();
 
         /// <summary>
@@ -100,20 +98,20 @@ namespace Horrible_Charades_ASP
         /// </summary>
         public void GetNoun(string gameCode)
         {
-            Clients.Caller.foo("initiating getNoun on serverside");
+            Clients.Caller.debugMessage("initiating getNoun on serverside");
             Game game = GameState.Instance.GetNoun(gameCode);
-            Clients.Caller.foo($"Have found a noun: {game.CurrentCharade.Noun} and updated serverside Game");
+            Clients.Caller.debugMessage($"Have found a noun: {game.CurrentCharade.Noun} and updated serverside Game");
             Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
         }
 
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-            Clients.Caller.foo("initiating UpdateCharade on serverside");
+            Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                Clients.Caller.foo("starting to find adjective");
+                Clients.Caller.debugMessage("starting to find adjective");
                 Game game = GameState.Instance.GetAdjective(gameCode);
-                Clients.Caller.foo($"Have found an adjective: {game.CurrentCharade.Adjective[0]} and updated serverside Game");
+                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0]} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
             }
             if (typeOfWord == "verb")
@@ -121,6 +119,14 @@ namespace Horrible_Charades_ASP
                 Game game = GameState.Instance.GetVerb(gameCode);
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
             }
+        }
+
+        public void GetModifier(string gameCode, int categoryID)
+        {
+            Clients.Caller.debugMessage("initiating getModifier on serverside");
+            Game game = GameState.Instance.GetModifier(gameCode, categoryID);
+            Clients.Caller.debugMessage($"Found a Modifier in category: {categoryID} and updated serverside Game");
+            Clients.Group(game.GameCode).InsertModifierHTML(game, categoryID);
         }
     }
 }
