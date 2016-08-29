@@ -1,9 +1,8 @@
-﻿<h1>Lobby</h1>
-<h3>Code to join: <strong>ABCDE</strong></h3>
+﻿<h1>Lobby for Host</h1>
+<h3>Code to join: <strong>{{vm.gameData.GameCode}}</strong></h3>
 <div id="teamList">
-    <ul>
-        <li>Team 1</li>
-        <li>Team 2</li>
+    <ul >
+        <li data-ng-repeat="team in vm.gameData.Teams">{{team.Name}}</li>
     </ul>
 </div>
 

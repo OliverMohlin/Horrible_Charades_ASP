@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Horrible_Charades_ASP.Database;
 using Horrible_Charades_ASP.Models;
+using System.Threading;
 
 namespace Horrible_Charades_ASP
 {
@@ -23,12 +24,14 @@ namespace Horrible_Charades_ASP
             Clients.All.hello(textToWrite);
         }
 
-        public void CreateGame() // När man trycker på New game ska man komma hit
+        /// <summary>
+        /// This function is called when a user clicks "New Game"
+        /// </summary>
+        public void CreateGame()
         {
             Game game = GameState.Instance.CreateGame();
             Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
         }
-        
         /// <summary>
         /// This function calls the method InsertCharadeHTML on Client-Side, which inserts provided string in a <div>-tag
         /// </summary>
@@ -42,26 +45,60 @@ namespace Horrible_Charades_ASP
         /// Creates a new team if the device don't have a team. 
         /// </summary>
         /// <param name="teamName"></param>
-        public void CreateTeam(string teamName, string gameCode) //To-do: validera team-name
+        public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
-            var team = GameState.Instance.GetTeam(teamName);
+            Clients.Caller.foo($"code:{gameCode} tam:{teamName}" );
+            Team team = GameState.Instance.GetTeam(teamName, gameCode);
+            Clients.Caller.foo($"Possible team retrieved from DB");
+
             if (team != null)
             {
-                Clients.All.teamsJoined(team.Name, team.ConnectionID);
+                //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
+                //Clients.All.teamsJoined(game);
+                Clients.Caller.displayMessage("There is already a team in this game with that name");
             }
             else
             {
+                Clients.Caller.foo($"creating team");
+
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
-                Clients.All.teamsJoined(game);
+                Clients.Caller.foo($"team created");
+
+                if (game.Teams.Count == 1)
+                {
+                    Clients.Caller.foo($"first team in game");
+                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyHost");
+                    //Clients.Caller.redirectToView("/#/LobbyHost");
+                }
+                else
+                {
+                    Clients.Caller.foo($"already 1 team in game");
+                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyGuest");
+                    //Clients.Caller.redirectToView("/#/LobbyGuest");
+                }
 
             }
         }
-
-        public void JoinGame(string teamName, string gameCode)
+        /// <summary>
+        /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
+        /// </summary>
+        /// <param name="gameCode"></param>
+        /// <param name="teamName"></param>
+        public void JoinGame(string gameCode, string teamName)
         {
+            Game game = GameState.Instance.GetGame(gameCode);
+            if (game == null)
+            {
+                //Clients.Caller.NoGameExist(false);
+                Clients.Caller.DisplayMessage("No such game exist. Revise your GameCode");
+            }
+            else
+            {
+                CreateTeam(gameCode, teamName);
+                //Clients.Caller.NoGameExist(true);
+            }
 
         }
-        
         /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side
@@ -86,7 +123,6 @@ namespace Horrible_Charades_ASP
                 Clients.All.InsertCharadeHTML(verb, "verb");
             }
         }
-        
         #region gamla ordhämtningar
         /// <summary>
         /// Hämtar ett slumpat Substantiv från Databasen
