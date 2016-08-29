@@ -21,7 +21,7 @@
         };
 
         vm.startGame = function () {
-            hub.server.redirectToView(vm.gameData.GameCode, "/#/WaitingRoom");
+            hub.server.redirectToView(vm.gameData.GameCode, "/#/WaitingRoomActor");
         }
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
