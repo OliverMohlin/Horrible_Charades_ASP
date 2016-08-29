@@ -47,7 +47,10 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
+            Clients.Caller.foo($"code:{gameCode} tam:{teamName}" );
             Team team = GameState.Instance.GetTeam(teamName, gameCode);
+            Clients.Caller.foo($"Possible team retrieved from DB");
+
             if (team != null)
             {
                 //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
@@ -56,16 +59,22 @@ namespace Horrible_Charades_ASP
             }
             else
             {
+                Clients.Caller.foo($"creating team");
+
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
+                Clients.Caller.foo($"team created");
+
                 if (game.Teams.Count == 1)
                 {
+                    Clients.Caller.foo($"first team in game");
                     Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyHost");
-                    Clients.Caller.redirectToView("/#/LobbyHost");
+                    //Clients.Caller.redirectToView("/#/LobbyHost");
                 }
                 else
                 {
+                    Clients.Caller.foo($"already 1 team in game");
                     Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyGuest");
-                    Clients.Caller.redirectToView("/#/LobbyGuest");
+                    //Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
 
             }

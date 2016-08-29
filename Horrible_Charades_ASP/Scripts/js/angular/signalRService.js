@@ -26,13 +26,18 @@
             console.log("Updating Gamestate");
             gameService.game = game;
             console.log(gameService.game);
-            console.log("GamestateUpdated");
+            //console.log("GamestateUpdated");
             //console.log("signalRService updategameState");
-            //hub.client.redirectToView(nextView);
+            hub.client.redirectToView(nextView);
         };
         
         hub.client.redirectToView = function (nextView) {
+            console.log("redirecting to view")
             window.location.href = nextView;
+        };
+
+        hub.client.foo = function (message) {
+            console.log(message);
         };
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub

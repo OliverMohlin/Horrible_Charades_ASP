@@ -29,6 +29,7 @@
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             gameService.game.GameCode = $("#GameCode").text();
+            console.log("requesting to create team")
             hub.server.createTeam(gameService.game.GameCode, ($("#TeamName").val()));
         };
 
