@@ -17,8 +17,9 @@ namespace Horrible_Charades_ASP.Models
 
         public List<Team> Teams { get; set; }
         public string[] TurnOrder { get; set; }
+        public int Turn { get; set; }
         public Charade CurrentCharade { get; set; }
-        public string WhosTurn { get; set; }
+        public Team WhosTurn { get; set; }
         public string GameCode { get; set; }
         public string GameState { get; set; }
         public int ID { get; set; }

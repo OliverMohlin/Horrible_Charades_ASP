@@ -68,9 +68,15 @@ namespace Horrible_Charades_ASP
             }
         }
 
-        public void redirectToView(string gameCode, string nextView)
+        public void startCharade(string gameCode)
         {
-            Clients.Group(gameCode).redirectToView(nextView);
+            Game game = GameState.Instance.GetGame(gameCode);
+
+            GameState.Instance.AssignWhosTurn(game);
+
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
         }
         /// <summary>
         /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
@@ -92,6 +98,15 @@ namespace Horrible_Charades_ASP
             }
 
         }
+
+        public void RedirectFromWaitingRoom(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+        }
+
         /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side

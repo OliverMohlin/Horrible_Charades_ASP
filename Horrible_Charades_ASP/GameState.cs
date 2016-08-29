@@ -66,6 +66,23 @@ namespace Horrible_Charades_ASP
             add.Wait();
             return game; //Todo: Ta in gameCode. Lägga till laget i game och i en grupp
         }
+
+        internal void AssignWhosTurn(Game game)
+        {
+            if (game.Turn == 0)
+            {
+                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+            }
+
+            foreach (Team team in game.Teams)
+            {
+                if (team.Id == game.TurnOrder[game.Turn])
+                {
+                    game.WhosTurn = team;
+                }
+            }
+        }
+
         internal Game GetGame(string gameCode)
         {
             var game = _games.FirstOrDefault(g => g.Key == gameCode);
