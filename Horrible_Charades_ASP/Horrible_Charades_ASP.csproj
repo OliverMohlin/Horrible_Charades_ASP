@@ -188,6 +188,7 @@
     <Compile Include="Models\Noun.cs" />
     <Compile Include="Models\CharadeContext.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\CustomUserIdProvider.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\Verb.cs" />
     <Compile Include="Models\Word.cs" />

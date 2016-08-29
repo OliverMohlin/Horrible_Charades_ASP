@@ -70,9 +70,24 @@ namespace Horrible_Charades_ASP
             }
         }
 
-        public void redirectToView(string gameCode, string nextView)
+        public void startCharade(string gameCode)
         {
-            Clients.Group(gameCode).redirectToView(nextView);
+            Game game = GameState.Instance.GetGame(gameCode);
+            if (game.Turn == 0)
+            {
+                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+            }
+
+            foreach (Team team in game.Teams)
+            {
+                if (team.Id == game.TurnOrder[game.Turn])
+                {
+                    game.WhosTurn = team;
+                }
+            }
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.User(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
         }
         /// <summary>
         /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
