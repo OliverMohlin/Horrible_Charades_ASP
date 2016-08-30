@@ -5,23 +5,24 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(gameService, signalRService) {
+    function contentController(gameService, signalRService, $interval) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
         vm.gameData = gameService.game;
 
-        timeLeft = 60;
-        counter = setInterval(timer, 1000);
-        function timer() {
-            timeLeft -= 1;
-            if (timeLeft <= 0) {
-                clearInterval(counter);
-                document.getElementById("timer").innerHTML = "Time is up!" //Här ska vi skicka vidare användaren till nästa view
-                window.location.href = '/Play/Score';
-                return;
-            }
-            document.getElementById("timer").innerHTML = "00:" + timeLeft < 10 ? "0" + timeLeft : timeLeft;
-        }
+        vm.timeLeft = 10;
+
+        //Starts timer on CharadeActor
+        vm.startTimer = function () {
+            $interval(function () {
+                vm.timeLeft--;
+                if (vm.timeLeft <= 0) {
+                    vm.pointCounter(0);
+
+                }
+            }, 1000);
+        };
+
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
             hub.server.createGame();
@@ -69,5 +70,11 @@
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(gameService.game.GameCode, type);
         };
+
+        vm.pointCounter = function (timeLeft) {
+            console.log("inside Pointcounter");
+            console.log(timeLeft);
+            hub.server.pointCounter(gameService.game.GameCode, timeLeft);
+        }
     }
 })();

@@ -158,5 +158,31 @@ namespace Horrible_Charades_ASP
 
             return game;
         }
+
+        internal Game AssignPoints(string gameCode, int timeLeft, string conId)
+        {
+            Game game = GetGame(gameCode);
+            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
+            int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
+            if (timeLeft > 45)
+            {
+                team.TurnPoint = 300 * charadewords;
+            }
+            else if (timeLeft > 30)
+            {
+                team.TurnPoint = 200 * charadewords;
+            }
+            else if (timeLeft > 15)
+            {
+                team.TurnPoint = 100 * charadewords;
+            }
+
+            if (team.ConnectionID == conId)
+            {
+                team.TurnPoint *= 4;
+            }
+
+            return game;
+        }
     }
 }

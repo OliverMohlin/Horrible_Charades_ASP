@@ -21,6 +21,8 @@ namespace Horrible_Charades_ASP.Models
         public string Hash { get; set; }
         public string Group { get; set; }
         public bool isPlaying { get; set; }
+        public int TotalPoints { get; set; }
+        public int TurnPoint { get; set; }
 
     }
 }

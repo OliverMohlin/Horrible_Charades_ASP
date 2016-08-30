@@ -1,9 +1,12 @@
 ﻿<h1>Charade - Actor</h1> <p>Timer</p>
 <br />
 <h2>Charade</h2>
-
-<span id="timer" style="font-size:3em; color:magenta; margin-left: 3em"></span>
 <br />
 
+
+<h2 data-ng-init="vm.startTimer()">{{vm.timeLeft}}</h2>
+<br />
+<br />
 <a class="button" href="#CreateTeam">Stop</a>
+<button data-ng-click="vm.pointCounter(vm.timeLeft)">STOP STOR OCH RÖD</button>
 <a href="#Score">Next Phase</a>

@@ -148,5 +148,11 @@ namespace Horrible_Charades_ASP
             Clients.Caller.debugMessage($"Found a Modifier of type: {type} and updated serverside Game");
             Clients.Group(game.GameCode).InsertRuleChangerHTML(game, type);
         }
+        public void PointCounter(string gameCode, int timeLeft)
+        {
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
+            Clients.All.updateGameState(game);
+            Clients.All.redirectToView("/#/Score");
+        }
     }
 }
