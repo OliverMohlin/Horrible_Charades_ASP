@@ -218,7 +218,7 @@ a {
     border-radius: 10px 10px 0 0;
 }
 
-label#GameCode {
+#GameCode {
     padding: 45px 10px 45px 5px;
 }
 
@@ -267,5 +267,6 @@ input:-moz-placeholder {
     right: 0;
 }
 /*------------------------------------
-    CharadeActor
+    CharadeParticipant
  -------------------------------------*/
+
