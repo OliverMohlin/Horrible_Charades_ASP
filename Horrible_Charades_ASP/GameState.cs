@@ -213,17 +213,20 @@ namespace Horrible_Charades_ASP
             int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
             if (timeLeft > 45)
             {
-                team.TurnPoint = 300 * charadewords;
+                team.TurnPoint = 400 * charadewords;
             }
             else if (timeLeft > 30)
             {
-                team.TurnPoint = 200 * charadewords;
+                team.TurnPoint = 300 * charadewords;
             }
             else if (timeLeft > 15)
             {
+                team.TurnPoint = 200 * charadewords;
+            }
+            else if (timeLeft > 0)
+            {
                 team.TurnPoint = 100 * charadewords;
             }
-
             if (team.ConnectionID == conId)
             {
                 team.TurnPoint *= 4;

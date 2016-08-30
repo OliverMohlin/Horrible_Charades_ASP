@@ -19,8 +19,8 @@
             $interval(function () {
                 vm.timeLeft--;
                 if (vm.timeLeft <= 0) {
+                    $interval.cancel();
                     vm.pointCounter(0);
-
                 }
             }, 1000);
         };
@@ -53,19 +53,16 @@
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
-            console.log("initiating getNoun");
             hub.server.getNoun(gameService.game.GameCode);
         };
 
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
-            console.log("initiating getAdjective");
             hub.server.updateCharade("adjective", gameService.game.GameCode);
         };
 
         //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
         vm.getVerb = function () {
-            console.log("initiating getVerb");
             hub.server.updateCharade("verb", gameService.game.GameCode);
         };
 
@@ -79,9 +76,22 @@
         };
 
         vm.pointCounter = function (timeLeft) {
-            console.log("inside Pointcounter");
-            console.log(timeLeft);
+            $interval.cancel();
             hub.server.pointCounter(gameService.game.GameCode, timeLeft);
         }
+        vm.printCharade = function () {
+            
+            for (var i = 0; i < gameService.game.CurrentCharade.Adjective.length; i++) {
+                $("#charade").append("<li>" + gameService.game.CurrentCharade.Adjective[i].Description + "</li>");
+            }
+
+            $("#charade").append("<li>" + gameService.game.CurrentCharade.Noun.Description + "</li>");
+
+            for (var i = 0; i < gameService.game.CurrentCharade.Verb.length; i++) {
+                $("#charade").append("<li>" + gameService.game.CurrentCharade.Verb[i].Description + "</li>");
+            }
+        };
+
     }
+
 })();
