@@ -13,18 +13,23 @@
         vm.gameData = gameService.game;
         vm.myTeam = gameService.myTeam;
         vm.timeLeft = 10;
+        vm.promise;
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-            $interval(function () {
-                vm.timeLeft--;
-                if (vm.timeLeft <= 0) {
-                    $interval.cancel();
-                    vm.pointCounter(0);
-                }
-            }, 1000);
+            vm.promise = $interval(timer, 1000);
         };
 
+        function timer() {
+            vm.timeLeft--;
+            if (vm.timeLeft <= 0) {
+                $interval.cancel();
+                vm.pointCounter(0);
+            };
+        };
+        vm.stopTimer = function () {
+            $interval.cancel(promise);
+        };
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
             hub.server.createGame();
@@ -76,7 +81,8 @@
         };
 
         vm.pointCounter = function (timeLeft) {
-            $interval.cancel();
+            $interval.cancel(vm.promise);
+            console.log(timeLeft);
             hub.server.pointCounter(gameService.game.GameCode, timeLeft);
         }
         vm.printCharade = function () {
