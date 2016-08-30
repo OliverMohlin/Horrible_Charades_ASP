@@ -5,9 +5,11 @@
     angular.module("mainContent")
         .service("signalRService", signalRService);
 
-    function signalRService(gameService) {
+    function signalRService() {
 
         var self = this;
+        self.game = {};
+        self.myTeam = {};
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
         hub.client.hello = function (textToWrite) {     //Assigns hello() to client
             $("#result").append("<li>" + textToWrite + "</li>");
@@ -17,18 +19,18 @@
         hub.client.printGameCode = function (game) {
             $("#GameCode").append(game.GameCode);
         };
-        //Write out a message
+        //Write out a message in Alert Popup
         hub.client.displayMessage = function (message) {
             alert(message);
         };
         //Updates game on clientSide
         hub.client.updateGameState = function (game) {
-            gameService.game = game;
+            self.game = game;
         };
         // Update the Local players index in games List of Teams 
-        hub.client.updateMyTeam = function (siffran) {
-            console.log(siffran);
-            gameService.myTeam = siffran;
+        hub.client.updateMyTeam = function (index) {
+            console.log(index);
+            self.myTeam = index;
         };
         //Redirects to next view
         hub.client.redirectToView = function (nextView) {
@@ -62,7 +64,7 @@
 
                 $(".verb").remove();
 
-                for (var i = 0; i < game.CurrentCharade.Verb.length; i++) {
+                for (i = 0; i < game.CurrentCharade.Verb.length; i++) {
                
                     if (i === 0) {
                         $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[i].Description + "</div>");
@@ -93,11 +95,10 @@
                 var tmpstr = "<ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
                     tmpstr += "<li id='" + alternatives[i][j].Description + "'><input type='radio' id='" + alternatives[i][j].Description + "' name='selector'><label for='" + alternatives[i][j].Description + "'>" + alternatives[i][j].Description + "</label></input></li>";
-                };
+                }
                 tmpstr += "</ul></br></br>";
                 $("#alternatives").append(tmpstr);
-            };
-
+            }
         };
 
     $("#charade").onload = function () {
