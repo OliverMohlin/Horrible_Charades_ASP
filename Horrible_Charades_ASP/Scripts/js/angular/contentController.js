@@ -12,7 +12,7 @@
         // Updates contentController to fit the locally persisted data in gameService. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
-        vm.timeLeft = 10;
+        vm.timeLeft = 30;
         vm.promise;
 
         //Starts timer on CharadeActor
@@ -76,9 +76,48 @@
             hub.server.updateCharade("verb", signalRService.game.GameCode);
         };
 
+        // Receives a call to reset the Timer in Clients Browsers.
+        hub.client.resetTimer = function (reset) {
+            // Allt fungerar förutom att sätta tiden till 10 !!!
+            vm.timeLeft = reset;
+            console.log("resetting Timer client-Side to ");
+            console.log(reset);
+        };
+        // Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
         vm.getRuleChanger = function () {
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
+        };
+        
+        // Sends FunkUp's towards the acting team when a matching button is pressed 
+        vm.activateFunkUp = function (Id) {
+            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
+            //vm.timeLeft = 10;
+            console.log("initiating activateFunkUp");
+            console.log(Id);
+            if (Id === 3) {
+                alert("DONT PUSH THIS BUTTTON!!!! just kidding. waiting for another timer to set the time on... :) ");
+            }
+            if (Id === 4) {
+                vm.getAdjective();
+            }
+            if (Id === 5) {
+                vm.getVerb();
+            }
+        };
+
+        // Sends FunkUp's towards the acting team when a matching button is pressed 
+        vm.activatePowerUp = function (Id) {
+            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
+            //vm.timeLeft = 10;
+            console.log("initiating activateFunkUp");
+            console.log(Id);
+            if (Id === 1) {
+                alert("DONT PUSH THIS BUTTTON!!!! just kidding. waiting for another timer to set the time on... :) ");
+            }
+            if (Id === 2) {
+                vm.shuffleCharade();
+            }
         };
 
         vm.getIncorrectAnswers = function () {
@@ -102,7 +141,9 @@
         //        $("#charade").append("<li>" + gameService.game.CurrentCharade.Verb[i].Description + "</li>");
         //    }
         //};
-
+        $.connection.hub.start().done(function () {                         //Opens connection to the Hub
+            hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+        });
     }
 
 })();

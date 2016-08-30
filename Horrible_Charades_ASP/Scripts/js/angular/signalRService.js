@@ -10,6 +10,7 @@
         var self = this;
         self.game = {};
         self.myTeam = {};
+        //var vm = contentController;
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
         hub.client.hello = function (textToWrite) {     //Assigns hello() to client
             $("#result").append("<li>" + textToWrite + "</li>");

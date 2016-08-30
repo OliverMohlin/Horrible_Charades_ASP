@@ -126,6 +126,12 @@ namespace Horrible_Charades_ASP
             Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
         }
 
+        /// <summary>
+        /// Updates the current charade serverSide with either adjective or verb.
+        /// Called upon when charade:Opponenet uses a the respective FunkUp
+        /// </summary>
+        /// <param name="typeOfWord"></param>
+        /// <param name="gameCode"></param>
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
             Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
@@ -133,21 +139,27 @@ namespace Horrible_Charades_ASP
             {
                 Clients.Caller.debugMessage("starting to find adjective");
                 Game game = GameState.Instance.GetAdjective(gameCode);
-                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0]} and updated serverside Game");
+                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0].Description} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
+                //Clients.Group(game.GameCode).resetTimer();
+                Clients.Caller.resetTimer(10);
             }
             if (typeOfWord == "verb")
             {
                 Game game = GameState.Instance.GetVerb(gameCode);
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
+                Clients.Group(game.GameCode).resetTimer(10);
             }
         }
 
+        /// <summary>
+        /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
+        /// </summary>
+        /// <param name="gameCode"></param>
         public void GetRuleChanger(string gameCode)
         {
             int index = 5;
             Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode,out index);
-            Clients.Caller.debugMessage($"Found a Modifier and updated serverside Game");
             Clients.Caller.updateMyTeam(index);
             Clients.Caller.debugMessage(game);
             Clients.Group(gameCode).updateGameState(game);
@@ -169,6 +181,10 @@ namespace Horrible_Charades_ASP
             Clients.Group(game.GameCode).redirectToView("/#/Score");
         }
 
+        /// <summary>
+        /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
+        /// </summary>
+        /// <param name="gameCode"></param>
         public void ShuffleCharade (string gameCode)
         {
             Clients.Caller.debugMessage("iniating shufflecharade on serverside");
@@ -178,7 +194,7 @@ namespace Horrible_Charades_ASP
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
-
+            Clients.Group(gameCode).resetTimer(10);
         }
     }
 }
