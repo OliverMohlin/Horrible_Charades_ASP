@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Horrible_Charades_ASP
@@ -47,10 +48,11 @@ namespace Horrible_Charades_ASP
         }
         /// <summary>
         /// Skapar ett team som kopplas till ConnectionId
+        /// Creates a team, add to game and SignalRGroup
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        public Game CreateTeam(string teamName, string gameCode, string conId) //Todo: koppla till connectionstring istället för Teamname
+        public Game CreateTeam(string teamName, string gameCode, string conId) //Todo: koppla till connectionstring istället för Teamname?
         {
             Game game = GetGame(gameCode);
             Team team = new Team(teamName);
@@ -59,10 +61,37 @@ namespace Horrible_Charades_ASP
 
             _teams[team.Name] = team;//Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             game.Teams.Add(team);
-            _games[game.GameCode] = game;
-            Groups.Add(team.ConnectionID, team.GameCode);
-            return game; //Todo: Ta in gameCode. Lägga till laget i game och i en grupp
+
+            Task add = Groups.Add(team.ConnectionID, team.GameCode);
+            add.Wait();
+            return game;
         }
+
+        /// <summary>
+        /// Assigns Who's turn in game
+        /// </summary>
+        /// <param name="game"></param>
+        internal void AssignWhosTurn(Game game)
+        {
+            if (game.Turn == 0)
+            {
+                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+            }
+
+            foreach (Team team in game.Teams)
+            {
+                if (team.Id == game.TurnOrder[game.Turn])
+                {
+                    game.WhosTurn = team;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return a game with a specific gameCode
+        /// </summary>
+        /// <param name="gameCode"></param>
+        /// <returns></returns>
         internal Game GetGame(string gameCode)
         {
             var game = _games.FirstOrDefault(g => g.Key == gameCode);
@@ -81,33 +110,53 @@ namespace Horrible_Charades_ASP
         }
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
-        internal string GetNoun(string gameCode)
+        internal Game GetNoun(string gameCode)
         {
             Word noun = _dbUtils.GetNoun();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
             Game game = GetGame(gameCode);
             game.CurrentCharade.Noun = noun.Description;
 
-            return noun.Description;
+            return game;
         }
 
-        internal string GetAdjective(string gameCode)
+        internal Game GetRuleChanger(string gameCode, string type)
+        {
+            Game game = GetGame(gameCode);
+            if (type == "PowerUp")
+            {
+                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+
+                game.PowerUps.Add(modifier);
+                return game;
+            }
+            else if (type == "FunkUp")
+            {
+                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                game.FunkUps.Add(modifier);
+                return game;
+            }
+            return null;
+
+
+        }
+        internal Game GetAdjective(string gameCode)
         {
             var adjective = _dbUtils.GetAdjective();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Game game = GetGame(gameCode);
             game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective().Description);
-            return adjective.Description;
+            return game;
         }
 
-        internal string GetVerb(string gameCode)
+        internal Game GetVerb(string gameCode)
         {
-            var verb = _dbUtils.GetVerb();
+            //var verb = _dbUtils.GetVerb();
             Game game = GetGame(gameCode);
             game.CurrentCharade.Verb.Add(_dbUtils.GetVerb().Description);
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
 
-            return verb.Description;
+            return game;
         }
     }
 }

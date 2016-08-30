@@ -11,9 +11,6 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-        DatabaseUtils _dbUtils = new DatabaseUtils(
-            new Models.CharadeContext());
-        Charade _charade = new Charade();
 
         /// <summary>
         /// This function calls the method Hello on Client-Side, with something to write out
@@ -47,37 +44,41 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
-            Clients.Caller.foo($"code:{gameCode} tam:{teamName}" );
             Team team = GameState.Instance.GetTeam(teamName, gameCode);
-            Clients.Caller.foo($"Possible team retrieved from DB");
 
             if (team != null)
             {
-                //Clients.Group(team.GameCode).UpdateGameState(GameState.Instance.GetGame(gameCode));
-                //Clients.All.teamsJoined(game);
                 Clients.Caller.displayMessage("There is already a team in this game with that name");
             }
             else
             {
-                Clients.Caller.foo($"creating team");
-
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
-                Clients.Caller.foo($"team created");
-
                 if (game.Teams.Count == 1)
                 {
-                    Clients.Caller.foo($"first team in game");
-                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyHost");
-                    //Clients.Caller.redirectToView("/#/LobbyHost");
+                    Clients.Group(game.GameCode).updateGameState(game);
+                    Clients.Caller.redirectToView("/#/LobbyHost");
                 }
-                else
-                {
-                    Clients.Caller.foo($"already 1 team in game");
-                    Clients.Group(game.GameCode).updateGameState(game, "/#/LobbyGuest");
-                    //Clients.Caller.redirectToView("/#/LobbyGuest");
+                else {
+                    Clients.Group(game.GameCode).updateGameState(game);
+                    Clients.Group(game.GameCode).pushToTeamList(teamName);
+                    Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
-
+    
             }
+        }
+        /// <summary>
+        /// Shuffles and assigns which Team is going to do the charade and redirects the client
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void startCharade(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+
+            GameState.Instance.AssignWhosTurn(game);
+
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
         }
         /// <summary>
         /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
@@ -100,62 +101,52 @@ namespace Horrible_Charades_ASP
 
         }
         /// <summary>
+        /// Redirects the client to PreCharadeActor and PreCharadeParticipant
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void RedirectFromWaitingRoom(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+        }
+
+        /// <summary>
         /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
         ///  Pushes to Client-side
         /// </summary>
-        public void GetCharade(string gameCode)
+        public void GetNoun(string gameCode)
         {
-            string noun = GameState.Instance.GetNoun(gameCode);
-            Clients.All.InsertCharadeHTML(noun, "noun");
+            Clients.Caller.debugMessage("initiating getNoun on serverside");
+            Game game = GameState.Instance.GetNoun(gameCode);
+            Clients.Caller.debugMessage($"Have found a noun: {game.CurrentCharade.Noun} and updated serverside Game");
+            Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
         }
 
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-
+            Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                string adjective = GameState.Instance.GetAdjective(gameCode);
-                Clients.All.InsertCharadeHTML(adjective, "adjective");
+                Clients.Caller.debugMessage("starting to find adjective");
+                Game game = GameState.Instance.GetAdjective(gameCode);
+                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0]} and updated serverside Game");
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
             }
             if (typeOfWord == "verb")
             {
-                string verb = GameState.Instance.GetVerb(gameCode);
-                Clients.All.InsertCharadeHTML(verb, "verb");
+                Game game = GameState.Instance.GetVerb(gameCode);
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
             }
         }
-        #region gamla ordhämtningar
-        /// <summary>
-        /// Hämtar ett slumpat Substantiv från Databasen
-        /// Hämtar även 3 felaktiga alternativ för gissande
-        /// </summary>
-        //public void GetNoun(string gameCode)
-        //{
-        //    string noun = GameState.Instance.GetNoun(gameCode);
 
-        //    //Clients.All.incorrectGuesses(tmpList);
-        //    Clients.All.InsertCharadeHTML(noun, "noun");
-        //}
-        /// <summary>
-        /// Hämtar slumpat Adjective från databasen
-        ///  + 3 felaktiga alternativ för gissande
-        /// </summary>
-        //public void GetAdjective()
-        //{
-        //    //string adjective = GameState.Instance.GetAdjective();
-        //    ////Clients.All.incorrectGuesses(tmpList);
-        //    //Clients.All.InsertCharadeHTML(adjective, "adjective");
-        //}
-        ///// <summary>
-        ///// Hämtar slumpat verb från databasen
-        /////  + 3 felaktiga alternativ för gissande
-        ///// </summary>
-        //public void GetVerb()
-        //{
-        //    string verb = GameState.Instance.GetVerb();
-        //    //Clients.All.incorrectGuesses(tmpList);
-        //    Clients.All.InsertCharadeHTML(verb, "verb");
-        //}
-        #endregion
-
+        public void GetRuleChanger(string gameCode, string type)
+        {
+            Clients.Caller.debugMessage("initiating getModifier on serverside");
+            Game game = GameState.Instance.GetRuleChanger(gameCode, type);
+            Clients.Caller.debugMessage($"Found a Modifier of type: {type} and updated serverside Game");
+            Clients.Group(game.GameCode).InsertRuleChangerHTML(game, type);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace Horrible_Charades_ASP.Models
         }
    
         public int Id { get; set; }
+        public int Time { get; set; }
         public string Noun { get; set; }
         public List<string> Adjective { get; set; }
         public List<string> Verb { get; set; }

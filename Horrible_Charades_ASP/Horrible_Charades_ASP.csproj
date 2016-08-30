@@ -185,6 +185,7 @@
     <Compile Include="Models\Adjective.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Charade.cs" />
+    <Compile Include="Models\RuleChanger.cs" />
     <Compile Include="Models\Noun.cs" />
     <Compile Include="Models\CharadeContext.cs" />
     <Compile Include="Models\Game.cs" />
@@ -212,6 +213,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\HorribleCharades - Web Deploy.pubxml" />
+    <Content Include="includes\css\main.css" />
+    <Content Include="includes\css\mediaQueries.css" />
+    <Content Include="includes\images\face_lines.svg" />
+    <Content Include="includes\images\horrible_charades_logo.svg" />
     <Content Include="Scripts\js\angular\contentController.js" />
     <Content Include="Scripts\js\angular\signalRService.js" />
     <Content Include="Scripts\js\angular\gameService.js" />
@@ -219,7 +224,8 @@
     <Content Include="Scripts\js\views\CharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\CreateTeamGuest.tpl.html" />
     <Content Include="Scripts\js\views\LobbyGuest.tpl.html" />
-    <Content Include="Scripts\js\views\WaitingRoom.tpl.html" />
+    <Content Include="Scripts\js\views\WaitingRoomActor.tpl.html" />
+    <Content Include="Scripts\js\views\WaitingRoomOpponent.tpl.html" />
     <Content Include="Scripts\js\views\PreCharadeParticipant.tpl.html" />
     <Content Include="Scripts\js\views\TotalScore.tpl.html" />
     <Content Include="Scripts\js\views\Score.tpl.html" />

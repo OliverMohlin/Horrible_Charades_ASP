@@ -1,10 +1,14 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    @*<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />*@
+
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
 </head>
 <body>
     @RenderBody()
@@ -21,5 +25,7 @@
     <script src="~/Scripts/js/angular/signalRService.js"></script>
     <script src="~/Scripts/js/angular/gameService.js"></script>
     <script src="~/Scripts/js/angular/contentController.js"></script>
+    @*--------------CSS------------------*@
+    <link href="~/includes/css/main.css" rel="stylesheet" />
 </body>
 </html>
