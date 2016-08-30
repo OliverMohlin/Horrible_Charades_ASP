@@ -25,6 +25,11 @@
         hub.client.updateGameState = function (game) {
             gameService.game = game;
         };
+        // Update the Local players index in games List of Teams 
+        hub.client.updateMyTeam = function (siffran) {
+            console.log(siffran);
+            gameService.myTeam = siffran;
+        };
         //Redirects to next view
         hub.client.redirectToView = function (nextView) {
             window.location.href = nextView;
@@ -42,22 +47,22 @@
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
             console.log("preparing to Print new Word");
             if (typeOfWord === "noun") {
-                $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun + "</div>");
+                $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
                 console.log("printing adjective");
-                $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[0] + " " + "</div>");
+                $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[0].Description + " " + "</div>");
                 console.log("adjective printed");
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "verb") {
                 if ($('.verb').length) {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + " while " + game.CurrentCharade.Verb[1] + "</div>");
+                    $("#noun").append("<div class='verb' style='display:inline'>" + " while " + game.CurrentCharade.Verb[1].Description + "</div>");
                     hub.client.updateGameState(game);
                 }
                 else {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[0] + "</div>");
+                    $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[0].Description + "</div>");
                     hub.client.updateGameState(game);
                 }
             }
@@ -66,25 +71,6 @@
         $("#charade").onload = function () {
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
-        };
-
-        hub.client.InsertRuleChangerHTML = function (game, type) {
-            console.log("preparing to show RuleChanger");
-            if (type === "PowerUp") {
-                console.log("printing PowerUp");
-                $("#powerUpContainer").append("<div class='powerUp' style='display:inline''>" + game.PowerUps[0].Description + "</div>");
-                console.log(game.PowerUps[0]);
-                hub.client.updateGameState(game);
-            }
-            if (type === "FunkUp") {
-                console.log("printing FunkupUp");
-                $("#funkUpContainer").prepend("<div class='funkUp' style='display:inline'>" + game.FunkUps[0].Description + " " + "</div>");
-                console.log(game.FunkUps[0]);
-                hub.client.updateGameState(game);
-            }
-        };
-        hub.client.DisplayAlternatives = function (alternatives) {
-
         };
 
         //Adds an adjective to a charade

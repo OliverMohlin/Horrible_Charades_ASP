@@ -80,7 +80,6 @@ a {
     margin: 0 auto;
 }
 
-
 /* --------------------------------------
    Main Menu
    -------------------------------------- */
@@ -139,7 +138,6 @@ a {
 #join-game {
     padding-top: 0.3em;
 }
-
 
 /* -------------- Media queries - Main menu ----------*/
 @media screen and (min-width: 280px) and (max-width: 640px) and (orientation:portrait) {
@@ -217,6 +215,7 @@ a {
 
 #GameCode {
     background-color: #848484;
+    border-radius: 10px 10px 0 0;
 }
 
 label#GameCode {
@@ -230,6 +229,7 @@ label#GameCode {
 #joinTeamButton, #createTeamButton {
     background-color: #EF5451;
     padding: 45px 10px 45px 5px;
+    border-radius: 0 0 10px 10px;
 }
 
 #login-container {
