@@ -68,15 +68,6 @@ a {
 /* --------------------------------------
    Main Menu
    -------------------------------------- */
-/*.mainMenu {
-    height: 100vh;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #BDBDBD;
-    overflow: hidden;
-}*/
 
 .full {
     background-color: #BDBDBD;
@@ -134,7 +125,10 @@ a {
     padding-top: 0.3em;
 }
 
-@media screen and (min-width: 320px) and (max-width: 420px) and (orientation:portrait) {
+
+/* -------------- Media queries ----------*/
+
+@media screen and (min-width: 280px) and (max-width: 640px) and (orientation:portrait) {
     .main-menu-btn {
         font-size: 18px;
         position: relative;
@@ -143,5 +137,44 @@ a {
     #face-container {
         height: 30em;
         width: 20em;
+    }
+
+}
+
+@media screen and (min-height: 500px) and (max-height: 740px) and (orientation:landscape) {
+    .main-menu-btn {
+        font-size: 23px;
+        position: relative;
+    }
+
+    #face-container {
+        height: 50em;
+        width: 25em;
+        margin-top:2em;
+    }
+
+    #logo {
+        width: 33rem;
+        margin-top: 2rem;
+    }
+}
+
+
+
+@media screen and (min-height: 280px) and (max-height: 500px) and (orientation:landscape) {
+    .main-menu-btn {
+        font-size: 18px;
+        position: relative;
+    }
+
+    #face-container {
+        height: 40em;
+        width: 20em;
+        margin-top:2em;
+    }
+
+    #logo {
+        width: 25rem;
+        margin-top: 2rem;
     }
 }
