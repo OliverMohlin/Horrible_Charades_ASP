@@ -120,22 +120,23 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal Game GetModifier(string gameCode, int categoryID)
+        internal Game GetRuleChanger(string gameCode, string type)
         {
             Game game = GetGame(gameCode);
-            if (categoryID == 1)
+            if (type == "PowerUp")
             {
-                List<RuleChanger> modifier = _dbUtils.GetAllModifiers(1);
+                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
 
-                //game.FunkUps.Add(modifier[0]);
+                game.PowerUps.Add(modifier);
                 return game;
             }
-            else
+            else if (type == "FunkUp")
             {
-                List<RuleChanger> modifier = _dbUtils.GetAllModifiers(2);
-                //game.PowerUps.Add(modifier[0]);
+                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                game.FunkUps.Add(modifier);
                 return game;
             }
+            return null;
 
 
         }

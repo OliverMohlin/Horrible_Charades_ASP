@@ -141,12 +141,12 @@ namespace Horrible_Charades_ASP
             }
         }
 
-        public void GetModifier(string gameCode, int categoryID)
+        public void GetRuleChanger(string gameCode, string type)
         {
             Clients.Caller.debugMessage("initiating getModifier on serverside");
-            Game game = GameState.Instance.GetModifier(gameCode, categoryID);
-            Clients.Caller.debugMessage($"Found a Modifier in category: {categoryID} and updated serverside Game");
-            Clients.Group(game.GameCode).InsertModifierHTML(game, categoryID);
+            Game game = GameState.Instance.GetRuleChanger(gameCode, type);
+            Clients.Caller.debugMessage($"Found a Modifier of type: {type} and updated serverside Game");
+            Clients.Group(game.GameCode).InsertRuleChangerHTML(game, type);
         }
     }
 }

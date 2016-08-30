@@ -67,18 +67,18 @@
             hub.server.GetNoun(gameService.gameCode);
         };
 
-        hub.client.InsertModifierHTML = function (game, categoryID) {
-            console.log("preparing to show Modifier");
-            if (categoryID === 1) {
-                console.log("printing funkUp");
-                $("#funkUpContainer").append("<div id='funkUp' style='display:inline''>" + game.FunkUps[0] + "</div>");
-                console.log("FunkUp printed");
+        hub.client.InsertRuleChangerHTML = function (game, type) {
+            console.log("preparing to show RuleChanger");
+            if (type === "PowerUp") {
+                console.log("printing PowerUp");
+                $("#powerUpContainer").append("<div class='powerUp' style='display:inline''>" + game.PowerUps[0].Description + "</div>");
+                console.log(game.PowerUps[0]);
                 hub.client.updateGameState(game);
             }
-            if (categoryID === 2) {
-                console.log("printing PowerUp");
-                $("#powerUpContainer").prepend("<div class='powerUp' style='display:inline'>" + game.PowerUps[0] + " " + "</div>");
-                console.log("PowerUp printed");
+            if (type === "FunkUp") {
+                console.log("printing FunkupUp");
+                $("#funkUpContainer").prepend("<div class='funkUp' style='display:inline'>" + game.FunkUps[0].Description + " " + "</div>");
+                console.log(game.FunkUps[0]);
                 hub.client.updateGameState(game);
             }
         };
