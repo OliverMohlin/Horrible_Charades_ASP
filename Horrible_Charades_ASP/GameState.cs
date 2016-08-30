@@ -194,7 +194,7 @@ namespace Horrible_Charades_ASP
             return tmpList;
         }
 
-        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, out int index)
         {
             Game game = GetGame(gameCode);
             index = GetTeam(game, connectionId);
