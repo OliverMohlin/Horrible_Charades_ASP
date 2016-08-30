@@ -159,19 +159,25 @@ namespace Horrible_Charades_ASP
         }
         internal Game GetAdjective(string gameCode)
         {
-            var adjective = _dbUtils.GetAdjective();
-            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Game game = GetGame(gameCode);
+            if (game.CurrentCharade.Adjective.Count >= 2)
+            {
+                return game;
+            }
+   
+
             game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
             return game;
         }
 
         internal Game GetVerb(string gameCode)
         {
-            //var verb = _dbUtils.GetVerb();
             Game game = GetGame(gameCode);
+            if (game.CurrentCharade.Verb.Count >= 2)
+            {
+                return game;
+            }
             game.CurrentCharade.Verb.Add(_dbUtils.GetVerb());
-            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
 
             return game;
         }
@@ -195,6 +201,63 @@ namespace Horrible_Charades_ASP
             };
 
             return tmpList;
+        }
+
+        internal Game ShuffleCharade(string gameCode)
+        {
+            Game game = GetGame(gameCode);
+
+            var newNoun = game.CurrentCharade.Noun;
+            var adjectiveList = game.CurrentCharade.Adjective;
+            adjectiveList = ShuffleAdjectivesToCurrentCharade(game);
+            var verbList = game.CurrentCharade.Verb;
+            verbList = ShuffleVerbsToCurrentCharade(game);
+
+            do
+            {
+                newNoun = _dbUtils.GetNoun();
+            } while (newNoun.Description == game.CurrentCharade.Noun.Description);
+            game.CurrentCharade.Noun = newNoun;
+            game.CurrentCharade.Adjective = adjectiveList;
+            game.CurrentCharade.Verb = verbList;
+
+            return game;
+        }
+
+        private List<Verb> ShuffleVerbsToCurrentCharade(Game game)
+        {
+            var verbList = new List<Verb>();
+
+            for (int i = 0; i < game.CurrentCharade.Verb.Count(); i++)
+            {
+                Verb lastVerb = game.CurrentCharade.Verb[i];
+                Verb tmpNewVerb = _dbUtils.GetVerb();
+
+                if (tmpNewVerb.Description == lastVerb.Description)
+                {
+                    tmpNewVerb = _dbUtils.GetVerb();
+                }
+                verbList.Add(tmpNewVerb);
+            }
+            return verbList;
+        }
+
+        private List<Adjective> ShuffleAdjectivesToCurrentCharade(Game game)
+        {
+            var adjectiveList = new List<Adjective>();
+
+            for (int i = 0; i < game.CurrentCharade.Adjective.Count(); i++)
+            {
+                Adjective lastAdjective = game.CurrentCharade.Adjective[i];
+                Adjective tmpNewAdjective = _dbUtils.GetAdjective();
+
+                if (tmpNewAdjective.Description == lastAdjective.Description)
+                {
+                    tmpNewAdjective = _dbUtils.GetAdjective();
+                }
+                adjectiveList.Add(tmpNewAdjective);
+            }
+            return adjectiveList;
         }
 
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, out int index)

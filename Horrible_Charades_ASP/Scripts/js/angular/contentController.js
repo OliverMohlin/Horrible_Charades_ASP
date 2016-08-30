@@ -61,6 +61,11 @@
             hub.server.getNoun(gameService.game.GameCode);
         };
 
+        //Calls shuffleCharade function on Server-side when "shufflecharade-button" is pressed by the actor
+        vm.shuffleCharade = function () {
+            $("#charadeContainer").html('');
+            hub.server.shuffleCharade(gameService.game.GameCode)
+        };
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
             hub.server.updateCharade("adjective", gameService.game.GameCode);

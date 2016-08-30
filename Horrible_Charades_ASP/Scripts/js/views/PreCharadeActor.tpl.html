@@ -38,5 +38,6 @@
 <div id="powerUpContainer"> 
     <ul>
         <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"> {{PowerUp.Description}} </li>
+        <li> <input type="button" data-ng-click="vm.shuffleCharade()" value="Klick to shuffle your charade!" /> </li>
     </ul>
 </div>

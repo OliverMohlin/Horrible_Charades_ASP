@@ -21,9 +21,16 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Noun GetNoun()
         {
-            var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
-            var qResult = _charadeContext.Nouns
-                .SingleOrDefault(n => n.ID == nounID);
+          
+            Noun qResult = null;
+            do
+            {
+                var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
+                qResult = _charadeContext.Nouns
+               .SingleOrDefault(n => n.ID == nounID);
+
+            } while (qResult == null);
+
             return qResult;
         }
 
@@ -33,9 +40,15 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Adjective GetAdjective()
         {
-            var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
-            var qResult = _charadeContext.Adjectives
+      
+            Adjective qResult = null;
+            do
+            {
+                var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
+                qResult = _charadeContext.Adjectives
             .SingleOrDefault(n => n.ID == adjectiveID);
+            } while (qResult == null);
+
             return qResult;
         }
 
@@ -45,9 +58,15 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Verb GetVerb()
         {
-            var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
-            var qResult = _charadeContext.Verbs
+          
+            Verb qResult = null;
+            do
+            {
+                var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
+                qResult = _charadeContext.Verbs
             .SingleOrDefault(n => n.ID == verbID);
+            } while (qResult == null);
+            
             return qResult;
         }
 

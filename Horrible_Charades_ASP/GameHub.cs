@@ -147,7 +147,6 @@ namespace Horrible_Charades_ASP
 
         {
             int index = 5;
-            Clients.Caller.debugMessage("initiating getModifier on serverside");
             Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode,out index);
             Clients.Caller.debugMessage($"Found a Modifier and updated serverside Game");
             Clients.Caller.updateMyTeam(index);
@@ -168,6 +167,18 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
             Clients.All.updateGameState(game);
             Clients.All.redirectToView("/#/Score");
+        }
+
+        public void ShuffleCharade (string gameCode)
+        {
+            Clients.Caller.debugMessage("iniating shufflecharade on serverside");
+            Game game = GameState.Instance.ShuffleCharade(gameCode);
+            Clients.Caller.debugMessage(game.CurrentCharade.Noun);
+            Clients.Caller.debugMessage(game.CurrentCharade.Adjective);
+            Clients.Caller.InsertCharadeHTML(game, "noun");
+            Clients.Caller.InsertCharadeHTML(game, "adjective");
+            Clients.Caller.InsertCharadeHTML(game, "verb");
+
         }
     }
 }

@@ -51,40 +51,49 @@
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
-                console.log("printing adjective");
-                $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[0].Description + " " + "</div>");
-                console.log("adjective printed");
+                $(".adjective").remove();
+
+                for (var i = 0; i < game.CurrentCharade.Adjective.length; i++) {
+                    $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[i].Description + " " + "</div>");
+                }
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "verb") {
-                if ($('.verb').length) {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + " while " + game.CurrentCharade.Verb[1].Description + "</div>");
-                    hub.client.updateGameState(game);
+
+                $(".verb").remove();
+
+                for (var i = 0; i < game.CurrentCharade.Verb.length; i++) {
+               
+                    if (i === 0) {
+                        $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[i].Description + "</div>");
+
+                    } else {
+                        $("#noun").append("<div class='verb' style='display:inline'>" + " while " + game.CurrentCharade.Verb[i].Description + "</div>");
+
+                    }
                 }
-                else {
-                    $("#noun").append("<div class='verb' style='display:inline'>" + "  " + game.CurrentCharade.Verb[0].Description + "</div>");
-                    hub.client.updateGameState(game);
-                }
+                hub.client.updateGameState(game);
+  
             }
         };
 
-        $("#charade").onload = function () {
-            console.log("initiating getNoun");
-            hub.server.GetNoun(gameService.gameCode);
-        };
+    $("#charade").onload = function () {
+        console.log("initiating getNoun");
+        hub.server.GetNoun(gameService.gameCode);
+    };
 
-        //Adds an adjective to a charade
-        $("#getAdjectiveButton").click(function () {
-            hub.server.getAdjective();
-        });
-        //Adds a verb to a charade
-        $("#getVerbButton").click(function () {
-            hub.server.getVerb();
-        });
+    //Adds an adjective to a charade
+    $("#getAdjectiveButton").click(function () {
+        hub.server.getAdjective();
+    });
+    //Adds a verb to a charade
+    $("#getVerbButton").click(function () {
+        hub.server.getVerb();
+    });
 
-        $.connection.hub.start().done(function () {                         //Opens connection to the Hub
-            hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
-        });
+    $.connection.hub.start().done(function () {                         //Opens connection to the Hub
+        hub.server.hello("Welcome to Horrible Charades");               //Calls hello() from Hub
+    });
 
-    }
+}
 })();
