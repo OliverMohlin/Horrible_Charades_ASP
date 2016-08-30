@@ -135,19 +135,19 @@ namespace Horrible_Charades_ASP
 
         internal Game GetRuleChanger(Game game, int index)
         {
-            RuleChanger modifier = _dbUtils.GetRuleChanger();
+            RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
 
-            if (modifier.Type == "PowerUp")
+            if (ruleChanger.Type == "PowerUp")
             {
 
                 //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
-                game.Teams[index].PowerUps.Add(modifier);
+                game.Teams[index].PowerUps.Add(ruleChanger);
                 return game;
             }
-            else if (modifier.Type == "FunkUp")
+            else if (ruleChanger.Type == "FunkUp")
             {
                 //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
-                game.Teams[index].FunkUps.Add(modifier);
+                game.Teams[index].FunkUps.Add(ruleChanger);
                 return game;
             }
             return null;
@@ -173,10 +173,10 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, out int index)
         {
             Game game = GetGame(gameCode);
-            int index = GetTeam(game, connectionId);
+            index = GetTeam(game, connectionId);
             GetRuleChanger(game, index);
 
             return game;

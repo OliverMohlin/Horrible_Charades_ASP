@@ -8,8 +8,10 @@
     function contentController(gameService, signalRService) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
-        vm.gameData = gameService.game;
 
+        // Updates contentController to fit the locally persisted data in gameService. 
+        vm.gameData = gameService.game;
+        vm.myTeam = gameService.myTeam;
         
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
@@ -33,8 +35,6 @@
 
         //Redirects to nextView
         vm.redirectFromWaitingRoom = function () {
-            console.log("initiating getRuleChanger");
-            vm.getRuleChanger();
             console.log("Redirecting to PreCharade");
             hub.server.redirectFromWaitingRoom(gameService.game.GameCode);
         };
@@ -57,7 +57,7 @@
             hub.server.updateCharade("verb", gameService.game.GameCode);
         };
 
-        vm.getRuleChanger = function (type) {
+        vm.getRuleChanger = function () {
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(gameService.game.GameCode);
         };

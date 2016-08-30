@@ -25,6 +25,11 @@
         hub.client.updateGameState = function (game) {
             gameService.game = game;
         };
+        // Update the Local players index in games List of Teams 
+        hub.client.updateMyTeam = function (siffran) {
+            console.log(siffran);
+            gameService.myTeam = siffran;
+        };
         //Redirects to next view
         hub.client.redirectToView = function (nextView) {
             window.location.href = nextView;
@@ -65,22 +70,6 @@
         $("#charade").onload = function () {
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
-        };
-
-        hub.client.InsertRuleChangerHTML = function (game, type) {
-            console.log("preparing to show RuleChanger");
-            if (type === "PowerUp") {
-                console.log("printing PowerUp");
-                $("#powerUpContainer").append("<div class='powerUp' style='display:inline''>" + game.PowerUps[0].Description + "</div>");
-                console.log(game.PowerUps[0]);
-                hub.client.updateGameState(game);
-            }
-            if (type === "FunkUp") {
-                console.log("printing FunkupUp");
-                $("#funkUpContainer").prepend("<div class='funkUp' style='display:inline'>" + game.FunkUps[0].Description + " " + "</div>");
-                console.log(game.FunkUps[0]);
-                hub.client.updateGameState(game);
-            }
         };
 
         //Adds an adjective to a charade

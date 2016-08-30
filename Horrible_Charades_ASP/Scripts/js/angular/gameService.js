@@ -8,6 +8,7 @@
     function gameService() {
         var self = this;
         self.game = {};
+        self.myTeam = {};
         var gameStateClient;
         console.log(self.game);
 
