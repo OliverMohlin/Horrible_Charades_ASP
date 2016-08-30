@@ -135,23 +135,26 @@ namespace Horrible_Charades_ASP
 
         internal Game GetRuleChanger(Game game, int index)
         {
-            RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
-
-            if (ruleChanger.Type == "PowerUp")
+            for (int i = 0; i < 6; i++)
             {
 
-                //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
-                game.Teams[index].PowerUps.Add(ruleChanger);
-                return game;
-            }
-            else if (ruleChanger.Type == "FunkUp")
-            {
-                //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
-                game.Teams[index].FunkUps.Add(ruleChanger);
-                return game;
-            }
-            return null;
+                RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
 
+                if (ruleChanger.Type == "PowerUp")
+                {
+
+                    //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                    game.Teams[index].PowerUps.Add(ruleChanger);
+                    //return game;
+                }
+                else if (ruleChanger.Type == "FunkUp")
+                {
+                    //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                    game.Teams[index].FunkUps.Add(ruleChanger);
+                    //return game;
+                }
+            }
+            return game;
 
         }
         internal Game GetAdjective(string gameCode)
