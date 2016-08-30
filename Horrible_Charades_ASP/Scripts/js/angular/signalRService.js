@@ -67,6 +67,29 @@
                 }
             }
         };
+        //hub.client.displayAlternatives = function (alternatives) {
+        //    for (var i = 0; i < alternatives.length; i++) {
+        //        var tmpstr = "<ul>";
+        //        for (var j = 0; j < alternatives[i].length; j++) {
+        //            tmpstr += "<li id='" + alternatives[i][j].Description + "'><a>" + alternatives[i][j].Description + "</a></li>"
+        //        };
+        //        tmpstr += "</ul></br></br>";
+        //        $("#alternatives").append(tmpstr);
+        //    };
+
+        //};
+
+        hub.client.displayAlternatives = function (alternatives) {
+            for (var i = 0; i < alternatives.length; i++) {
+                var tmpstr = "<ul>";
+                for (var j = 0; j < alternatives[i].length; j++) {
+                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><input type='radio' id='" + alternatives[i][j].Description + "' name='selector'><label for='" + alternatives[i][j].Description + "'>" + alternatives[i][j].Description + "</label></input></li>";
+                };
+                tmpstr += "</ul></br></br>";
+                $("#alternatives").append(tmpstr);
+            };
+
+        };
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");

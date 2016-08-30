@@ -192,7 +192,6 @@ namespace Horrible_Charades_ASP
 
             foreach (Verb verb in game.CurrentCharade.Verb)
             {
-
                 tmpList.Add(_dbUtils.GetIncorrectAnswers(verb));
             };
 
