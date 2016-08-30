@@ -144,7 +144,6 @@ namespace Horrible_Charades_ASP
         }
 
         public void GetRuleChanger(string gameCode)
-
         {
             int index = 5;
             Clients.Caller.debugMessage("initiating getModifier on serverside");
@@ -165,9 +164,10 @@ namespace Horrible_Charades_ASP
         }
         public void PointCounter(string gameCode, int timeLeft)
         {
+            //Kolla så att
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
-            Clients.All.updateGameState(game);
-            Clients.All.redirectToView("/#/Score");
+            Clients.Group(game.GameCode).updateGameState(game);
+            Clients.Group(game.GameCode).redirectToView("/#/Score");
         }
     }
 }

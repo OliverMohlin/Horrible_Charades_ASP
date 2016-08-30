@@ -80,6 +80,8 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
                 tmpList.Remove(tmpList[randomID]);
             }
             newTmpList.Add(inputWord);
+            //newTmpList.Sort(t => RandomUtils.rnd.Next()).Select(o => o.ID);
+            newTmpList.Shuffle();
             return newTmpList;
         }
 
