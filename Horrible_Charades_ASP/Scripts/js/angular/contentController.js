@@ -11,7 +11,7 @@
 
         // Updates contentController to fit the locally persisted data in gameService. 
         vm.gameData = gameService.game;
-
+        vm.myTeam = gameService.myTeam;
         vm.timeLeft = 10;
 
         //Starts timer on CharadeActor
