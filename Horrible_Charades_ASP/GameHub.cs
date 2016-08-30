@@ -154,5 +154,20 @@ namespace Horrible_Charades_ASP
             Clients.Caller.debugMessage(game);
             Clients.Group(gameCode).updateGameState(game);
         }
+
+        public void GetIncorrectAnswers(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            List<List<Word>> inCorrectAnswers = new List<List<Word>>();
+            inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
+
+            Clients.Caller.DisplayAlternatives(inCorrectAnswers);
+        }
+        public void PointCounter(string gameCode, int timeLeft)
+        {
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
+            Clients.All.updateGameState(game);
+            Clients.All.redirectToView("/#/Score");
+        }
     }
 }
