@@ -1,18 +1,14 @@
-﻿<h1 data-ng-init="vm.getModifier()">Pre-Charade - Participant</h1> <p>Timer</p>
-<br />
-<br />
-<div></div>
-<div><button data-ng-click="vm.getAdjective()">Klicka för Adjektiv</button></div>
-<div>Icon</div><br />
-<div><button data-ng-click="vm.getVerb()">Klicka för Verb</button></div>
-<div>Icon</div>
-<div>Icon</div>
-<a href="#CharadeParticipant">Next Phase</a>
-<p>FUNKUPS</p>
-<br />
-
-<div id="funkUpContainer">
-    <ul>
-        <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps"> {{FunkUp.Description}} </li>
-    </ul>
+﻿<div class="container-fluid" id="pre-charade-participant-container">
+    <h1 class="header-page" vm.getModifier()">Charade Setup</h1>
+    <h1><span class="time-text" data-ng-init="vm.startTimer()">{{vm.timeLeft}}</span><br /> seconds to go..</h1>
+    <div class="row" id="funkUpContainer">
+            <p>{Team}'s turn funk up their charade!</p>
+            <ul>
+                <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps"><button class="btn btn-default">{{FunkUp.Description}}</button></li>
+            </ul>
+            <!--<img src="../../../includes/images/powerup.png" />
+            <img src="../../../includes/images/powerup.png" />
+            <img src="../../../includes/images/powerup.png" />-->
+    </div>
 </div>
+<a href="#CharadeParticipant">Next Phase</a>

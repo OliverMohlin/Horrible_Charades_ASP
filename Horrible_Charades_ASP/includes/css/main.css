@@ -63,6 +63,8 @@ button:focus {
 
 body {
     background-color: #BDBDBD;
+    font-family: Calibri, Arial, sans-serif;
+    font-weight: 900;
 }
 
 h1,
@@ -70,9 +72,9 @@ h2,
 h3,
 h4,
 h5,
-p,
 a {
     font-family: 'Bungee', Calibri, Arial, sans-serif;
+    font-weight: 200;
 }
 
 .col-centered {
@@ -191,7 +193,7 @@ a {
 /* --------------------------------------
    Create Team
    -------------------------------------- */
-#login-container > div > h1 {
+.header-page {
     text-align: center;
     font-size: 52px;
     margin-top: 0.7em;
@@ -265,4 +267,40 @@ input:-moz-placeholder {
     padding: 0.5em 0;
     margin: 0 0 15px;
     right: 0;
+}
+
+/* --------------------------------------
+   PreCharadeActor
+   -------------------------------------- */
+
+#funkUpContainer > ul li {
+    display: inline;
+}
+
+#pre-charade-participant-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.time-text {
+    font-size: 110px;
+    margin-top: 0.7em;
+    margin-bottom: 0em;
+}
+
+#pre-charade-participant-container > h2 {
+    margin-top: 2em;
+    font-size: 23px;
+}
+
+#pre-charade-participant-container > div > p {
+    font-size: 20px;
+    margin: 2em 0;
+}
+
+#funkUpContainer {
+    background-color: #E0E0E0;
+    height: 20em;
+    margin-top: 2em;
 }
