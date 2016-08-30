@@ -135,10 +135,12 @@ namespace Horrible_Charades_ASP
 
         internal Game GetRuleChanger(Game game, int index)
         {
-            for (int i = 0; i < 6; i++)
+
+            //Ändra för olika antal funkups
+            for (int i = 0; i < 3; i++)
             {
 
-                RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
+                RuleChanger ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
 
                 if (ruleChanger.Type == "PowerUp")
                 {
@@ -196,7 +198,6 @@ namespace Horrible_Charades_ASP
 
             foreach (Verb verb in game.CurrentCharade.Verb)
             {
-
                 tmpList.Add(_dbUtils.GetIncorrectAnswers(verb));
             };
 

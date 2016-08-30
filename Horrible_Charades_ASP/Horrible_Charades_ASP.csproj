@@ -217,6 +217,7 @@
     <Content Include="includes\css\mediaQueries.css" />
     <Content Include="includes\images\face_lines.svg" />
     <Content Include="includes\images\horrible_charades_logo.svg" />
+    <Content Include="includes\images\powerup.png" />
     <Content Include="Scripts\js\angular\contentController.js" />
     <Content Include="Scripts\js\angular\signalRService.js" />
     <Content Include="Scripts\js\angular\gameService.js" />
