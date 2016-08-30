@@ -1,0 +1,155 @@
+﻿/* --------------------------------------
+   Media Queries
+   -------------------------------------- */
+
+/* Landscape phone small*/
+@media (max-width: 570px) and (orientation:landscape) {
+    #logo {
+        height: 8em;
+        padding-top: 10%;
+    }
+
+    #face-container {
+        width: 12em;
+        margin-top: 10%;
+    }
+
+    .main-menu-btn {
+        font-size: 12px;
+        line-height: 11px;
+    }
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0;
+    }
+}
+
+/* Landscape phone*/
+@media (max-width: 736px) and (min-width:571px) and (orientation:landscape) {
+    #logo {
+        height: 9em;
+        padding-top: 10%;
+    }
+
+    #face-container {
+        width: 15em;
+        margin-top: 10%;
+    }
+
+    .main-menu-btn {
+        font-size: 16px;
+        line-height: 15px;
+    }
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0;
+    }
+}
+
+@media (min-width: 240px) and (orientation:portrait) {
+    #logo {
+        width: 20em;
+    }
+
+    #face-container {
+        width: 20em;
+        margin-top: 3em;
+    }
+
+    .main-menu-btn {
+        font-size: 17px;
+        line-height: 22px;
+    }
+
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0;
+    }
+}
+/* Portrait phone */
+@media (min-width: 480px) and (orientation:portrait) {
+    #logo {
+        width: 23em;
+    }
+
+    #face-container {
+        width: 23em;
+        margin-top: 3em;
+    }
+
+    .main-menu-btn {
+        font-size: 19px;
+        line-height: 26px;
+    }
+
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0;
+    }
+}
+/* Landscape phone to portrait tablet */
+@media (min-width: 768px) {
+    #logo {
+        width: 32em;
+    }
+
+    #face-container {
+        width: 32em;
+        height: 38em;
+        margin-top: 3em;
+    }
+
+    .main-menu-btn {
+        font-size: 28px;
+        line-height: 38px;
+    }
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0;
+    }
+}
+/* Large desktop */
+@media (min-width: 1200px) {
+    #logo {
+        width: 41em;
+    }
+
+    #face-container {
+        width: 41em;
+        height: 38em;
+        margin-top: 3em;
+    }
+
+    .main-menu-btn {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    #face-container > div > a:nth-child(1) {
+        padding-top: 0.8em;
+    }
+
+    #face-container > div > a:nth-child(2) {
+        padding-top: 0.1em;
+    }
+}

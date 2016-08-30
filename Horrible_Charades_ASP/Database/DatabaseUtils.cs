@@ -24,9 +24,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
             var qResult = _charadeContext.Nouns
                 .SingleOrDefault(n => n.ID == nounID);
-
             return qResult;
-
         }
 
         /// <summary>
@@ -38,7 +36,6 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
             var qResult = _charadeContext.Adjectives
             .SingleOrDefault(n => n.ID == adjectiveID);
-
             return qResult;
         }
 
@@ -51,7 +48,6 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
             var qResult = _charadeContext.Verbs
             .SingleOrDefault(n => n.ID == verbID);
-
             return qResult;
         }
 
@@ -76,17 +72,13 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             else
                 tmpList.AddRange(GetAllVerbWords(inputWord.CategoryID));
 
-
             tmpList.Remove(inputWord);
-
             for (int i = 0; i < 3; i++)
             {
                 int randomID = RandomUtils.ReturnValue(tmpList.Count - 1);
                 newTmpList.Add(tmpList[randomID].Description);
                 tmpList.Remove(tmpList[randomID]);
             }
-
-
             return newTmpList;
         }
 
@@ -120,20 +112,13 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             return _charadeContext.Verbs.Where(n => n.CategoryID == categoryID).ToList<Word>();
         }
 
-        public List<RuleChanger> GetAllModifiers(int categoryID)
+        public RuleChanger GetRuleChanger(string type)
         {
-            GetAdjective();
 
+            var tmpList = _charadeContext.RuleChangers.Where(r => r.Type == type).ToList();
 
-            var o = _charadeContext.RuleChangers.ToArray();
-            return null;
-            //var tmpList = new List<RuleChanger>();
-            //tmpList.AddRange(_charadeContext.Modifiers.Where(n => n.CategoryID == categoryID));
-
-            //int modifierID = RandomUtils.ReturnValue(tmpList.Count() - 1);
-            //var qResult = tmpList[modifierID];
-
-            //return qResult;
+            int modifierID = RandomUtils.ReturnValue(tmpList.Count() - 1);
+            return tmpList[modifierID];
         }
     }
 }

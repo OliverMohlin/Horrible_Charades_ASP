@@ -213,6 +213,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Properties\PublishProfiles\HorribleCharades - Web Deploy.pubxml" />
+    <Content Include="includes\css\main.css" />
+    <Content Include="includes\css\mediaQueries.css" />
+    <Content Include="includes\images\face_lines.svg" />
+    <Content Include="includes\images\horrible_charades_logo.svg" />
     <Content Include="Scripts\js\angular\contentController.js" />
     <Content Include="Scripts\js\angular\signalRService.js" />
     <Content Include="Scripts\js\angular\gameService.js" />

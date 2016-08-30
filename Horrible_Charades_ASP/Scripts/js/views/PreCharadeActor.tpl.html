@@ -3,12 +3,17 @@
 <br />
 <h1 id="charade" data-ng-init="vm.getNoun()">Charade</h1>
 <br />
-<!--data-ng-init anropar funktionen vm.getCharade när p-taggen ska skrivas-->
-<p ></p>
+<br />
+<p>POWERUPS</p>
+<br />
+
+<div id="powerUpContainer"> 
+
+</div>
 <div class="container" id="charadeContainer">
     
 </div>
-<button data-ng-click="vm.getNoun()">Klicka för substantiv</button>
+<button data-ng-click="vm.getRuleChanger('PowerUp')">Klicka för PowerUp</button>
 <!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
 <button data-ng-click="vm.getAdjective()" >Klicka för Adjektiv</button>
 <a href="#CharadeActor">Next Phase</a>
