@@ -304,3 +304,82 @@ input:-moz-placeholder {
     height: 20em;
     margin-top: 2em;
 }
+
+
+/* --------------------------------------
+   WaitingRoomActor
+   -------------------------------------- */
+#waitingroomactor-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+    #waitingroomactor-container > h1 {
+        margin-top: 1em;
+        font-size: 52px;
+    }
+
+#waitingRoomActorButton {
+    background-color: #EF5451;
+    padding: 65px 15px 65px 10px;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 3em;
+}
+
+.text-input, #waitingRoomActorButton {
+    text-align: center;
+    font-size: 25px;
+    padding: 20px 10px 20px 5px;
+    display: block;
+    width: 50%;
+    border: none;
+    font-family: Bungee;
+    color: white;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* --------------------------------------
+   WaitingRoomOpponent
+   -------------------------------------- */
+
+#waitingroomopponent-container {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 52px;
+}
+
+    #waitingroomopponent-container > h2 {
+        margin-top: 2em;
+    }
+
+/* loading dots */
+
+.loading:after {
+    content: ' .';
+    animation: dots 1s steps(7, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        color: #EF5451;
+        text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);
+    }
+
+    40% {
+        color: #EF5451;
+        text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0);
+    }
+
+    60% {
+        color: #EF5451;
+        text-shadow: .25em 0 0 #EF5451, .5em 0 0 rgba(0,0,0,0);
+    }
+
+    80%, 100% {
+        color: #EF5451;
+        text-shadow: .25em 0 0 #EF5451, .5em 0 0 #EF5451;
+    }
+}
