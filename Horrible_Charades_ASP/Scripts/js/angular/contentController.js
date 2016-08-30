@@ -69,5 +69,9 @@
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(gameService.game.GameCode, type);
         };
+
+        vm.getIncorrectAnswers = function () {
+            hub.server.getIncorrectAnswers(gameService.game.GameCode);
+        };
     }
 })();

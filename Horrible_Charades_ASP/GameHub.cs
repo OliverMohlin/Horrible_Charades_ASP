@@ -148,5 +148,14 @@ namespace Horrible_Charades_ASP
             Clients.Caller.debugMessage($"Found a Modifier of type: {type} and updated serverside Game");
             Clients.Group(game.GameCode).InsertRuleChangerHTML(game, type);
         }
+
+        public void GetIncorrectAnswers(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            List<List<Word>> inCorrectAnswers = new List<List<Word>>();
+            inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
+
+            Clients.Caller.DisplayAlternatives(inCorrectAnswers);
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Noun baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Word GetNoun()
+        public Noun GetNoun()
         {
             var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
             var qResult = _charadeContext.Nouns
@@ -31,7 +31,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Adjective baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Word GetAdjective()
+        public Adjective GetAdjective()
         {
             var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
             var qResult = _charadeContext.Adjectives
@@ -43,7 +43,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Verb baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Word GetVerb()
+        public Verb GetVerb()
         {
             var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
             var qResult = _charadeContext.Verbs
@@ -52,14 +52,14 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         }
 
         /// <summary>
-        /// This method retrieves incorrect alternatives to show in opponents' view during a charade.
+        /// This method retrieves incorrect alternatives to show in opponents' view during a charade + the right one.
         /// </summary>
         /// <param name="inputWord"></param>
         /// <returns></returns>
-        public List<string> GetIncorrectAnswers(Word inputWord)
+        public List<Word> GetIncorrectAnswers(Word inputWord)
         {
             List<Word> tmpList = new List<Word>();
-            List<String> newTmpList = new List<String>();
+            List<Word> newTmpList = new List<Word>();
 
             if (inputWord is Noun)
             {
@@ -76,9 +76,10 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             for (int i = 0; i < 3; i++)
             {
                 int randomID = RandomUtils.ReturnValue(tmpList.Count - 1);
-                newTmpList.Add(tmpList[randomID].Description);
+                newTmpList.Add(tmpList[randomID]);
                 tmpList.Remove(tmpList[randomID]);
             }
+            newTmpList.Add(inputWord);
             return newTmpList;
         }
 

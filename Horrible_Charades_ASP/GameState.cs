@@ -112,10 +112,10 @@ namespace Horrible_Charades_ASP
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
         internal Game GetNoun(string gameCode)
         {
-            Word noun = _dbUtils.GetNoun();
+            Noun noun = _dbUtils.GetNoun();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Noun = noun.Description;
+            game.CurrentCharade.Noun = noun;
 
             return game;
         }
@@ -145,7 +145,7 @@ namespace Horrible_Charades_ASP
             var adjective = _dbUtils.GetAdjective();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective().Description);
+            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
             return game;
         }
 
@@ -153,10 +153,31 @@ namespace Horrible_Charades_ASP
         {
             //var verb = _dbUtils.GetVerb();
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb().Description);
+            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb());
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
 
             return game;
+        }
+
+        internal List<List<Word>> GetIncorrectAnswers(string gameCode)
+        {
+            Game game = GetGame(gameCode);
+            List<List<Word>> tmpList = new List<List<Word>>();
+
+            foreach (Adjective adjective in game.CurrentCharade.Adjective)
+            {
+                tmpList.Add(_dbUtils.GetIncorrectAnswers(adjective));
+            };
+
+            tmpList.Add(_dbUtils.GetIncorrectAnswers(game.CurrentCharade.Noun));
+
+            foreach (Verb verb in game.CurrentCharade.Verb)
+            {
+
+                tmpList.Add(_dbUtils.GetIncorrectAnswers(verb));
+            };
+
+            return tmpList;
         }
     }
 }

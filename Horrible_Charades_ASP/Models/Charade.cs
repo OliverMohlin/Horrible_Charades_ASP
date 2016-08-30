@@ -9,17 +9,17 @@ namespace Horrible_Charades_ASP.Models
     {
         public Charade()
         {
-            Adjective = new List<string>();
-            Verb = new List<string>();
+            Adjective = new List<Adjective>();
+            Verb = new List<Verb>();
             //Todo: sätt noun direkt med ett substantiv från databasen.
             //Todo: sätt ID på ett vettigt sätt :) (vet inte hur vi ska använda detta än)
         }
    
         public int Id { get; set; }
         public int Time { get; set; }
-        public string Noun { get; set; }
-        public List<string> Adjective { get; set; }
-        public List<string> Verb { get; set; }
+        public Noun Noun { get; set; }
+        public List<Adjective> Adjective { get; set; }
+        public List<Verb> Verb { get; set; }
 
     }
 }
