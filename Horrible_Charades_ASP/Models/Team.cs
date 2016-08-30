@@ -12,6 +12,8 @@ namespace Horrible_Charades_ASP.Models
             Name = name;
             //Hash = hash;
             Id = Guid.NewGuid().ToString("d");
+            PowerUps = new List<RuleChanger>();
+            FunkUps = new List<RuleChanger>();
         }
 
         public string ConnectionID { get; set; }
@@ -23,6 +25,8 @@ namespace Horrible_Charades_ASP.Models
         public bool isPlaying { get; set; }
         public int TotalPoints { get; set; }
         public int TurnPoint { get; set; }
+        public List<RuleChanger> PowerUps { get; set; }
+        public List<RuleChanger> FunkUps { get; set; }
 
     }
 }

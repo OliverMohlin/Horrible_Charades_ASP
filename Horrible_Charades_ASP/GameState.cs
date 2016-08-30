@@ -13,6 +13,12 @@ namespace Horrible_Charades_ASP
 {
     public class GameState
     {
+
+        /// <summary>
+        /// Medförde viss problematik med att låta flera klienter prata med databasen samtidigt.
+        /// Löstes genom att lägga till (MARS) "MultipleActiveResultSets=true" i ConnectionString.
+        /// MARS låter flera göra Queryes hos databasen samtidigt. 
+        /// </summary>
         private static readonly Lazy<GameState> _instance = new Lazy<GameState>(            //Lazy = Skapas inte förän klassen accessas
             () => new GameState(GlobalHost.ConnectionManager.GetHubContext<GameHub>()));    //Skickar in vår Gamehub till konstruktorn
 
@@ -45,6 +51,13 @@ namespace Horrible_Charades_ASP
         internal Team GetTeam(string teamName, string gameCode)
         {
             return _teams.Values.FirstOrDefault(t => t.Name == teamName && t.GameCode == gameCode);
+        }
+
+        internal int GetTeam(Game game, string connectionId)
+        {
+            var index = game.Teams.FindIndex(t => t.ConnectionID == connectionId);
+
+            return index;
         }
         /// <summary>
         /// Skapar ett team som kopplas till ConnectionId
@@ -112,28 +125,29 @@ namespace Horrible_Charades_ASP
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
         internal Game GetNoun(string gameCode)
         {
-            Word noun = _dbUtils.GetNoun();
+            Noun noun = _dbUtils.GetNoun();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Noun = noun.Description;
+            game.CurrentCharade.Noun = noun;
 
             return game;
         }
 
-        internal Game GetRuleChanger(string gameCode, string type)
+        internal Game GetRuleChanger(Game game, int index)
         {
-            Game game = GetGame(gameCode);
-            if (type == "PowerUp")
-            {
-                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+            RuleChanger modifier = _dbUtils.GetRuleChanger();
 
-                game.PowerUps.Add(modifier);
+            if (modifier.Type == "PowerUp")
+            {
+
+                //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                game.Teams[index].PowerUps.Add(modifier);
                 return game;
             }
-            else if (type == "FunkUp")
+            else if (modifier.Type == "FunkUp")
             {
-                RuleChanger modifier = _dbUtils.GetRuleChanger(type);
-                game.FunkUps.Add(modifier);
+                //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
+                game.Teams[index].FunkUps.Add(modifier);
                 return game;
             }
             return null;
@@ -145,7 +159,7 @@ namespace Horrible_Charades_ASP
             var adjective = _dbUtils.GetAdjective();
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(adjective);
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective().Description);
+            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
             return game;
         }
 
@@ -153,8 +167,38 @@ namespace Horrible_Charades_ASP
         {
             //var verb = _dbUtils.GetVerb();
             Game game = GetGame(gameCode);
-            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb().Description);
+            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb());
             //List<string> tmpList = _dbUtils.GetIncorrectAnswers(verb);
+
+            return game;
+        }
+
+        internal List<List<Word>> GetIncorrectAnswers(string gameCode)
+        {
+            Game game = GetGame(gameCode);
+            List<List<Word>> tmpList = new List<List<Word>>();
+
+            foreach (Adjective adjective in game.CurrentCharade.Adjective)
+            {
+                tmpList.Add(_dbUtils.GetIncorrectAnswers(adjective));
+            };
+
+            tmpList.Add(_dbUtils.GetIncorrectAnswers(game.CurrentCharade.Noun));
+
+            foreach (Verb verb in game.CurrentCharade.Verb)
+            {
+
+                tmpList.Add(_dbUtils.GetIncorrectAnswers(verb));
+            };
+
+            return tmpList;
+        }
+
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
+        {
+            Game game = GetGame(gameCode);
+            int index = GetTeam(game, connectionId);
+            GetRuleChanger(game, index);
 
             return game;
         }

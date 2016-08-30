@@ -82,6 +82,9 @@
                 hub.client.updateGameState(game);
             }
         };
+        hub.client.DisplayAlternatives = function (alternatives) {
+
+        };
 
         //Adds an adjective to a charade
         $("#getAdjectiveButton").click(function () {

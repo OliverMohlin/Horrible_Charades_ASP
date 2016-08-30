@@ -3,26 +3,26 @@
         <ul id="result"></ul>
     </div>
 
-    <h1>Create Team</h1>
-    <!--<form id="TeamNameForm" name="TeamNameForm" data-ng-submit="vm.joinGame()" novalidate>-->
+    <div class="container" id="login-container">
+        <div class="col-centered">
+            <h1>Join a <br /> Game</h1>
+            <!--<label for="GameCode" id="GCLabel">Game Code:</label>-->
+            <input type="text" placeholder="Game Code" id="GameCode" class="text-input" name="GameCode" data-ng-model="vm.Team.GameCode" required />
+            <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
 
-        <label for="GameCode" id="GCLabel">Game Code:</label>
-        <input type="text" placeholder="Game Code" id="GameCode" name="GameCode" data-ng-model="vm.Team.GameCode" required /> 
-        <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
-
-        <label for="TeamName">Team Name:</label>
-        <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" data-ng-model="vm.Team.Name" required />
-        <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
-
-        <!--<button type="submit" id="joinGameButton" value="Submit" data-ng-disabled="TeamNameForm.$invalid"></button>-->
-        <button id="joinTeamButton" data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.joinGame()">Submit</button>
+            <!--<label for="TeamName">Team Name:</label>-->
+            <input type="text" placeholder="Team Name" id="TeamName" class="text-input" name="TeamName" data-ng-model="vm.Team.Name" required />
+            <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
+            <button id="joinTeamButton" data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.joinGame()">Join Game</button>
+        </div>
+    </div>
 
 
-        <br />
-        <br />
+
+    <div class="container">
         <div id="teams">
         </div>
-    <!--</form>-->
+    </div>
     <br />
 
     <a class="button" href="#Lobby">Next Phase</a>
