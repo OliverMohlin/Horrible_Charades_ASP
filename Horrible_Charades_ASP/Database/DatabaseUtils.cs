@@ -121,5 +121,13 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             int modifierID = RandomUtils.ReturnValue(tmpList.Count() - 1);
             return tmpList[modifierID];
         }
+        public RuleChanger GetRuleChanger()
+        {
+            var tmpList = new List<RuleChanger>();
+            tmpList = _charadeContext.RuleChangers.ToList();
+
+            int modifierID = RandomUtils.ReturnValue(tmpList.Count() - 1);
+            return tmpList[modifierID];
+        }
     }
 }

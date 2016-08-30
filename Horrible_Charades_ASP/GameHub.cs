@@ -108,6 +108,8 @@ namespace Horrible_Charades_ASP
         {
             Game game = GameState.Instance.GetGame(gameCode);
             Clients.Group(gameCode).updateGameState(game);
+
+            game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
         }
@@ -141,12 +143,14 @@ namespace Horrible_Charades_ASP
             }
         }
 
-        public void GetRuleChanger(string gameCode, string type)
+        public void GetRuleChanger(string gameCode)
+
         {
             Clients.Caller.debugMessage("initiating getModifier on serverside");
-            Game game = GameState.Instance.GetRuleChanger(gameCode, type);
-            Clients.Caller.debugMessage($"Found a Modifier of type: {type} and updated serverside Game");
-            Clients.Group(game.GameCode).InsertRuleChangerHTML(game, type);
+            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
+            Clients.Caller.debugMessage($"Found a Modifier and updated serverside Game");
+            Clients.Caller.debugMessage(game);
+            //Clients.Group(gameCode).InsertRuleChangerHTML(game, type);
         }
 
         public void GetIncorrectAnswers(string gameCode)
