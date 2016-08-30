@@ -62,6 +62,7 @@
                 }
             }
         };
+
         $("#charade").onload = function () {
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
