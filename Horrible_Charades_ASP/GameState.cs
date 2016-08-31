@@ -77,6 +77,7 @@ namespace Horrible_Charades_ASP
 
             Task add = Groups.Add(team.ConnectionID, team.GameCode);
             add.Wait();
+            game.GameState = 2;
             return game;
         }
 
@@ -84,8 +85,10 @@ namespace Horrible_Charades_ASP
         /// Assigns Who's turn in game
         /// </summary>
         /// <param name="game"></param>
-        internal void AssignWhosTurn(Game game)
+        internal Game AssignWhosTurn(string gameCode)
         {
+            Game game = GetGame(gameCode);
+
             if (game.Turn == 0)
             {
                 game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
@@ -98,7 +101,12 @@ namespace Horrible_Charades_ASP
                     game.WhosTurn = team;
                 }
             }
+
+            game.GameState = 3;
+
+            return game;
         }
+
 
         /// <summary>
         /// Return a game with a specific gameCode
