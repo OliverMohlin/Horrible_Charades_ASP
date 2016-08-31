@@ -218,6 +218,8 @@
     <Content Include="includes\images\face_lines.svg" />
     <Content Include="includes\images\horrible_charades_logo.svg" />
     <Content Include="includes\images\powerup.png" />
+    <Content Include="Scripts\libs\angular-sanitize.js" />
+    <Content Include="Scripts\libs\angular-sanitize.min.js" />
     <Content Include="Scripts\js\angular\contentController.js" />
     <Content Include="Scripts\js\angular\signalRService.js" />
     <Content Include="Scripts\js\angular\mainContent.js" />
@@ -241,6 +243,7 @@
     <Content Include="Scripts\libs\angular.min.js" />
     <Content Include="Scripts\libs\angular.min.js.map" />
     <Content Include="Scripts\libs\angular-route.min.js.map" />
+    <Content Include="Scripts\libs\angular-sanitize.min.js.map" />
     <None Include="Scripts\libs\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />

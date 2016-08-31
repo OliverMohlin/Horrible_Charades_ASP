@@ -76,7 +76,6 @@
             hub.server.redirectToCharade(signalRService.game.GameCode);
         };
 
-
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
             hub.server.getNoun(signalRService.game.GameCode);
