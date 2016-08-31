@@ -18,7 +18,7 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
-
+            
             if (signalRService.game.GameState === 4) {
                 $(".timer").text(time);
             } else {
