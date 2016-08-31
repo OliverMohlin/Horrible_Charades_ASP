@@ -12,7 +12,7 @@
         // Updates contentController to fit the locally persisted data in gameService. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
-        vm.timeLeft = 30;
+        vm.timeLeft = 3000;
         vm.promise;
 
         //Starts timer on CharadeActor
