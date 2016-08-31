@@ -303,7 +303,7 @@ input:-moz-placeholder {
     border-radius: 20px;
     padding: 12px;
     margin: 7px;
-    width: 30%;
+    width: 40%;
 }
 
 #startGameButton {
@@ -313,6 +313,20 @@ input:-moz-placeholder {
     color: white;
     display: inline-table;
     background-color: #EF5451;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px 0px 20px 0px;
+    width: 40%;
+    border: none;
+}
+
+#waitingForHost {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 34px;
+    color: white;
+    display: inline-table;
+    background-color: #848484;
     border-radius: 20px;
     padding: 10px;
     margin: 5px 0px 20px 0px;
