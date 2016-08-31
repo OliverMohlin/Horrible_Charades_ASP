@@ -9,6 +9,7 @@
     function signalRService() {
 
         var self = this;
+        self.time = 60;
         self.game = {};
         self.myTeam = {};
         //var vm = contentController;

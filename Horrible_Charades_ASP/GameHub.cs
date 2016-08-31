@@ -55,6 +55,7 @@ namespace Horrible_Charades_ASP
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
                 if (game.Teams.Count == 1)
                 {
+
                     Clients.Group(game.GameCode).updateGameState(game);
                     Clients.Caller.redirectToView("/#/LobbyHost");
                 }
@@ -72,9 +73,8 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void startCharade(string gameCode)
         {
-            Game game = GameState.Instance.GetGame(gameCode);
 
-            GameState.Instance.AssignWhosTurn(game);
+            Game game = GameState.Instance.AssignWhosTurn(gameCode);
 
             Clients.Group(gameCode).updateGameState(game);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
@@ -104,14 +104,24 @@ namespace Horrible_Charades_ASP
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
-        public void RedirectFromWaitingRoom(string gameCode)
+        public void RedirectToPreCharade(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
+            game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
             //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+        }
+
+        public void RedirectToCharade(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            game.GameState = 5;
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/CharadeActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/CharadeParticipant");
         }
 
         /// <summary>
