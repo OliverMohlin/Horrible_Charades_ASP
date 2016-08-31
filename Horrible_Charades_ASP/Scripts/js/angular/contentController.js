@@ -17,11 +17,14 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
+            $("#test").text(vm.timeLeft);
             vm.promise = $interval(timer, 1000);
         };
 
         function timer() {
+            vm.timeLeft = $("#test").text();
             vm.timeLeft--;
+            $("#test").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel();
                 vm.pointCounter(0);
@@ -79,9 +82,9 @@
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
-            vm.timeLeft = reset;
-            console.log("resetting Timer client-Side to ");
-            console.log(reset);
+            $("#test").text(reset);
+            console.log("timeLeft");
+            console.log(vm.timeLeft);
         };
         // Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
         vm.getRuleChanger = function () {

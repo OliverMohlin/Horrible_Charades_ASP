@@ -141,9 +141,9 @@ namespace Horrible_Charades_ASP
                 Game game = GameState.Instance.GetAdjective(gameCode);
                 Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0].Description} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
-                //Clients.Group(game.GameCode).resetTimer();
-                Clients.Caller.resetTimer(10);
+                Clients.Group(game.GameCode).resetTimer(10);
             }
+
             if (typeOfWord == "verb")
             {
                 Game game = GameState.Instance.GetVerb(gameCode);
