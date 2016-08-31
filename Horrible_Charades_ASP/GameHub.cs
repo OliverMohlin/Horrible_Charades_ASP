@@ -144,12 +144,9 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-            Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                Clients.Caller.debugMessage("starting to find adjective");
                 Game game = GameState.Instance.GetAdjective(gameCode);
-                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0].Description} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
                 Clients.Group(game.GameCode).resetTimer(10);
             }
