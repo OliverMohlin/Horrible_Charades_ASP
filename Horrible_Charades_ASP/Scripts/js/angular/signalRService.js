@@ -29,7 +29,6 @@
         };
         // Update the Local players index in games List of Teams 
         hub.client.updateMyTeam = function (index) {
-            console.log(index);
             self.myTeam = index;
         };
         //Redirects to next view

@@ -68,15 +68,29 @@ namespace Horrible_Charades_ASP
     
             }
         }
+
+        /// <summary>
+        /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void GetRuleChanger(string gameCode)
+        {
+            int index = 0;
+            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode,out index);
+            Clients.Caller.updateMyTeam(index);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Group(gameCode).startCharade();
+        }
+
         /// <summary>
         /// Shuffles and assigns which Team is going to do the charade and redirects the client
         /// </summary>
         /// <param name="gameCode"></param>
-        public void startCharade(string gameCode)
+        public void StartCharade(string gameCode)
         {
-
-            Game game = GameState.Instance.AssignWhosTurn(gameCode);
-
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Caller.debugMessage("hub startCharade says: " + gameCode);
+            Clients.Caller.debugMessage(game);
             Clients.Group(gameCode).updateGameState(game);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
@@ -114,6 +128,7 @@ namespace Horrible_Charades_ASP
             //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+            Clients.Group(game.GameCode).startTimer();
         }
 
         public void RedirectToCharade(string gameCode)
@@ -123,6 +138,7 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).updateGameState(game);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/CharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/CharadeParticipant");
+            Clients.Group(game.GameCode).startTimer();
         }
 
         /// <summary>
@@ -167,18 +183,6 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).resetTimer(10);
         }
 
-        /// <summary>
-        /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
-        /// </summary>
-        /// <param name="gameCode"></param>
-        public void GetRuleChanger(string gameCode)
-        {
-            int index = 5;
-            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode,out index);
-            Clients.Caller.updateMyTeam(index);
-            Clients.Caller.debugMessage(game);
-            Clients.Group(gameCode).updateGameState(game);
-        }
 
         public void GetIncorrectAnswers(string gameCode)
         {

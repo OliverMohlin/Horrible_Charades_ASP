@@ -45,8 +45,14 @@
                 }
             }
         }
+        // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
+        hub.client.startTimer = function () {
+            console.log("calling vm.startTimer")
+            vm.stopTimer();
+            vm.startTimer();
+        }
         vm.stopTimer = function () {
-            $interval.cancel(promise);
+            $interval.cancel(vm.promise);
         };
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
@@ -59,10 +65,14 @@
         };
 
         //Calls StartCharade on Server-Side when a the host presses start
-        vm.startCharade = function () {
+        hub.client.startCharade = function () {
             hub.server.startCharade(signalRService.game.GameCode);
-            hub.server.getRuleChanger(signalRService.game.GameCode);
         };
+
+        vm.leaveLobby = function () {
+            hub.server.getRuleChanger(signalRService.game.GameCode);
+
+        }
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
@@ -100,6 +110,7 @@
             hub.server.updateCharade("verb", signalRService.game.GameCode);
         };
 
+
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
@@ -107,6 +118,7 @@
             console.log("timeLeft");
             console.log(vm.timeLeft);
         };
+
         // Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
         vm.getRuleChanger = function () {
             console.log("initiating getRuleChanger");

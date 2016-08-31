@@ -85,10 +85,8 @@ namespace Horrible_Charades_ASP
         /// Assigns Who's turn in game
         /// </summary>
         /// <param name="game"></param>
-        internal Game AssignWhosTurn(string gameCode)
+        internal void AssignWhosTurn(Game game)
         {
-            Game game = GetGame(gameCode);
-
             if (game.Turn == 0)
             {
                 game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
@@ -103,10 +101,7 @@ namespace Horrible_Charades_ASP
             }
 
             game.GameState = 3;
-
-            return game;
         }
-
 
         /// <summary>
         /// Return a game with a specific gameCode
@@ -291,7 +286,7 @@ namespace Horrible_Charades_ASP
             Game game = GetGame(gameCode);
             index = GetTeam(game, connectionId);
             GetRuleChanger(game, index);
-
+            AssignWhosTurn(game);
             return game;
         }
 
