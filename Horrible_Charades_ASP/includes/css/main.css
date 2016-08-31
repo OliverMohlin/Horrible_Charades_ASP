@@ -315,7 +315,7 @@ input:-moz-placeholder {
     border-radius: 20px;
     padding: 10px;
     margin: 5px 0px 20px 0px;
-    width: 30%;
+    width: 40%;
     border: none;
 }
 
@@ -335,7 +335,7 @@ input:-moz-placeholder {
     }
 
     .teamList {
-        height: 40%;
+        height: 55%;
     }
 }
 
