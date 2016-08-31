@@ -44,6 +44,15 @@
         hub.client.pushToTeamList = function (teamName) {
             $("#teamList").append("<li>" + teamName + "</li>");
         };
+        hub.client.affectCharadeTime = function (direction) {
+            console.log(direction);
+            if (direction === "plus") {
+                signalRService.time += 15;
+            }
+            if (dicretion === "minus") {
+                signalRService.time -= 15;
+            }
+        };
 
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
@@ -79,28 +88,28 @@
             }
         };
 
-        //hub.client.displayAlternatives = function (alternatives) {
-        //    for (var i = 0; i < alternatives.length; i++) {
-        //        var tmpstr = "<ul>";
-        //        for (var j = 0; j < alternatives[i].length; j++) {
-        //            tmpstr += "<li id='" + alternatives[i][j].Description + "'><a>" + alternatives[i][j].Description + "</a></li>"
-        //        };
-        //        tmpstr += "</ul></br></br>";
-        //        $("#alternatives").append(tmpstr);
-        //    };
-
-        //};
-
         hub.client.displayAlternatives = function (alternatives) {
             for (var i = 0; i < alternatives.length; i++) {
                 var tmpstr = "<ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><input type='radio' id='" + alternatives[i][j].Description + "' name='selector'><label for='" + alternatives[i][j].Description + "'>" + alternatives[i][j].Description + "</label></input></li>";
-                }
+                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button ng-click='buttondisabled = true' ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>"
+                };
                 tmpstr += "</ul></br></br>";
                 $("#alternatives").append(tmpstr);
-            }
+            };
+
         };
+
+        //hub.client.displayAlternatives = function (alternatives) {
+        //    for (var i = 0; i < alternatives.length; i++) {
+        //        var tmpstr = "<ul>";
+        //        for (var j = 0; j < alternatives[i].length; j++) {
+        //            tmpstr += "<li id='" + alternatives[i][j].Description + "'><input type='radio' id='" + alternatives[i][j].Description + "' name='selector'><label for='" + alternatives[i][j].Description + "'>" + alternatives[i][j].Description + "</label></input></li>";
+        //        }
+        //        tmpstr += "</ul></br></br>";
+        //        $("#alternatives").append(tmpstr);
+        //    }
+        //};
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");

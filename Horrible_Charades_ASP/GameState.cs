@@ -144,10 +144,11 @@ namespace Horrible_Charades_ASP
         internal Game GetRuleChanger(Game game, int index)
         {
             //Ändra för olika antal funkups
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
 
-                RuleChanger ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
+                //RuleChanger ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
+                RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
 
                 if (ruleChanger.Type == "PowerUp")
                 {

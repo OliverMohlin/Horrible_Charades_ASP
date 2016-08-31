@@ -18,7 +18,7 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
-
+            
             if (signalRService.game.GameState === 4) {
                 $(".timer").text(time);
             } else {
@@ -35,9 +35,12 @@
                 $interval.cancel(vm.promise);
                 if (signalRService.game.GameState === 4) {
                     vm.redirectToCharade();
-                } else if (signalRService.game.GameState === 5) {
+                }
+                else if (signalRService.game.GameState === 5) {
                     vm.pointCounter(0);
-
+                }
+                else {
+                    console.log("GameState is not correct!")
                 }
             }
         }
@@ -108,13 +111,15 @@
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
         };
-        
+
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
+            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
+            //vm.timeLeft = 10;
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 3) {
-                signalRService.time -= 15;
+                hub.server.affectCaradeTime(signalRService.game.GameCode, "minus");
             }
             if (Id === 4) {
                 vm.getAdjective();
@@ -124,15 +129,13 @@
             }
         };
 
-        // Sends FunkUp's towards the acting team when a matching button is pressed 
+        // Sends PowerUp's towards the acting team when a matching button is pressed 
         vm.activatePowerUp = function (Id) {
-            console.log("initiating activateFunkUp");
-            console.log(Id);
             if (Id === 1) {
-                signalRService.time += 15;
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus");
             }
             if (Id === 2) {
-                vm.shuffleCharade();
+                hub.server.shuffleCharade(signalRService.game.GameCode);
             }
         };
 
@@ -146,7 +149,7 @@
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
         //vm.printCharade = function () {
-            
+
         //    for (var i = 0; i < gameService.game.CurrentCharade.Adjective.length; i++) {
         //        $("#charade").append("<li>" + gameService.game.CurrentCharade.Adjective[i].Description + "</li>");
         //    }
@@ -159,6 +162,6 @@
         //};
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
-    }
 
+    }
 })();
