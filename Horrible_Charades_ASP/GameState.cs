@@ -142,19 +142,14 @@ namespace Horrible_Charades_ASP
             for (int i = 0; i < 3; i++)
             {
                 RuleChanger ruleChanger = new RuleChanger();
-
-                //RuleChanger ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
                 do
                 {
                     ruleChanger = _dbUtils.GetRuleChanger();
                 } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
 
-
                 if (ruleChanger.Type == "PowerUp")
                 {
-                    //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
                     game.Teams[index].PowerUps.Add(ruleChanger);
-                    //return game;
                 }
                 else if (ruleChanger.Type == "FunkUp")
                 {
@@ -170,10 +165,7 @@ namespace Horrible_Charades_ASP
                     {
                         ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
                     }
-
-                    //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
                     game.Teams[index].FunkUps.Add(ruleChanger);
-                    //return game;
                 }
             }
             return game;
