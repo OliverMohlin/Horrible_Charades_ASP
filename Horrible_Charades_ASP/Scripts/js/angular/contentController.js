@@ -94,8 +94,6 @@
         
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
-            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
-            //vm.timeLeft = 10;
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 3) {
@@ -111,8 +109,6 @@
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activatePowerUp = function (Id) {
-            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
-            //vm.timeLeft = 10;
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 1) {

@@ -2,13 +2,15 @@
     <h1 class="header-page" vm.getModifier()">Charade Setup</h1>
     <h1><span class="time-text"><label data-ng-init="vm.startTimer()" id="test"></label></span><br /> seconds to go..</h1>
     <div class="row" id="funkUpContainer">
-            <p>{Team}'s turn! funk up their charade!</p>
-            <ul>
-                <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps"><button class="btn btn-default" data-ng-click="vm.activateFunkUp(FunkUp.ID)">{{FunkUp.Description}}</button></li>
-            </ul>
-            <!--<img src="../../../includes/images/powerup.png" />
-            <img src="../../../includes/images/powerup.png" />
-            <img src="../../../includes/images/powerup.png" />-->
+        <p>{Team}'s turn! funk up their charade!</p>
+        <ul>
+            <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps"><button class="btn btn-default" data-ng-click="vm.activateFunkUp(FunkUp.ID)">{{FunkUp.Description}}</button></li>
+        </ul>
+
+
+        <!--<img src="../../../includes/images/powerup.png" />
+        <img src="../../../includes/images/powerup.png" />
+        <img src="../../../includes/images/powerup.png" />-->
     </div>
 </div>
 
