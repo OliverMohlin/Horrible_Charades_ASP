@@ -92,7 +92,7 @@
             for (var i = 0; i < alternatives.length; i++) {
                 var tmpstr = "<ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button ng-click='buttondisabled = true' ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>"
+                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button data-ng-click='buttondisabled = true' data-ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>"
                 };
                 tmpstr += "</ul></br></br>";
                 $("#alternatives").append(tmpstr);
