@@ -144,12 +144,9 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-            Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                Clients.Caller.debugMessage("starting to find adjective");
                 Game game = GameState.Instance.GetAdjective(gameCode);
-                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0].Description} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
                 Clients.Group(game.GameCode).resetTimer(10);
             }
@@ -160,6 +157,13 @@ namespace Horrible_Charades_ASP
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
                 Clients.Group(game.GameCode).resetTimer(10);
             }
+        }
+
+        public void AffectCharadeTime(string gameCode, string direction)
+        {
+            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
+            Clients.Group(gameCode).affectCharadeTime(direction);
+            Clients.Group(gameCode).resetTimer(10);
         }
 
         /// <summary>
@@ -197,10 +201,7 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void ShuffleCharade (string gameCode)
         {
-            Clients.Caller.debugMessage("iniating shufflecharade on serverside");
             Game game = GameState.Instance.ShuffleCharade(gameCode);
-            Clients.Caller.debugMessage(game.CurrentCharade.Noun);
-            Clients.Caller.debugMessage(game.CurrentCharade.Adjective);
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");

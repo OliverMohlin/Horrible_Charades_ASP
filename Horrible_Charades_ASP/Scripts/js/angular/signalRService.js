@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/// <reference path="signalRService.js" />
+(function () {
     "use strict";
 
     //Getting the existing module
@@ -42,6 +43,15 @@
         //Show join game for everbody in the game
         hub.client.pushToTeamList = function (teamName) {
             $("#teamList").append("<li>" + teamName + "</li>");
+        };
+        hub.client.affectCharadeTime = function (direction) {
+            console.log(direction);
+            if (direction === "plus") {
+                signalRService.time += 15;
+            }
+            if (dicretion === "minus") {
+                signalRService.time -= 15;
+            }
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
