@@ -104,7 +104,7 @@ namespace Horrible_Charades_ASP
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
-        public void RedirectFromWaitingRoom(string gameCode)
+        public void RedirectToPreCharade(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
             Clients.Group(gameCode).updateGameState(game);

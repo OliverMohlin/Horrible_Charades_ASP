@@ -16,15 +16,15 @@
         vm.promise;
 
         //Starts timer on CharadeActor
-        vm.startTimer = function () {
-            $("#test").text(vm.timeLeft);
+        vm.startTimer = function (time) {
+            $(".timer").text(time);
             vm.promise = $interval(timer, 1000);
         };
 
         function timer() {
-            vm.timeLeft = $("#test").text();
+            vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
-            $("#test").text(vm.timeLeft);
+            $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel();
                 vm.pointCounter(0);
@@ -45,7 +45,8 @@
 
         //Calls StartCharade on Server-Side when a the host presses start
         vm.startCharade = function () {
-            hub.server.startCharade(vm.gameData.GameCode);
+            hub.server.startCharade(signalRService.game.GameCode);
+            hub.server.getRuleChanger(signalRService.game.GameCode);
         };
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
@@ -54,9 +55,9 @@
         };
 
         //Redirects to nextView
-        vm.redirectFromWaitingRoom = function () {
+        vm.redirectToPreCharade = function () {
             console.log("Redirecting to PreCharade");
-            hub.server.redirectFromWaitingRoom(signalRService.game.GameCode);
+            hub.server.redirectToPreCharade(signalRService.game.GameCode);
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
@@ -82,7 +83,7 @@
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
-            $("#test").text(reset);
+            $(".timer").text(reset);
             console.log("timeLeft");
             console.log(vm.timeLeft);
         };
