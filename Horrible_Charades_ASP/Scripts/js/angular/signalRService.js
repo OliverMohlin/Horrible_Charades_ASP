@@ -1,4 +1,5 @@
-﻿/// <reference path="signalRService.js" />
+﻿/// <reference path="contentController.js" />
+/// <reference path="signalRService.js" />
 (function () {
     "use strict";
 
@@ -89,16 +90,15 @@
 
         hub.client.displayAlternatives = function (alternatives) {
             for (var i = 0; i < alternatives.length; i++) {
-                var tmpstr = "<ul>";
+                var tmpstr = "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button data-ng-click='buttondisabled = true' data-ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>"
+                    tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.hide()'>" + alternatives[i][j].Description + "</button> </li>"
                 };
-                tmpstr += "</ul></br></br>";
+                tmpstr += "</ul> </div> </br></br>";
                 $("#alternatives").append(tmpstr);
             };
-
         };
-
+     
         //hub.client.displayAlternatives = function (alternatives) {
         //    for (var i = 0; i < alternatives.length; i++) {
         //        var tmpstr = "<ul>";
@@ -109,6 +109,13 @@
         //        $("#alternatives").append(tmpstr);
         //    }
         //};
+        //$("#alternatives").click(function () {
+        //    console.log("hiding div");
+        //    var i = event.target.name[event.target.name.length - 1]
+        //    $("#myDiv" + i).hide()
+        //    var str = event.target.name.substring(0, event.target.name.length - 1);
+        //    $("#" + i).append(str)
+        //});
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");

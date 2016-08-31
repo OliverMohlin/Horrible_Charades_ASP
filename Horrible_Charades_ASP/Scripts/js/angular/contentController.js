@@ -49,7 +49,7 @@
         hub.client.startTimer = function () {
             console.log("calling vm.startTimer")
             vm.stopTimer();
-            vm.startTimer();
+            //vm.startTimer();
         }
         vm.stopTimer = function () {
             $interval.cancel(vm.promise);
@@ -172,6 +172,14 @@
             for (var i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
                 $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");
             }
+        };
+
+        vm.hideDiv = function () {
+            console.log("hiding div");
+            //var i = event.target.name[event.target.name.length - 1]
+            //$("#myDiv" + i).hide()
+            //var str = event.target.name.substring(0, event.target.name.length - 1);
+            //$("#" + i).append(str);
         };
 
         vm.submitGuess = function () {
