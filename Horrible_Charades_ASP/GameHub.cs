@@ -70,32 +70,6 @@ namespace Horrible_Charades_ASP
         }
 
         /// <summary>
-        /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
-        /// </summary>
-        /// <param name="gameCode"></param>
-        public void GetRuleChanger(string gameCode)
-        {
-            int index = 0;
-            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode,out index);
-            Clients.Caller.updateMyTeam(index);
-            Clients.Group(gameCode).updateGameState(game);
-            Clients.Group(gameCode).startCharade();
-        }
-
-        /// <summary>
-        /// Shuffles and assigns which Team is going to do the charade and redirects the client
-        /// </summary>
-        /// <param name="gameCode"></param>
-        public void StartCharade(string gameCode)
-        {
-            Game game = GameState.Instance.GetGame(gameCode);
-            Clients.Caller.debugMessage("hub startCharade says: " + gameCode);
-            Clients.Caller.debugMessage(game);
-            Clients.Group(gameCode).updateGameState(game);
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
-            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
-        }
-        /// <summary>
         /// Takes in a gameCode and TeamName from a joining team, looks for a Game with matching gameCode and adds the team into the game.
         /// </summary>
         /// <param name="gameCode"></param>
@@ -115,6 +89,32 @@ namespace Horrible_Charades_ASP
             }
 
         }
+
+        /// <summary>
+        /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void GetRuleChanger(string gameCode)
+        {
+            int index = 0;
+            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode, out index);
+            Clients.Caller.updateMyTeam(index);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Group(gameCode).startCharade();
+        }
+
+        /// <summary>
+        /// Shuffles and assigns which Team is going to do the charade and redirects the client
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void StartCharade(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
+        }
+
         /// <summary>
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
@@ -125,9 +125,14 @@ namespace Horrible_Charades_ASP
             game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
+            Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
+            Clients.Group(gameCode).debugMessage(game.GameState);
+            Clients.Group(gameCode).debugMessage(game.Teams);
             //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+            Clients.Group(gameCode).debugMessage("red.ToPreCharade Sleeping thread for 0.5sek");
+            Thread.Sleep(500);
             Clients.Group(game.GameCode).startTimer();
         }
 
@@ -138,6 +143,8 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).updateGameState(game);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/CharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/CharadeParticipant");
+            Clients.Group(gameCode).debugMessage("red.ToCharade Sleeping thread for 0.5sek");
+            Thread.Sleep(500);
             Clients.Group(game.GameCode).startTimer();
         }
 
@@ -147,9 +154,8 @@ namespace Horrible_Charades_ASP
         /// </summary>
         public void GetNoun(string gameCode)
         {
-            Clients.Caller.debugMessage("initiating getNoun on serverside");
             Game game = GameState.Instance.GetNoun(gameCode);
-            Clients.Caller.debugMessage($"Have found a noun: {game.CurrentCharade.Noun} and updated serverside Game");
+            Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
             Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
         }
 

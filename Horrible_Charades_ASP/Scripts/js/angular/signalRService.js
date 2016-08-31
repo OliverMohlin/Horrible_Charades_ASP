@@ -55,7 +55,6 @@
 
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
-            console.log("preparing to Print new Word");
             if (typeOfWord === "noun") {
                 $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
@@ -91,11 +90,11 @@
             for (var i = 0; i < alternatives.length; i++) {
                 var tmpstr = "<ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button data-ng-click='buttondisabled = true' data-ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>"
-                };
+                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button data-ng-click='buttondisabled = true' data-ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>";
+                }
                 tmpstr += "</ul></br></br>";
                 $("#alternatives").append(tmpstr);
-            };
+            }
 
         };
 
