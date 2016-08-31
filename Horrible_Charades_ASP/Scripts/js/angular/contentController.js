@@ -21,9 +21,9 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(time);
+                $(".timer").text(10);
             } else {
-                $(".timer").text(vm.time);
+                $(".timer").text(60);
             }
             vm.promise = $interval(timer, 1000);
         };
