@@ -2,7 +2,7 @@
     <h1 class="header-page">Charade Setup</h1>
     <h1><span class="time-text"><label data-ng-init="vm.startTimer()" id="test"></label></span><br /> seconds to go..</h1>
     <div class="row" id="funkUpContainer">
-            <p>{Team}'s turn! funk up their charade!</p>
+            <p class="info-text">{Team}'s turn! funk up their charade!</p>
             <ul id="funkup-list">
                 <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps" id="funkup-list-item"><div ng-bind-html="FunkUp.HTMLString ">{{FunkUp.HTMLString}}</div></li>
             </ul>

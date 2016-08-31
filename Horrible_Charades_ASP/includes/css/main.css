@@ -89,6 +89,17 @@ a {
     margin-bottom: 0.7em;
 }
 
+.info-text {
+    font-size: 22px;
+    margin: 1em;
+}
+
+.gamecode-text{
+    font-family:'Source Code Pro';
+    font-weight:900;
+    font-size: 44px;
+}
+
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
     .header-page {
         font-size: 26px;
@@ -328,7 +339,6 @@ input:-moz-placeholder {
 
     #startGameButton {
         font-size: 20px;
-        width: 40%;
     }
 
     .lobby-code {
@@ -352,6 +362,8 @@ input:-moz-placeholder {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .time-text {
@@ -360,45 +372,32 @@ input:-moz-placeholder {
     margin-bottom: 0em;
 }
 
-
-#pre-charade-participant-container > h2 {
-    margin-top: 2em;
-    font-size: 23px;
-}
-
-#pre-charade-participant-container > div > p {
-    font-size: 20px;
-    margin: 2em 0;
-}
-
 #funkUpContainer {
     background-color: #E0E0E0;
-    height: 80vh;
     margin-top: 1em;
+    overflow: hidden;
 }
-
 
 .funkup {
     display: inline-block;
     background-color: #EF5451;
-    margin: 0 10px;
+    margin: 0 0.5em 1em 0.5em;
     width: 25rem;
     height: 25rem;
     border-radius: 50%;
-    padding: 8vh 0;
     color: white;
+    padding: 1.2em 0;
     font-family: Bungee;
     font-size: 56px;
-    line-height:76px;
-
+    line-height: 76px;
 }
 
-.funkup-text{
-    margin-top:1em;
+.funkup-text {
+    margin-top: 1em;
 }
 
 .add {
-    font-size: 170px;
+    font-size: 160px;
 }
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
@@ -409,6 +408,18 @@ input:-moz-placeholder {
     #pre-charade-participant-container > div > p {
         font-size: 16px;
         margin: 1em 0;
+    }
+
+    .funkup {
+        margin: 0 1em 1em 0;
+        width: 10rem;
+        height: 10rem;
+        font-size: 22px;
+        line-height: 24px;
+    }
+
+    .add {
+        font-size: 64px;
     }
 }
 
