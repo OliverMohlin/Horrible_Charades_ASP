@@ -41,12 +41,21 @@
                     vm.pointCounter(0);
                 }
                 else {
-                    console.log("GameState is not correct!")
+                    console.log("GameState is not correct!");
                 }
             }
-        }
+        };
+
+        // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
+        hub.client.startTimer = function () {
+            console.log("calling vm.startTimer");
+            vm.stopTimer();
+            vm.startTimer();
+        };
+
+        // Stops the timer. Called from startTimer.
         vm.stopTimer = function () {
-            $interval.cancel(promise);
+            $interval.cancel(vm.promise);
         };
         //Calls CreateGame function on Server-Side when CreateTeamHost is loaded
         vm.createGame = function () {
@@ -58,23 +67,29 @@
             hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
         };
 
-        //Calls StartCharade on Server-Side when a the host presses start
-        vm.startCharade = function () {
-            hub.server.startCharade(signalRService.game.GameCode);
-            hub.server.getRuleChanger(signalRService.game.GameCode);
-        };
+
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
             hub.server.createTeam(signalRService.game.GameCode, $("#TeamName").val());
         };
 
-        //Redirects to nextView
+        //Calls StartCharade on Server-Side when a the host presses start
+        hub.client.startCharade = function () {
+            hub.server.startCharade(signalRService.game.GameCode);
+        };
+
+        vm.leaveLobby = function () {
+            console.log("initiating getRuleChanger");
+            hub.server.getRuleChanger(signalRService.game.GameCode);
+        };
+
+        //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            console.log("Redirecting to PreCharade");
             hub.server.redirectToPreCharade(signalRService.game.GameCode);
         };
 
+        // Redirects to Charade View
         vm.redirectToCharade = function () {
             console.log("Redirecting to Charade");
             hub.server.redirectToCharade(signalRService.game.GameCode);
@@ -90,6 +105,10 @@
             $(".charadeContainer").html('');
             hub.server.shuffleCharade(signalRService.game.GameCode);
         };
+
+        vm.funkUp = function (id) {
+            console.log(id);
+        };
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
         vm.getAdjective = function () {
             hub.server.updateCharade("adjective", signalRService.game.GameCode);
@@ -100,6 +119,7 @@
             hub.server.updateCharade("verb", signalRService.game.GameCode);
         };
 
+
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
@@ -107,11 +127,11 @@
             console.log("timeLeft");
             console.log(vm.timeLeft);
         };
-        // Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
-        vm.getRuleChanger = function () {
-            console.log("initiating getRuleChanger");
-            hub.server.getRuleChanger(signalRService.game.GameCode);
-        };
+
+        //// Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
+        //vm.getRuleChanger = function () {
+        //    hub.server.getRuleChanger(signalRService.game.GameCode);
+        //};
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
@@ -157,9 +177,17 @@
 
             $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + " </li>");
 
-            for (var i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
-                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + " </li>");
+            for ( i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
+                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");
             }
+        };
+
+        vm.hideDiv = function () {
+            console.log("hiding div");
+            //var i = event.target.name[event.target.name.length - 1]
+            //$("#myDiv" + i).hide()
+            //var str = event.target.name.substring(0, event.target.name.length - 1);
+            //$("#" + i).append(str);
         };
 
         vm.submitGuess = function () {

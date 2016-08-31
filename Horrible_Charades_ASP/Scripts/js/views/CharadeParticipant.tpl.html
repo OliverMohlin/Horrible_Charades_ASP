@@ -1,6 +1,6 @@
 ﻿<h1 data-ng-init="vm.getIncorrectAnswers()">Charade - Participant</h1> 
 
-<h1><span class="time-text"><label data-ng-init="vm.startTimer(60)" class="timer"></label></span><br /> seconds to go..</h1>
+<h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
 <p>List of Adj</p>
 <div id="alternatives" data-ng-hide="vm.guessed"></div>
 <div data-ng-show="vm.guessed"> Show och hide funkar</div> <!--Visas när de har gissat-->
@@ -8,3 +8,18 @@
 <button data-ng-click="vm.submitGuess()">Submit Guess</button>
 
 <a href="#Score">Next Phase</a>
+
+
+<!--<script>
+
+         function checkBtn(event) {
+               alert(event.target.name);
+         }
+</script>
+
+
+<br /><br />
+<input type="submit" name="save" id="save" onClick="checkBtn(event)" /><br />
+<input type="submit" name="update" id="update" value="Update" onClick="checkBtn(event)" /><br />
+<input type="submit" name="delete" id="delete" value="Delete" onClick="checkBtn(event)" /-->
+><br />
