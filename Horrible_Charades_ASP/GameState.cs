@@ -144,11 +144,16 @@ namespace Horrible_Charades_ASP
         internal Game GetRuleChanger(Game game, int index)
         {
             //Ändra för olika antal funkups
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 3; i++)
             {
+                RuleChanger ruleChanger = new RuleChanger();
 
                 //RuleChanger ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
-                RuleChanger ruleChanger = _dbUtils.GetRuleChanger();
+                do
+                {
+                    ruleChanger = _dbUtils.GetRuleChanger();
+                } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
+
 
                 if (ruleChanger.Type == "PowerUp")
                 {
@@ -160,15 +165,15 @@ namespace Horrible_Charades_ASP
                 {
                     if (ruleChanger.Description == "Add Adjective")
                     {
-                        ruleChanger.HTMLString = "<div class='btn funkup add - adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>Add <br />Adjective</div>";
+                        ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
                     }
                     else if (ruleChanger.Description == "Add Verb")
                     {
-                        ruleChanger.HTMLString = "<div class='btn funkup add - adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>Add <br />Verb</div>";
+                        ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
                     }
                     else
                     {
-                        ruleChanger.HTMLString = "<div class='btn funkup add - adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
+                        ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
                     }
 
                     //RuleChanger modifier = _dbUtils.GetRuleChanger(type);
@@ -186,7 +191,7 @@ namespace Horrible_Charades_ASP
             {
                 return game;
             }
-   
+
 
             game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
             return game;

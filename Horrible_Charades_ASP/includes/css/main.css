@@ -264,6 +264,7 @@ a {
     color: white;
     font-family: Bungee;
 }
+
 ::-moz-placeholder {
     color: white;
 }
@@ -279,21 +280,72 @@ input:-moz-placeholder {
 /* --------------------------------------
    Lobby
    -------------------------------------- */
-.team-item {
-    background-color: white;
-    border-radius: 1rem;
-    height: 5rem;
-    padding: 0.5em 0;
-    margin: 0 0 15px;
-    right: 0;
+#lobby-container {
+    text-align: center;
+}
+
+.lobby-code {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.teamList {
+    height: 66%;
+}
+
+.lobby-teamList {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 34px;
+    color: white;
+    display: inline-table;
+    background-color: #616262;
+    border-radius: 20px;
+    padding: 12px;
+    margin: 7px;
+    width: 30%;
+}
+
+#startGameButton {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 34px;
+    color: white;
+    display: inline-table;
+    background-color: #EF5451;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 5px 0px 20px 0px;
+    width: 30%;
+    border: none;
+}
+
+/*--------------------- Media queries - Lobby ---------------------*/
+@media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
+    .lobby-teamList {
+        font-size: 20px;
+    }
+
+    #startGameButton {
+        font-size: 20px;
+        width: 40%;
+    }
+
+    .lobby-code {
+        font-size: inherit;
+    }
+
+    .teamList {
+        height: 40%;
+    }
 }
 
 /* --------------------------------------
-   PreCharadeActor
+   PreCharadeParticipant
    -------------------------------------- */
 
 #funkUpContainer > ul li {
-    display: inline;
+    display: inline-block;
 }
 
 #pre-charade-participant-container {
@@ -326,16 +378,27 @@ input:-moz-placeholder {
 }
 
 
-.funkup{
+.funkup {
     display: inline-block;
     background-color: #EF5451;
-    margin: 0 1vw;
-    width: 23vw;
-    height: 23vw;
+    margin: 0 10px;
+    width: 25rem;
+    height: 25rem;
     border-radius: 50%;
     padding: 8vh 0;
-    color:white;
-    font-size: 3vw;
+    color: white;
+    font-family: Bungee;
+    font-size: 56px;
+    line-height:76px;
+
+}
+
+.funkup-text{
+    margin-top:1em;
+}
+
+.add {
+    font-size: 170px;
 }
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {

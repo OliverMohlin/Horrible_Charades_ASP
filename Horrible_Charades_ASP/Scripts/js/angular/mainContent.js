@@ -1,7 +1,7 @@
 ﻿
 //Creates the module
 (function () {
-    angular.module("mainContent", ["ngRoute"])
+    angular.module("mainContent", ["ngRoute", "ngSanitize"])
     .config(function ($routeProvider) {
 
         $routeProvider

@@ -42,7 +42,7 @@
         };
         //Show join game for everbody in the game
         hub.client.pushToTeamList = function (teamName) {
-            $("#teamList").append("<li>" + teamName + "</li>");
+            $(".teamList").append("<li class='lobby-teamList'>" + teamName + "</li>");
         };
         hub.client.affectCharadeTime = function (direction) {
             console.log(direction);

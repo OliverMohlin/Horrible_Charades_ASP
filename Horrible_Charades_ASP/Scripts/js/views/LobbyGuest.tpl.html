@@ -1,18 +1,20 @@
-﻿<h1>Lobby for Guest</h1>
-<h3>Code to join: <strong> {{vm.gameData.GameCode}} </strong></h3>
-<div>
-    <ul id="teamList">
-        <li data-ng-repeat="team in vm.gameData.Teams">{{team.Name}}</li>
-    </ul>
-</div>
+﻿<div class="container-fluid" id="lobby-container">
+    <h1 class="header-page">Lobby for Guest</h1>
+    <h3 class="lobby-code">Code to join: {{vm.gameData.GameCode}}</h3>
 
-<div id="options">
-    <h3>Options</h3>
+    <div>
+        <ul class="teamList">
+            <li data-ng-repeat="team in vm.gameData.Teams" class="lobby-teamList">{{team.Name}}</li>
+        </ul>
+    </div>
+
+    <!--<div id="options">
+        <h3>Options</h3>
+    </div>-->
+
+    <h1>Waiting for host...</h1>
 </div>
-<p>Waiting for Host...</p>
-<br />
-<br />
 
 <a href="#WaitingRoomActor">Next Phase (Actor)</a>
-<a href="#WaitingRoomOpponenet">Next Phase (Oppponent)</a>
+<a href="#WaitingRoomOpponent">Next Phase (Opponent)</a>
 <!--<a href="#PreCharadeParticipant">Next Phase (Participant)</a>-->
