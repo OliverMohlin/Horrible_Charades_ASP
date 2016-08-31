@@ -40,7 +40,7 @@
         };
         //Show join game for everbody in the game
         hub.client.pushToTeamList = function (teamName) {
-            $("#teamList").append("<li>" + teamName + "</li>");
+            $(".teamList").append("<li class='lobby-teamList'>" + teamName + "</li>");
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
