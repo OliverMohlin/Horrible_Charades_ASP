@@ -21,7 +21,7 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(10);
+                $(".timer").text(3000);
             } else {
                 $(".timer").text(60);
             }
@@ -102,7 +102,7 @@
 
         //Calls shuffleCharade function on Server-side when "shufflecharade-button" is pressed by the actor
         vm.shuffleCharade = function () {
-            $("#charadeContainer").html('');
+            $(".charadeContainer").html('');
             hub.server.shuffleCharade(signalRService.game.GameCode);
         };
 
@@ -172,10 +172,10 @@
         vm.printCharade = function () {
 
             for (var i = 0; i < signalRService.game.CurrentCharade.Adjective.length; i++) {
-                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Adjective[i].Description + "</li>");
+                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Adjective[i].Description + " </li>");
             }
 
-            $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + "</li>");
+            $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + " </li>");
 
             for ( i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
                 $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");

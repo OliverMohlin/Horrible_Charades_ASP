@@ -56,7 +56,7 @@
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
             if (typeOfWord === "noun") {
-                $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
+                $(".charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
