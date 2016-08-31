@@ -43,6 +43,15 @@
         hub.client.pushToTeamList = function (teamName) {
             $("#teamList").append("<li>" + teamName + "</li>");
         };
+        hub.client.affectCharadeTime = function (direction) {
+            console.log(direction);
+            if (direction === "plus") {
+                signalRService.time += 15;
+            }
+            if (dicretion === "minus") {
+                signalRService.time -= 15;
+            }
+        };
 
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {

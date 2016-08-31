@@ -162,6 +162,13 @@ namespace Horrible_Charades_ASP
             }
         }
 
+        public void AffectCharadeTime(string gameCode, string direction)
+        {
+            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
+            Clients.Group(gameCode).affectCharadeTime(direction);
+            Clients.Group(gameCode).resetTimer(10);
+        }
+
         /// <summary>
         /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
         /// </summary>
@@ -197,10 +204,7 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void ShuffleCharade (string gameCode)
         {
-            Clients.Caller.debugMessage("iniating shufflecharade on serverside");
             Game game = GameState.Instance.ShuffleCharade(gameCode);
-            Clients.Caller.debugMessage(game.CurrentCharade.Noun);
-            Clients.Caller.debugMessage(game.CurrentCharade.Adjective);
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
