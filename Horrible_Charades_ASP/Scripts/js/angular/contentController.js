@@ -50,7 +50,7 @@
         hub.client.startTimer = function () {
             console.log("calling vm.startTimer");
             vm.stopTimer();
-            vm.startTimer();
+            //vm.startTimer();
         };
 
         // Stops the timer. Called from startTimer.
