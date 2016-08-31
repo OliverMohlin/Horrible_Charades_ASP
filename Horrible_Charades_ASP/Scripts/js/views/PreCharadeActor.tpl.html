@@ -1,14 +1,7 @@
 ﻿
 <h1>Pre-Charade - Actor</h1>
-<p>Timer</p> 
-
-
-
+<h1><span class="time-text"><label data-ng-init="vm.startTimer(10)" class="timer"></label></span><br /> seconds to go..</h1>
 <p>Icons</p>
-
-
-
-
 
 
 <br />
@@ -40,7 +33,6 @@
 <p>POWERUPS</p>
 <div id="powerUpContainer"> 
     <ul>
-        <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"> {{PowerUp.Description}} </li>
-        <li> <input type="button" data-ng-click="vm.shuffleCharade()" value="Klick to shuffle your charade!" /> </li>
+        <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>
     </ul>
 </div>

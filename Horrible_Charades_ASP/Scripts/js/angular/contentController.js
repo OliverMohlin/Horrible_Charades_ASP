@@ -12,19 +12,36 @@
         // Updates contentController to fit the locally persisted data in gameService. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
-        vm.timeLeft = 30;
+        vm.timeLeft = 3000;
         vm.promise;
+        vm.time = signalRService.time;
 
         //Starts timer on CharadeActor
-        vm.startTimer = function () {
+        vm.startTimer = function (time) {
+            
+            if (signalRService.game.GameState === 4) {
+                $(".timer").text(time);
+            } else {
+                $(".timer").text(vm.time);
+            }
             vm.promise = $interval(timer, 1000);
         };
 
         function timer() {
+            vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
+            $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
-                $interval.cancel();
-                vm.pointCounter(0);
+                $interval.cancel(vm.promise);
+                if (signalRService.game.GameState === 4) {
+                    vm.redirectToCharade();
+                }
+                else if (signalRService.game.GameState === 5) {
+                    vm.pointCounter(0);
+                }
+                else {
+                    console.log("GameState is not correct!")
+                }
             }
         }
         vm.stopTimer = function () {
@@ -42,7 +59,8 @@
 
         //Calls StartCharade on Server-Side when a the host presses start
         vm.startCharade = function () {
-            hub.server.startCharade(vm.gameData.GameCode);
+            hub.server.startCharade(signalRService.game.GameCode);
+            hub.server.getRuleChanger(signalRService.game.GameCode);
         };
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
@@ -51,9 +69,14 @@
         };
 
         //Redirects to nextView
-        vm.redirectFromWaitingRoom = function () {
+        vm.redirectToPreCharade = function () {
             console.log("Redirecting to PreCharade");
-            hub.server.redirectFromWaitingRoom(signalRService.game.GameCode);
+            hub.server.redirectToPreCharade(signalRService.game.GameCode);
+        };
+
+        vm.redirectToCharade = function () {
+            console.log("Redirecting to Charade");
+            hub.server.redirectToCharade(signalRService.game.GameCode);
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
@@ -79,16 +102,16 @@
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
-            vm.timeLeft = reset;
-            console.log("resetting Timer client-Side to ");
-            console.log(reset);
+            $(".timer").text(reset);
+            console.log("timeLeft");
+            console.log(vm.timeLeft);
         };
         // Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
         vm.getRuleChanger = function () {
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
         };
-        
+
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
             // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
@@ -96,7 +119,7 @@
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 3) {
-                alert("DONT PUSH THIS BUTTTON!!!! just kidding. waiting for another timer to set the time on... :) ");
+                hub.server.affectCaradeTime(signalRService.game.GameCode, "minus");
             }
             if (Id === 4) {
                 vm.getAdjective();
@@ -106,17 +129,13 @@
             }
         };
 
-        // Sends FunkUp's towards the acting team when a matching button is pressed 
+        // Sends PowerUp's towards the acting team when a matching button is pressed 
         vm.activatePowerUp = function (Id) {
-            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
-            //vm.timeLeft = 10;
-            console.log("initiating activateFunkUp");
-            console.log(Id);
             if (Id === 1) {
-                alert("DONT PUSH THIS BUTTTON!!!! just kidding. waiting for another timer to set the time on... :) ");
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus");
             }
             if (Id === 2) {
-                vm.shuffleCharade();
+                hub.server.shuffleCharade(signalRService.game.GameCode);
             }
         };
 
@@ -126,11 +145,11 @@
 
         vm.pointCounter = function (timeLeft) {
             $interval.cancel(vm.promise);
-            console.log(timeLeft);
+            console.log("You're in pointcounter");
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
         //vm.printCharade = function () {
-            
+
         //    for (var i = 0; i < gameService.game.CurrentCharade.Adjective.length; i++) {
         //        $("#charade").append("<li>" + gameService.game.CurrentCharade.Adjective[i].Description + "</li>");
         //    }
@@ -143,6 +162,6 @@
         //};
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
-    }
 
+    }
 })();

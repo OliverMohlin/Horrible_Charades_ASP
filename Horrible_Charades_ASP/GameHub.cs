@@ -55,6 +55,7 @@ namespace Horrible_Charades_ASP
                 Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
                 if (game.Teams.Count == 1)
                 {
+
                     Clients.Group(game.GameCode).updateGameState(game);
                     Clients.Caller.redirectToView("/#/LobbyHost");
                 }
@@ -72,9 +73,8 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void startCharade(string gameCode)
         {
-            Game game = GameState.Instance.GetGame(gameCode);
 
-            GameState.Instance.AssignWhosTurn(game);
+            Game game = GameState.Instance.AssignWhosTurn(gameCode);
 
             Clients.Group(gameCode).updateGameState(game);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
@@ -104,14 +104,24 @@ namespace Horrible_Charades_ASP
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
-        public void RedirectFromWaitingRoom(string gameCode)
+        public void RedirectToPreCharade(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
+            game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
             //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
             Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+        }
+
+        public void RedirectToCharade(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            game.GameState = 5;
+            Clients.Group(gameCode).updateGameState(game);
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/CharadeActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/CharadeParticipant");
         }
 
         /// <summary>
@@ -134,22 +144,26 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void UpdateCharade(string typeOfWord, string gameCode)
         {
-            Clients.Caller.debugMessage("initiating UpdateCharade on serverside");
             if (typeOfWord == "adjective")
             {
-                Clients.Caller.debugMessage("starting to find adjective");
                 Game game = GameState.Instance.GetAdjective(gameCode);
-                Clients.Caller.debugMessage($"Have found an adjective: {game.CurrentCharade.Adjective[0].Description} and updated serverside Game");
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
-                //Clients.Group(game.GameCode).resetTimer();
-                Clients.Caller.resetTimer(10);
+                Clients.Group(game.GameCode).resetTimer(10);
             }
+
             if (typeOfWord == "verb")
             {
                 Game game = GameState.Instance.GetVerb(gameCode);
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
                 Clients.Group(game.GameCode).resetTimer(10);
             }
+        }
+
+        public void AffectCharadeTime(string gameCode, string direction)
+        {
+            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
+            Clients.Group(gameCode).affectCharadeTime(direction);
+            Clients.Group(gameCode).resetTimer(10);
         }
 
         /// <summary>
@@ -187,10 +201,7 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void ShuffleCharade (string gameCode)
         {
-            Clients.Caller.debugMessage("iniating shufflecharade on serverside");
             Game game = GameState.Instance.ShuffleCharade(gameCode);
-            Clients.Caller.debugMessage(game.CurrentCharade.Noun);
-            Clients.Caller.debugMessage(game.CurrentCharade.Adjective);
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
