@@ -1,38 +1,25 @@
-﻿
-<h1>Pre-Charade - Actor</h1>
-<h1><span class="time-text"><label data-ng-init="vm.startTimer(10)" class="timer"></label></span><br /> seconds to go..</h1>
-<p>Icons</p>
+﻿<div class="container-fluid centered-container">
+    <h4 class="time-container"><span class="time-text timer" data-ng-init="vm.startTimer(3000) "></span></h4>
+    <p class="timer-description">until charade starts..</p>
+    <div class="charadeContainer" data-ng-init="vm.getNoun()">
+        <p class="info-text">Your charade is: </p>
+    </div>
+    <br />
+    <p>POWERUPS</p>
+    <div id="powerUpContainer">
+        <ul>
+            <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>
+        </ul>
+    </div>
 
+    <!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
+    <button data-ng-click="vm.getAdjective()">Klicka för Adjektiv</button>
 
-<br />
-<h1 id="charade" data-ng-init="vm.getNoun()">Charade</h1>
-<br />
-<br />
-<p>POWERUPS</p>
-<br />
+    <input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
 
-<div id="powerUpContainer"> 
+    <input type="button" data-ng-click="vm.timer()" value="Klicka för timer" />
 
-</div>
-<div class="container" id="charadeContainer">
-    
-</div>
-<!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
-<button data-ng-click="vm.getAdjective()" >Klicka för Adjektiv</button>
+    <a href="#CharadeActor">Next Phase (Actor)</a>
 
-<input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
-
-<input type="button" data-ng-click="vm.timer()" value="Klicka för timer" />
-
-<a href="#CharadeActor">Next Phase (Actor)</a>
-
-<a href="#CharadeParticipant">Next Phase (Participant)</a>
-
-
-<br />
-<p>POWERUPS</p>
-<div id="powerUpContainer"> 
-    <ul>
-        <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>
-    </ul>
+    <a href="#CharadeParticipant">Next Phase (Participant)</a>
 </div>

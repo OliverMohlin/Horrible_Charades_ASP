@@ -1,11 +1,10 @@
 ﻿<div class="container-fluid" id="lobby-container">
     <h1 class="header-page">Lobby</h1>
-    <h3 class="lobby-code"><span class="gamecode-text">{{vm.gameData.GameCode}}</span> <br /> Code to join : </h3>
+    <h3 class="lobby-code"><span class="gamecode-text">{{vm.gameData.GameCode}}</span> <br /> Code to join </h3>
     <div>
         <ul class="teamList">
             <li data-ng-repeat="team in vm.gameData.Teams" class="lobby-teamList">{{team.Name}}</li>
         </ul>
     </div>
     <button data-ng-click="vm.startCharade()" id="startGameButton">Start Game</button>
-
 </div>

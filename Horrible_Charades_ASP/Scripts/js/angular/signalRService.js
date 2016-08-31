@@ -58,7 +58,7 @@
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
             console.log("preparing to Print new Word");
             if (typeOfWord === "noun") {
-                $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
+                $(".charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
