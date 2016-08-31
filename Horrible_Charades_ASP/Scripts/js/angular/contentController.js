@@ -15,10 +15,11 @@
         vm.timeLeft = 3000;
         vm.promise;
         vm.time = signalRService.time;
+        vm.guessed = false;
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
-            
+
             if (signalRService.game.GameState === 4) {
                 $(".timer").text(time);
             } else {
@@ -148,18 +149,22 @@
             console.log("You're in pointcounter");
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
-        //vm.printCharade = function () {
+        vm.printCharade = function () {
 
-        //    for (var i = 0; i < gameService.game.CurrentCharade.Adjective.length; i++) {
-        //        $("#charade").append("<li>" + gameService.game.CurrentCharade.Adjective[i].Description + "</li>");
-        //    }
+            for (var i = 0; i < signalRService.game.CurrentCharade.Adjective.length; i++) {
+                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Adjective[i].Description + "</li>");
+            }
 
-        //    $("#charade").append("<li>" + gameService.game.CurrentCharade.Noun.Description + "</li>");
+            $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + "</li>");
 
-        //    for (var i = 0; i < gameService.game.CurrentCharade.Verb.length; i++) {
-        //        $("#charade").append("<li>" + gameService.game.CurrentCharade.Verb[i].Description + "</li>");
-        //    }
-        //};
+            for (var i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
+                $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");
+            }
+        };
+
+        vm.submitGuess = function () {
+            vm.guessed = true;
+        };
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
 
