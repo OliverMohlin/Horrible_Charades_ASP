@@ -4,11 +4,12 @@
         <div id="face-container" class="col-lg-5 col-centered">
             <ul>
                 <li>
-                    <a href="#CreateTeamHost" class="btn main-menu-btn" id="new-game">New<br /> Game</a>
+                    <a href="#CreateTeamHost" class="btn main-menu-btn" id="new-game" onclick="play()">New<br /> Game</a>
                 </li>
                 <li>
-                    <a href="#CreateTeamGuest" class="btn main-menu-btn" id="join-game">Join<br /> Game</a>
+                    <a href="#CreateTeamGuest" class="btn main-menu-btn" id="join-game" onclick="play()" >Join<br /> Game</a>
                 </li>
+    
             </ul>
         <!--</div>-->
     </div>
@@ -33,6 +34,12 @@
         }
     </script>-->
 
+    <script>
+        var play = function () {
+            var audio = new Audio("sounds/Knappvalj.mp3");
+            audio.play();
+        }
+    </script>
 </div>
 
 

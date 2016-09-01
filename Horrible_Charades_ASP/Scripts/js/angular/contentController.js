@@ -44,6 +44,7 @@
                 }
                 else if (signalRService.game.GameState === 5) {
                     vm.pointCounter(0);
+                    vm.playTut();
                 }
                 else if (signalRService.game.GameState === 6) {
                     hub.server.redirectToTotalScore(signalRService.game.GameCode);
@@ -56,6 +57,7 @@
                 }
             }
         };
+
 
         // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
         hub.client.startTimer = function () {
@@ -78,7 +80,7 @@
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
-
+     
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
@@ -141,6 +143,7 @@
             }
             if (Id === 4) {
                 hub.server.updateCharade("adjective", signalRService.game.GameCode);
+
             }
             if (Id === 5) {
                 hub.server.updateCharade("verb", signalRService.game.GameCode);
@@ -207,6 +210,42 @@
             console.log("efter calculateScoreP")
             //hub.server.calculateScoreP(signalRService.game.GameCode);
         };
+
+        vm.showTeams = function () {
+            console.log("inne i showTeams", signalRService.game.Teams)
+
+           //hub.server.getTeams() 
+        }
+
+        vm.playKnappJoin = function () {
+            var audio = new Audio("sounds/Knappjoin.mp3");
+            audio.play();
+        }
+
+        vm.playKnappvalj = function () {
+            var audio = new Audio("sounds/Knappvalj.mp3");
+            audio.play();
+        }
+
+        vm.playJubel = function () {
+            var audio = new Audio("sounds/Jubel.mp3");
+            audio.play();
+        }
+
+        vm.playLightsThunder = function () {
+            var audio = new Audio("sounds/lightsthunder.mp3");
+            audio.play();
+        }
+
+        vm.playTickTack = function () {
+            var audio = new Audio("sounds/Ticktack.mp3");
+            audio.play();
+        }
+
+        vm.playTut = function () {
+            var audio = new Audio("sounds/Tut.mp3");
+            audio.play();
+        }
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
