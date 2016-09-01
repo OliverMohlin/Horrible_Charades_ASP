@@ -3,10 +3,10 @@
     <h4 class="time-container"><span class="time-text"></span></h4>
     <p class="timer-description"> until charade starts..</p>
     <div class="row" id="funkUpContainer">
-        <p class="info-text">{Team}'s turn! funk up their charade!</p>
-        <ul id="funkup-list">
-            <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps" id="funkup-list-item"><div ng-bind-html="FunkUp.HTMLString ">{{FunkUp.HTMLString}}</div></li>
-        </ul>
+            <p class="info-text">{Team}'s turn! funk up their charade!</p>
+            <ul id="funkup-list">
+                <li data-ng-repeat="FunkUp in vm.gameData.Teams[vm.myTeam].FunkUps" id="funkup-list-item"><div ng-bind-html="FunkUp.HTMLString ">{{FunkUp.HTMLString}}</div></li>
+            </ul>
 
     </div>
 </div>

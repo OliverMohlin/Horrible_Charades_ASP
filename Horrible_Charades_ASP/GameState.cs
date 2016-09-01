@@ -144,7 +144,7 @@ namespace Horrible_Charades_ASP
                 RuleChanger ruleChanger = new RuleChanger();
                 do
                 {
-                    ruleChanger = _dbUtils.GetRuleChanger();
+                    ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
                 } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
 
                 if (ruleChanger.Type == "PowerUp")

@@ -108,19 +108,18 @@
             hub.server.shuffleCharade(signalRService.game.GameCode);
         };
 
-        vm.funkUp = function (id) {
-            console.log(id);
-        };
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
-        vm.getAdjective = function () {
+
+        $(".add-adjective").click(function () {
+            console.log("clicked on add Adjectrive");
             hub.server.updateCharade("adjective", signalRService.game.GameCode);
-        };
+        });
 
         //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
-        vm.getVerb = function () {
+        $(".add-verb").click(function () {
+            console.log("clicked on add Verb");
             hub.server.updateCharade("verb", signalRService.game.GameCode);
-        };
-
+        });
 
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
@@ -135,14 +134,13 @@
         //    hub.server.getRuleChanger(signalRService.game.GameCode);
         //};
 
+
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
-            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
-            //vm.timeLeft = 10;
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 3) {
-                hub.server.affectCaradeTime(signalRService.game.GameCode, "minus");
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "minus");
             }
             if (Id === 4) {
                 vm.getAdjective();
@@ -179,7 +177,7 @@
 
             $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + " </li>");
 
-            for ( i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
+            for (i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
                 $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");
             }
         };
