@@ -14,6 +14,12 @@ namespace Horrible_Charades_ASP.Models
             Id = Guid.NewGuid().ToString("d");
             PowerUps = new List<RuleChanger>();
             FunkUps = new List<RuleChanger>();
+            GameState.Instance.getRuleChangers(this);
+        }
+
+        private void AddRuleChangers()
+        {
+            
         }
 
         public string ConnectionID { get; set; }

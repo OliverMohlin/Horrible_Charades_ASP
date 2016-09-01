@@ -136,6 +136,15 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
+        internal void getRuleChangers(Team team)
+        {
+            
+            team.PowerUps.Add(_dbUtils.GetRuleChanger("Shuffle"));
+            team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Adjective"));
+            team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Activity"));
+
+        }
+
         internal Game GetRuleChanger(Game game, int index)
         {
             foreach (var team in game.Teams)

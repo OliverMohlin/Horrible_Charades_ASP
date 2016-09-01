@@ -8,11 +8,23 @@
 
 <div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
 
-<button data-ng-click="vm.submitGuess()">Guess</button>
+<button data-ng-click="vm.submitGuess()">Submit Guess</button>
 
 <a href="#Score">Next Phase</a>
 
-<input type="hidden" name="guess" id="hidden" value="">
+
+<!-- SKIT I DET HÄR SHAHIN -->
+<!--<div data-ng-hide="vm.guessed" data-ng-repeat="alternatives in vm.alternatives">
+    {{vm.alternatives}}
+    <div id="$index" ></div><div id="myDiv + $index" data-ng-repeat="answer in list">
+        <ul>
+            <li><button name="{{answer}} $parent.$index" data-ng-click="vm.submitGuess()"> {{answer}}</button></li>
+        </ul>
+    <br />
+    <br />
+    </div>
+</div>-->
+<!--<div data-ng-repeat="friend in vm.friends">{{friend}}</div>-->
 
 
 <script>

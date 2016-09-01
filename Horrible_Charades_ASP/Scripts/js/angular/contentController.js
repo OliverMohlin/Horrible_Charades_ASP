@@ -16,8 +16,7 @@
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
-        vm.alternatives = [];
-        vm.test = ["a", "b", "c"]
+        vm.alternatives = ["a", "b", "c"]
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
@@ -94,7 +93,8 @@
 
         //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            hub.server.redirectToPreCharade(signalRService.game.GameCode);
+            console.log("Redirect to pre charade");
+            hub.server.redirectToPreCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         // Redirects to Charade View
@@ -222,7 +222,7 @@
         };
 
         $(".led").click(function () {
-            alert("jQuery-click works contentController")
+            alert("jQuery-click works contentController");
         });
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
