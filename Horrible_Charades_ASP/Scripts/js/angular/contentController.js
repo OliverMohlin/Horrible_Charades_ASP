@@ -16,6 +16,8 @@
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
+        vm.alternatives;
+        vm.test = ["a","b","c"]
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
@@ -182,6 +184,11 @@
             }
         };
 
+        hub.client.displayAlternatives = function (alternatives) {
+            vm.alternatives = alternatives;
+            };
+        };
+
         vm.hideDiv = function () {
             console.log("hiding div");
             //var i = event.target.name[event.target.name.length - 1]
@@ -193,6 +200,10 @@
         vm.submitGuess = function () {
             vm.guessed = true;
         };
+
+        $(".led").click(function () {
+            alert("jQuery-click works contentController")
+        });
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
 

@@ -86,17 +86,21 @@
             }
         };
 
-        hub.client.displayAlternatives = function (alternatives) {
-            for (var i = 0; i < alternatives.length; i++) {
-                var tmpstr = "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
-                for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.hideDiv()'>" + alternatives[i][j].Description + "</button> </li>"
-                };
-                tmpstr += "</ul> </div> </br></br>";
-                angular.element(document.getElementById('alternatives')).append($compile(tmpstr)($scope));
-                //$("#alternatives").append(tmpstr);
-            };
-        };
+        //hub.client.displayAlternatives = function (alternatives) {
+
+        //    for (var i = 0; i < alternatives.length; i++) {
+        //        var tmpstr = "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
+
+        //        for (var j = 0; j < alternatives[i].length; j++) {
+        //            tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
+        //        };
+
+        //        tmpstr += "</ul> </div> </br></br>";
+
+        //        //angular.element(document.getElementById('alternatives')).append($compile(tmpstr)($scope));
+        //        $("#alternatives").append(tmpstr);
+        //    };
+        //};
      
         //hub.client.displayAlternatives = function (alternatives) {
         //    for (var i = 0; i < alternatives.length; i++) {
@@ -120,6 +124,10 @@
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
         };
+
+        $(".led").click(function () {
+            alert("jQuery-click works contentController")
+        });
 
         //Adds an adjective to a charade
         $("#getAdjectiveButton").click(function () {
