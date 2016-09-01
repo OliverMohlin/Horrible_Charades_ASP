@@ -17,7 +17,7 @@
         vm.time = signalRService.time;
         vm.guessed = false;
         vm.alternatives;
-        vm.test = ["a","b","c"]
+        vm.test = ["a", "b", "c"]
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
@@ -191,8 +191,8 @@
 
         hub.client.displayAlternatives = function (alternatives) {
             vm.alternatives = alternatives;
-            };
         };
+
 
         vm.hideDiv = function () {
             console.log("hiding div");
