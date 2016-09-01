@@ -122,18 +122,25 @@ namespace Horrible_Charades_ASP
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
-        public void RedirectToPreCharade(string gameCode)
+        public void RedirectToPreCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
+            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
             Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
             Clients.Group(gameCode).debugMessage(game.GameState);
             Clients.Group(gameCode).debugMessage(game.Teams);
-            //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
-            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+
+            Clients.Caller.redirectToView("/#/PreCharadeActor");
+            Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
+
+
+            //Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
+            //Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+
+
             Clients.Group(gameCode).debugMessage("red.ToPreCharade Sleeping thread for 0.5sek");
             Thread.Sleep(500);
             Clients.Group(game.GameCode).startTimer();
