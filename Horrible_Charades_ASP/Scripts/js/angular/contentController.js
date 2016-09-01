@@ -22,10 +22,14 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(65);
+                $(".timer").text(10);
+            } else if (signalRService.game.GameState === 5) {
+                $(".timer").text(60);
+            } else if (signalRService.game.GameState === 6){
+                $(".timer").text(5);
             } else {
                 $(".timer").text(5);
-            }
+        }
             vm.promise = $interval(timer, 1000);
         };
 
@@ -41,8 +45,14 @@
                 else if (signalRService.game.GameState === 5) {
                     vm.pointCounter(0);
                 }
+                else if (signalRService.game.GameState === 6) {
+                    hub.server.redirectToTotalScore(signalRService.game.GameCode);
+                } else if (signalRService.game.GameState === 7)
+                {
+                    vm.leaveLobby(signalRService.game.GameCode);
+                }
                 else {
-                    console.log("GameState is not correct!");
+                    alert("Your gameState is wrong. Swish $('300') for netflix and chill with Bernie Lo <3 ");
                 }
             }
         };
@@ -79,14 +89,15 @@
             signalRService.teamName = teamName;
         };
 
-        //Calls StartCharade on Server-Side when a the host presses start
-        hub.client.startCharade = function () {
-            hub.server.startCharade(signalRService.game.GameCode);
-        };
 
         vm.leaveLobby = function () {
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
+        };
+
+        //Calls StartCharade on Server-Side when a the host presses start
+        hub.client.startCharade = function () {
+            hub.server.startCharade(signalRService.game.GameCode);
         };
 
         //Redirects to PreCharade View
@@ -156,6 +167,7 @@
             var timeLeft = $(".timer").text();
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
+
         vm.printCharade = function () {
 
             for (var i = 0; i < signalRService.game.CurrentCharade.Adjective.length; i++) {
@@ -175,7 +187,7 @@
                 tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
 
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + [i][j]+ "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                    tmpstr += "<li id='" + [i][j] + "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
                 };
 
                 tmpstr += "</ul> </div> </br></br>";
@@ -195,12 +207,6 @@
             console.log("efter calculateScoreP")
             //hub.server.calculateScoreP(signalRService.game.GameCode);
         };
-
-        vm.showTeams = function () {
-            console.log("inne i showTeams", signalRService.game.Teams)
-
-           //hub.server.getTeams() 
-        }
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });

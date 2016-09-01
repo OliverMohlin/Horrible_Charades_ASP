@@ -99,7 +99,7 @@ namespace Horrible_Charades_ASP
                     game.WhosTurn = team;
                 }
             }
-
+            game.Turn++;
             game.GameState = 3;
         }
 
@@ -287,8 +287,13 @@ namespace Horrible_Charades_ASP
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, out int index)
         {
             Game game = GetGame(gameCode);
+
             index = GetTeam(game, connectionId);
-            GetRuleChanger(game, index);
+            // We are now hardcoding the rulechangers at start. 
+            //GetRuleChanger(game, index);
+            game.CurrentCharade.Adjective.Clear();
+            game.CurrentCharade.Verb.Clear();
+            GetNoun(gameCode);
             AssignWhosTurn(game);
             return game;
         }
@@ -324,7 +329,7 @@ namespace Horrible_Charades_ASP
                 }
             }
 
-
+            game.GameState = 6;
             return game;
         }
         internal Game AssignPoints(string gameCode, int timeLeft, string conId, string guess)
