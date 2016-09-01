@@ -21,9 +21,10 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(3000);
+                $(".timer").text(5);
+                console.log("Set timer to " + 5)
             } else {
-                $(".timer").text(60);
+                $(".timer").text(10);
             }
             vm.promise = $interval(timer, 1000);
         };
@@ -31,6 +32,7 @@
         function timer() {
             vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
+            console.log(vm.timeLeft + "seconds left");
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
@@ -50,7 +52,7 @@
         hub.client.startTimer = function () {
             console.log("calling vm.startTimer");
             vm.stopTimer();
-            //vm.startTimer();
+            vm.startTimer();
         };
 
         // Stops the timer. Called from startTimer.
@@ -74,6 +76,10 @@
             hub.server.createTeam(signalRService.game.GameCode, $("#TeamName").val());
         };
 
+        hub.client.setTeamName = function (teamName) {
+            signalRService.teamName = teamName;
+        };
+
         //Calls StartCharade on Server-Side when a the host presses start
         hub.client.startCharade = function () {
             hub.server.startCharade(signalRService.game.GameCode);
@@ -92,7 +98,8 @@
         // Redirects to Charade View
         vm.redirectToCharade = function () {
             console.log("Redirecting to Charade");
-            hub.server.redirectToCharade(signalRService.game.GameCode);
+            console.log(signalRService.teamName);
+            hub.server.redirectToCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded

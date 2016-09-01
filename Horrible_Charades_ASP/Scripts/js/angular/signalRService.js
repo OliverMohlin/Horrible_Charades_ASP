@@ -9,9 +9,10 @@
     function signalRService() {
 
         var self = this;
-        self.time = 60;
+        self.timeLeft = 60;
         self.game = {};
         self.myTeam = {};
+        self.teamName;
         //var vm = contentController;
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
 
