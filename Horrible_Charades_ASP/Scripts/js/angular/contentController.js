@@ -5,19 +5,31 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(signalRService, $interval) {
+    function contentController(signalRService, $interval, $timeout, $compile) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
-        // Updates contentController to fit the locally persisted data in gameService. 
+        // Updates contentController to fit the locally persisted data in gameServic    e. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
         vm.timeLeft = 3000;
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
-        vm.alternatives;
-        vm.test = ["a","b","c"]
+        vm.alternatives = ["a", "b", "c","d"]
+        //vm.test = ["a","b","c"]
+        vm.friends = [
+                {name:'John', age:25, gender:'boy'},
+                {name:'Jessie', age:30, gender:'girl'},
+                {name:'Johanna', age:28, gender:'girl'},
+                {name:'Joy', age:15, gender:'girl'},
+                {name:'Mary', age:28, gender:'girl'},
+                {name:'Peter', age:95, gender:'boy'},
+                {name:'Sebastian', age:50, gender:'boy'},
+                {name:'Erika', age:27, gender:'girl'},
+                {name:'Patrick', age:40, gender:'boy'},
+                {name:'Samantha', age:60, gender:'girl'}
+        ];
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
@@ -183,10 +195,32 @@
         };
 
         hub.client.displayAlternatives = function (alternatives) {
-            vm.alternatives = alternatives;
-            };
-        };
+                var tmpstr = "";
+                for (var i = 0; i < alternatives.length; i++) {
+                    tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
 
+                    for (var j = 0; j < alternatives[i].length; j++) {
+                        tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
+                    };
+
+                    tmpstr += "</ul> </div> </br></br>";
+                    
+
+
+                }
+      
+           
+                var newStr = $compile(tmpstr)(vm);
+            //angular.element(document.getElementById('alternatives')).append(newStr);
+            $('#alternatives').append(newStr);
+                //$scope.$apply();
+            };
+
+        //hub.client.displayAlternatives = function (alternatives) {
+            
+        //    vm.alternatives = alternatives;
+        //    console.log(vm.alternatives);
+        //};
         vm.hideDiv = function () {
             console.log("hiding div");
             //var i = event.target.name[event.target.name.length - 1]
@@ -196,7 +230,9 @@
         };
 
         vm.submitGuess = function () {
-            vm.guessed = true;
+            console.log("submitGuess");
+            alert('clicked')
+            //vm.guessed = true;
         };
 
         $(".led").click(function () {
@@ -204,6 +240,8 @@
         });
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
+    };
 
-    }
-})();
+
+}
+)();

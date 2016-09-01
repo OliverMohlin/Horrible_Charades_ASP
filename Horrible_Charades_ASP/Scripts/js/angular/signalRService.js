@@ -6,7 +6,7 @@
     angular.module("mainContent")
         .service("signalRService", signalRService);
 
-    function signalRService() {
+    function signalRService($compile) {
 
         var self = this;
         self.time = 60;
@@ -86,39 +86,6 @@
             }
         };
 
-        //hub.client.displayAlternatives = function (alternatives) {
-
-        //    for (var i = 0; i < alternatives.length; i++) {
-        //        var tmpstr = "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
-
-        //        for (var j = 0; j < alternatives[i].length; j++) {
-        //            tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
-        //        };
-
-        //        tmpstr += "</ul> </div> </br></br>";
-
-        //        //angular.element(document.getElementById('alternatives')).append($compile(tmpstr)($scope));
-        //        $("#alternatives").append(tmpstr);
-        //    };
-        //};
-     
-        //hub.client.displayAlternatives = function (alternatives) {
-        //    for (var i = 0; i < alternatives.length; i++) {
-        //        var tmpstr = "<ul>";
-        //        for (var j = 0; j < alternatives[i].length; j++) {
-        //            tmpstr += "<li id='" + alternatives[i][j].Description + "'><input type='radio' id='" + alternatives[i][j].Description + "' name='selector'><label for='" + alternatives[i][j].Description + "'>" + alternatives[i][j].Description + "</label></input></li>";
-        //        }
-        //        tmpstr += "</ul></br></br>";
-        //        $("#alternatives").append(tmpstr);
-        //    }
-        //};
-        //$("#alternatives").click(function () {
-        //    console.log("hiding div");
-        //    var i = event.target.name[event.target.name.length - 1]
-        //    $("#myDiv" + i).hide()
-        //    var str = event.target.name.substring(0, event.target.name.length - 1);
-        //    $("#" + i).append(str)
-        //});
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");
