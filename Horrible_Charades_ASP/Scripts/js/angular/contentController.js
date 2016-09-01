@@ -14,6 +14,7 @@
         vm.myTeam = signalRService.myTeam;
         vm.timeLeft = 65;
         vm.promise;
+        vm.hide = false;
         vm.time = signalRService.time;
         vm.guessed = false;
         vm.alternatives = ["a", "b", "c"]
@@ -93,7 +94,6 @@
 
 
         vm.leaveLobby = function () {
-            console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
         };
 
@@ -202,7 +202,7 @@
         vm.submitGuess = function () {
             console.log("Inne i submitt guess")
             vm.guessed = true;
-            var guess = $("#hidden").val() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
+            var guess = $("#hidden").text() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
             $("#submit").append(" " + guess)
             var timeLeft = $(".timer").text()
             console.log(timeLeft)

@@ -3,13 +3,13 @@
 <h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
 
 <div id="alternatives" data-ng-hide="vm.guessed">
-<div id="enter"></div>
 </div>
 
 <div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
 
+<div id="enter"></div>
 <button data-ng-click="vm.submitGuess()">Submit Guess</button>
-
+<label id="hidden" data-ng-show="vm.hide"></label>
 <a href="#Score">Next Phase</a>
 
 <script>
@@ -22,11 +22,11 @@
         var str = event.target.name.substring(0, event.target.name.length - 1);
         $("#" + i).append(str);
         guess += str;
-        $("#hidden").val(guess);
+        $("#hidden").text(guess);
         click++;
 
         if (click === 1) {
-            $("#enter").append(" Press 'Guess'");
+            $("#enter").html(" Don't forget to submit your Guess! ");
         }
     }
 </script>
