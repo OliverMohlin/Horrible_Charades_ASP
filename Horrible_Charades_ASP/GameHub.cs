@@ -202,7 +202,6 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).resetTimer(10);
         }
 
-
         public void GetIncorrectAnswers(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
@@ -212,7 +211,6 @@ namespace Horrible_Charades_ASP
         }
         public void PointCounter(string gameCode, int timeLeft)
         {
-            
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
             Clients.Group(game.GameCode).updateGameState(game);
             Clients.Group(game.GameCode).redirectToView("/#/Score");
@@ -220,7 +218,6 @@ namespace Horrible_Charades_ASP
         public void CalculateScoreP(string gameCode, int timeLeft, string guess)
         {
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
-            
         }
 
         /// <summary>

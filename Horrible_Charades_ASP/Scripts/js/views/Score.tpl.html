@@ -1,26 +1,16 @@
-﻿<div class="container-fluid" id="score-container">
-
+﻿<div class="container-fluid" id="score-container" data-ng-init="vm.showTeams()">
     <h1 class="header-page">Score - Other Teams' Guesses</h1>
-
-    <!--<ul class="teamList">
-        <li class="score-teamList">Team1: ___CharadeGuess___ Points</li>
-        <li class="score-teamList">Team2: ___CharadeGuess___ Points</li>
-        <li class="score-teamList">Team3: ___CharadeGuess___ Points</li>
-    </ul>-->
-
-    <div class="a">
+    <div data-ng-repeat="team in vm.gameData.Teams" id="TeamName-list-item" class="a">
         <ul>
-            <li class="score-teamList">Team1</li>
-            <li class="score-teamList">Team2</li>
-            <li class="score-teamList">Team3</li>
+            <li class="score-teamList">{{team.Name}}</li>
         </ul>
+
     </div>
-    <div class="b">
+    <div data-ng-repeat="team in vm.gameData.Teams" id="TeamName-list-item" class="b">
         <ul>
-            <li class="score-scoreList">56</li>
-            <li class="score-scoreList">25</li>
-            <li class="score-scoreList">12</li>
+            <li class="score-scoreList">{{team.TurnPoint}}</li>
         </ul>
+
     </div>
 
 </div>

@@ -67,7 +67,7 @@
 
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
-            hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
+            hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
 
@@ -201,12 +201,8 @@
 
                 tmpstr += "</ul> </div> </br></br>";
 
-
                 $('#alternatives').append(tmpstr);
-
             }
-
-
         };
 
         vm.submitGuess = function () {
@@ -216,14 +212,17 @@
             $("#submit").append(" " + guess)
             var timeLeft = $(".timer").text()
             console.log(timeLeft)
-            hub.server.calculateScoreP(signalRService.game.GameCode, 40, guess);
+            hub.server.calculateScoreP(signalRService.game.GameCode, timeLeft, guess);
             console.log("efter calculateScoreP")
             //hub.server.calculateScoreP(signalRService.game.GameCode);
         };
 
-        $(".led").click(function () {
-            alert("jQuery-click works contentController");
-        });
+        vm.showTeams = function () {
+            console.log("inne i showTeams", signalRService.game.Teams)
+
+           //hub.server.getTeams() 
+        }
+
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
     };
