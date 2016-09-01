@@ -267,6 +267,12 @@
     <Content Include="Scripts\libs\respond.min.js" />
     <Content Include="Scripts\libs\_references.js" />
     <Content Include="Scripts\temp.js" />
+    <Content Include="sounds\Jubel.mp3" />
+    <Content Include="sounds\Knappjoin.mp3" />
+    <Content Include="sounds\Knappvalj.mp3" />
+    <Content Include="sounds\lightsthunder.mp3" />
+    <Content Include="sounds\Ticktack.mp3" />
+    <Content Include="sounds\Tut.mp3" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

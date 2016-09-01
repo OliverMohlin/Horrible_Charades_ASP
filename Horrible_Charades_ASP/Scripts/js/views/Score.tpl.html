@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" id="score-container" data-ng-init="vm.showTeams()">
+﻿<div class="container-fluid" id="score-container">
     <h1 class="header-page">Score - Other Teams' Guesses</h1>
     <div data-ng-repeat="team in vm.gameData.Teams" id="TeamName-list-item" class="a">
         <ul>
@@ -13,6 +13,9 @@
 
     </div>
 
+    <button id="tuta" data-ng-click="vm.playJubel()">Applause</button>
+
+    <label data-ng-hide="timer" class="timer">5</label>
 </div>
 <a href="#TotalScore">Next Phase</a>
 <!-- Kom ihåg att reseta turnpoint och öka på turn i game -->

@@ -22,10 +22,14 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(65);
+                $(".timer").text(10);
+            } else if (signalRService.game.GameState === 5) {
+                $(".timer").text(60);
+            } else if (signalRService.game.GameState === 6){
+                $(".timer").text(5);
             } else {
                 $(".timer").text(5);
-            }
+        }
             vm.promise = $interval(timer, 1000);
         };
 
@@ -40,12 +44,20 @@
                 }
                 else if (signalRService.game.GameState === 5) {
                     vm.pointCounter(0);
+                    vm.playTut();
+                }
+                else if (signalRService.game.GameState === 6) {
+                    hub.server.redirectToTotalScore(signalRService.game.GameCode);
+                } else if (signalRService.game.GameState === 7)
+                {
+                    vm.leaveLobby(signalRService.game.GameCode);
                 }
                 else {
-                    console.log("GameState is not correct!");
+                    alert("Your gameState is wrong. Swish $('300') for netflix and chill with Bernie Lo <3 ");
                 }
             }
         };
+
 
         // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
         hub.client.startTimer = function () {
@@ -68,7 +80,7 @@
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
-
+     
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
@@ -79,14 +91,15 @@
             signalRService.teamName = teamName;
         };
 
-        //Calls StartCharade on Server-Side when a the host presses start
-        hub.client.startCharade = function () {
-            hub.server.startCharade(signalRService.game.GameCode);
-        };
 
         vm.leaveLobby = function () {
             console.log("initiating getRuleChanger");
             hub.server.getRuleChanger(signalRService.game.GameCode);
+        };
+
+        //Calls StartCharade on Server-Side when a the host presses start
+        hub.client.startCharade = function () {
+            hub.server.startCharade(signalRService.game.GameCode);
         };
 
         //Redirects to PreCharade View
@@ -130,6 +143,7 @@
             }
             if (Id === 4) {
                 hub.server.updateCharade("adjective", signalRService.game.GameCode);
+
             }
             if (Id === 5) {
                 hub.server.updateCharade("verb", signalRService.game.GameCode);
@@ -156,6 +170,7 @@
             var timeLeft = $(".timer").text();
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
+
         vm.printCharade = function () {
 
             for (var i = 0; i < signalRService.game.CurrentCharade.Adjective.length; i++) {
@@ -175,7 +190,7 @@
                 tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
 
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + [i][j]+ "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                    tmpstr += "<li id='" + [i][j] + "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
                 };
 
                 tmpstr += "</ul> </div> </br></br>";
@@ -200,6 +215,36 @@
             console.log("inne i showTeams", signalRService.game.Teams)
 
            //hub.server.getTeams() 
+        }
+
+        vm.playKnappJoin = function () {
+            var audio = new Audio("sounds/Knappjoin.mp3");
+            audio.play();
+        }
+
+        vm.playKnappvalj = function () {
+            var audio = new Audio("sounds/Knappvalj.mp3");
+            audio.play();
+        }
+
+        vm.playJubel = function () {
+            var audio = new Audio("sounds/Jubel.mp3");
+            audio.play();
+        }
+
+        vm.playLightsThunder = function () {
+            var audio = new Audio("sounds/lightsthunder.mp3");
+            audio.play();
+        }
+
+        vm.playTickTack = function () {
+            var audio = new Audio("sounds/Ticktack.mp3");
+            audio.play();
+        }
+
+        vm.playTut = function () {
+            var audio = new Audio("sounds/Tut.mp3");
+            audio.play();
         }
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              

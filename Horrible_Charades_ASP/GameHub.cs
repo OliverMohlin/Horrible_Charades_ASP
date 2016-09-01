@@ -129,9 +129,9 @@ namespace Horrible_Charades_ASP
             game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
-            Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
-            Clients.Group(gameCode).debugMessage(game.GameState);
-            Clients.Group(gameCode).debugMessage(game.Teams);
+            //Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
+            //Clients.Group(gameCode).debugMessage(game.GameState);
+            //Clients.Group(gameCode).debugMessage(game.Teams);
 
             Clients.Caller.redirectToView("/#/PreCharadeActor");
             Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
@@ -167,9 +167,9 @@ namespace Horrible_Charades_ASP
         /// </summary>
         public void GetNoun(string gameCode)
         {
-            Game game = GameState.Instance.GetNoun(gameCode);
-            Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
-            Clients.Group(game.GameCode).InsertCharadeHTML(game, "noun");
+            Game game = GameState.Instance.GetGame(gameCode);
+            //Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
+            Clients.Group(gameCode).InsertCharadeHTML(game, "noun");
         }
 
         /// <summary>
@@ -208,6 +208,11 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).resetTimer(10);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameCode"></param>
+        /// <param name="direction"></param>
         public void AffectCharadeTime(string gameCode, string direction)
         {
             Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
@@ -215,6 +220,10 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).resetTimer(10);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameCode"></param>
         public void GetIncorrectAnswers(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
@@ -222,9 +231,16 @@ namespace Horrible_Charades_ASP
             inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
             Clients.Caller.DisplayAlternatives(inCorrectAnswers);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameCode"></param>
+        /// <param name="timeLeft"></param>
         public void PointCounter(string gameCode, int timeLeft)
         {
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
+
             Clients.Group(game.GameCode).updateGameState(game);
             Clients.Group(game.GameCode).redirectToView("/#/Score");
         }
@@ -233,5 +249,13 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
         }
 
+        public void RedirectToTotalScore(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            game.GameState = 7;
+            Clients.Group(game.GameCode).updateGameState(game);
+            Clients.Group(gameCode).redirectToView("/#/TotalScore");
+            Clients.Group(gameCode).startTimer();
+        }
     }
 }
