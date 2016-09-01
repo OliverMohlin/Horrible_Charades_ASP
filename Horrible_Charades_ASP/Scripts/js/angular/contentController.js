@@ -5,7 +5,7 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(signalRService, $interval, $timeout, $compile) {
+    function contentController(signalRService, $interval, $timeout, $compile, $scope) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
@@ -16,17 +16,17 @@
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
-        vm.alternatives;
+        vm.alternatives = [];
         vm.test = ["a", "b", "c"]
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(5);
+                $(".timer").text(10);
                 console.log("Set timer to " + 5)
             } else {
-                $(".timer").text(10);
+                $(".timer").text(30);
             }
             vm.promise = $interval(timer, 1000);
         };
@@ -54,7 +54,7 @@
         hub.client.startTimer = function () {
             console.log("calling vm.startTimer");
             vm.stopTimer();
-            //vm.startTimer();
+            vm.startTimer();
         };
 
         // Stops the timer. Called from startTimer.
@@ -171,9 +171,10 @@
             hub.server.getIncorrectAnswers(signalRService.game.GameCode);
         };
 
-        vm.pointCounter = function (timeLeft) {
+        vm.pointCounter = function () {
             $interval.cancel(vm.promise);
             console.log("You're in pointcounter");
+            var timeLeft = $(".timer").text();
             hub.server.pointCounter(signalRService.game.GameCode, timeLeft);
         };
         vm.printCharade = function () {
@@ -190,44 +191,34 @@
         };
 
         hub.client.displayAlternatives = function (alternatives) {
-                var tmpstr = "";
-                for (var i = 0; i < alternatives.length; i++) {
-                    tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
+            var tmpstr = "";
+            for (var i = 0; i < alternatives.length; i++) {
+                tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
 
-                    for (var j = 0; j < alternatives[i].length; j++) {
-                        tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
-                    };
+                for (var j = 0; j < alternatives[i].length; j++) {
+                    tmpstr += "<li id='" + [i][j]+ "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                };
 
-                    tmpstr += "</ul> </div> </br></br>";
-                    
+                tmpstr += "</ul> </div> </br></br>";
 
 
-                }
-      
-           
-                var newStr = $compile(tmpstr)(vm);
-            //angular.element(document.getElementById('alternatives')).append(newStr);
-            $('#alternatives').append(newStr);
-                //$scope.$apply();
-            };
+                $('#alternatives').append(tmpstr);
 
-        //hub.client.displayAlternatives = function (alternatives) {
-            
-        //    vm.alternatives = alternatives;
-        //    console.log(vm.alternatives);
-        //};
-        vm.hideDiv = function () {
-            console.log("hiding div");
-            //var i = event.target.name[event.target.name.length - 1]
-            //$("#myDiv" + i).hide()
-            //var str = event.target.name.substring(0, event.target.name.length - 1);
-            //$("#" + i).append(str);
+            }
+
+
         };
 
         vm.submitGuess = function () {
-            console.log("submitGuess");
-            alert('clicked')
-            //vm.guessed = true;
+            console.log("Inne i submitt guess")
+            vm.guessed = true;
+            var guess = $("#hidden").val() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
+            $("#submit").append(" " + guess)
+            var timeLeft = $(".timer").text()
+            console.log(timeLeft)
+            hub.server.calculateScoreP(signalRService.game.GameCode, 40, guess);
+            console.log("efter calculateScoreP")
+            //hub.server.calculateScoreP(signalRService.game.GameCode);
         };
 
         $(".led").click(function () {

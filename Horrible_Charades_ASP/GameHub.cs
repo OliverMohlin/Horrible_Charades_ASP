@@ -208,15 +208,19 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.GetGame(gameCode);
             List<List<Word>> inCorrectAnswers = new List<List<Word>>();
             inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
-
             Clients.Caller.DisplayAlternatives(inCorrectAnswers);
         }
         public void PointCounter(string gameCode, int timeLeft)
         {
-            //Kolla så att
+            
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
             Clients.Group(game.GameCode).updateGameState(game);
             Clients.Group(game.GameCode).redirectToView("/#/Score");
+        }
+        public void CalculateScoreP(string gameCode, int timeLeft, string guess)
+        {
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
+            
         }
 
         /// <summary>

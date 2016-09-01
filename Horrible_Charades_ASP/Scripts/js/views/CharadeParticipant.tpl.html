@@ -1,39 +1,35 @@
-﻿<h1 data-ng-init="vm.getIncorrectAnswers()">Charade - Participant</h1> 
+﻿<h1 data-ng-init="vm.getIncorrectAnswers()">Charade - Participant</h1>
 
 <h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
-<p>List of Adj</p>
 
-<div id="alternatives" data-ng-hide="vm.guessed" >
-    <!--VI vill skicka med genererad kod för att vet inte hur vi databinder det. Vi vet inte hur många svarasalternativ vi ska skicka med därför gör vi det dynamiskt. (Vill få hideDiv att funka i /angular/contentController när knapparna som genereras trycks på)-->
+<div id="alternatives" data-ng-hide="vm.guessed">
+<div id="enter"></div>
 </div>
 
-<div data-ng-show="vm.guessed"> Show och hide funkar</div> <!--Visas när de har gissat-->
+<div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
 
-<button data-ng-click="vm.submitGuess()">Submit Guess</button>
+<button data-ng-click="vm.submitGuess()">Guess</button>
 
 <a href="#Score">Next Phase</a>
 
-
-<!-- SKIT I DET HÄR SHAHIN -->
-<!--<div data-ng-hide="vm.guessed" data-ng-repeat="alternatives in vm.alternatives">
-    {{vm.alternatives}}
-    <div id="$index" ></div><div id="myDiv + $index" data-ng-repeat="answer in list">
-        <ul>
-            <li><button name="{{answer}} $parent.$index" data-ng-click="vm.submitGuess()"> {{answer}}</button></li>
-        </ul>
-    <br />
-    <br />
-    </div>
-</div>-->
-<!--<div data-ng-repeat="friend in vm.friends">{{friend}}</div>-->
+<input type="hidden" name="guess" id="hidden" value="">
 
 
-<!--<script>
+<script>
+    var guess = "";
 
-        var checkBtn = function (event) {
-            var i = event.target.name[event.target.name.length - 1]
-            $("#myDiv" + i).hide()
-            var str = event.target.name.substring(0, event.target.name.length - 1);
-            $("#" + i).append(str);
-         }
-</script>-->
+    var checkBtn = function (event) {
+        var click = 0;
+        var i = event.target.name[event.target.name.length - 1]
+        $("#myDiv" + i).hide()
+        var str = event.target.name.substring(0, event.target.name.length - 1);
+        $("#" + i).append(str);
+        guess += str;
+        $("#hidden").val(guess);
+        click++;
+
+        if (click === 1) {
+            $("#enter").append(" Press 'Guess'");
+        }
+    }
+</script>
