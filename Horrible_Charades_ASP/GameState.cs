@@ -138,7 +138,7 @@ namespace Horrible_Charades_ASP
 
         internal void getRuleChangers(Team team)
         {
-            
+
             team.PowerUps.Add(_dbUtils.GetRuleChanger("Shuffle"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Adjective"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Activity"));
@@ -180,7 +180,7 @@ namespace Horrible_Charades_ASP
                     }
                 }
             }
-                return game;
+            return game;
         }
         internal Game GetAdjective(string gameCode)
         {
@@ -298,6 +298,7 @@ namespace Horrible_Charades_ASP
             Game game = GetGame(gameCode);
             Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
             int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
+
             if (timeLeft > 45)
             {
                 team.TurnPoint = 400 * charadewords;
@@ -314,10 +315,71 @@ namespace Horrible_Charades_ASP
             {
                 team.TurnPoint = 100 * charadewords;
             }
-            if (team.ConnectionID == conId)
+            if (game.WhosTurn.ConnectionID == conId)
             {
-                team.TurnPoint *= 4;
+                team.TurnPoint *= 2;
+                foreach (var loopTeams in game.Teams)
+                {
+                    loopTeams.TotalPoints += loopTeams.TurnPoint;
+                }
             }
+
+
+            return game;
+        }
+        internal Game AssignPoints(string gameCode, int timeLeft, string conId, string guess)
+        {
+            Game game = GetGame(gameCode);
+            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
+
+            List<string> charade = new List<string>();
+
+            charade.Add(game.CurrentCharade.Noun.Description);
+
+            int correctwords = 0;
+            foreach (Word word in game.CurrentCharade.Adjective)
+            {
+                charade.Add(word.Description);
+            }
+
+            foreach (Word word in game.CurrentCharade.Verb)
+            {
+                charade.Add(word.Description);
+            }
+
+            foreach (string word in charade)
+            {
+                if (guess.Contains(word))
+                {
+                    correctwords++;
+                }
+            }
+
+            if (correctwords == charade.Count())
+            {
+                int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
+                if (timeLeft > 45)
+                {
+                    team.TurnPoint = 40 * charadewords;
+                }
+                else if (timeLeft > 30)
+                {
+                    team.TurnPoint = 30 * charadewords;
+                }
+                else if (timeLeft > 15)
+                {
+                    team.TurnPoint = 20 * charadewords;
+                }
+                else if (timeLeft > 0)
+                {
+                    team.TurnPoint = 10 * charadewords;
+                }
+                if (game.WhosTurn.ConnectionID == conId)
+                {
+                    team.TurnPoint *= 2;
+                }
+            }
+
 
             return game;
         }
