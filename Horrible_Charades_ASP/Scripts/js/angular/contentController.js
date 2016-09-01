@@ -16,28 +16,17 @@
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
-        vm.alternatives = ["a", "b", "c","d"]
-        //vm.test = ["a","b","c"]
-        vm.friends = [
-                {name:'John', age:25, gender:'boy'},
-                {name:'Jessie', age:30, gender:'girl'},
-                {name:'Johanna', age:28, gender:'girl'},
-                {name:'Joy', age:15, gender:'girl'},
-                {name:'Mary', age:28, gender:'girl'},
-                {name:'Peter', age:95, gender:'boy'},
-                {name:'Sebastian', age:50, gender:'boy'},
-                {name:'Erika', age:27, gender:'girl'},
-                {name:'Patrick', age:40, gender:'boy'},
-                {name:'Samantha', age:60, gender:'girl'}
-        ];
+        vm.alternatives;
+        vm.test = ["a", "b", "c"]
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(3000);
+                $(".timer").text(5);
+                console.log("Set timer to " + 5)
             } else {
-                $(".timer").text(60);
+                $(".timer").text(10);
             }
             vm.promise = $interval(timer, 1000);
         };
@@ -45,6 +34,7 @@
         function timer() {
             vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
+            console.log(vm.timeLeft + "seconds left");
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
@@ -88,6 +78,10 @@
             hub.server.createTeam(signalRService.game.GameCode, $("#TeamName").val());
         };
 
+        hub.client.setTeamName = function (teamName) {
+            signalRService.teamName = teamName;
+        };
+
         //Calls StartCharade on Server-Side when a the host presses start
         hub.client.startCharade = function () {
             hub.server.startCharade(signalRService.game.GameCode);
@@ -106,7 +100,8 @@
         // Redirects to Charade View
         vm.redirectToCharade = function () {
             console.log("Redirecting to Charade");
-            hub.server.redirectToCharade(signalRService.game.GameCode);
+            console.log(signalRService.teamName);
+            hub.server.redirectToCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
