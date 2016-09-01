@@ -7,7 +7,7 @@
         <div class="col-centered">
             <h1 class="header-page">Join a <br /> Game</h1>
 
-            <input type="text" placeholder="Game Code" id="GameCode" class="text-input" name="GameCode" data-ng-model="vm.Team.GameCode" required />
+            <input type="text" placeholder="Game Code" id="GameCode" name="GameCode" data-ng-model="vm.Team.GameCode" required />
             <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
 
             <input type="text" placeholder="Team Name" id="TeamName" class="text-input" name="TeamName" data-ng-model="vm.Team.Name" required />

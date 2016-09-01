@@ -1,16 +1,10 @@
-﻿<h1>Charade - Actor</h1> <p>Timer</p>
+﻿<div class="container-fluid centered-container">
 
-<br />
-<ul id="charade" data-ng-init="vm.printCharade()">
+    <h1><span class="time-text"><label data-ng-init="vm.startTimer(10)" class="timer"></label></span><br /> seconds to go..</h1>
 
-</ul>
-<br />
+    <ul id="charade" class="charadeContainer" data-ng-init="vm.printCharade()"></ul>
 
-<h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
-<br />
-<br />
-
-
-<!--<a class="button" href="#CreateTeam">Stop</a>-->
-<button data-ng-click="vm.pointCounter(vm.timeLeft)">STOP STOR OCH RÖD</button>
-<a href="#Score">Next Phase</a>
+    <!--<a class="button" href="#CreateTeam">Stop</a>-->
+    <button data-ng-click="vm.pointCounter(vm.timeLeft)">STOP STOR OCH RÖD</button>
+    <a href="#Score">Next Phase</a>
+</div>

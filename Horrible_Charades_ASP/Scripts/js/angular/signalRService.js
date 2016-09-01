@@ -56,7 +56,7 @@
         //Write out and append new words to a charade in Pre-Charade(?)
         hub.client.InsertCharadeHTML = function (game, typeOfWord) {
             if (typeOfWord === "noun") {
-                $("#charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
+                $(".charadeContainer").append("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
             }
             if (typeOfWord === "adjective") {
@@ -88,16 +88,16 @@
 
         hub.client.displayAlternatives = function (alternatives) {
             for (var i = 0; i < alternatives.length; i++) {
-                var tmpstr = "<ul>";
+                var tmpstr = "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + alternatives[i][j].Description + "'><button data-ng-click='buttondisabled = true' data-ng-disabled='buttondisabled'>" + alternatives[i][j].Description + "</button></li>";
-                }
-                tmpstr += "</ul></br></br>";
-                $("#alternatives").append(tmpstr);
-            }
-
+                    tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.hideDiv()'>" + alternatives[i][j].Description + "</button> </li>"
+                };
+                tmpstr += "</ul> </div> </br></br>";
+                angular.element(document.getElementById('alternatives')).append($compile(tmpstr)($scope));
+                //$("#alternatives").append(tmpstr);
+            };
         };
-
+     
         //hub.client.displayAlternatives = function (alternatives) {
         //    for (var i = 0; i < alternatives.length; i++) {
         //        var tmpstr = "<ul>";
@@ -108,6 +108,13 @@
         //        $("#alternatives").append(tmpstr);
         //    }
         //};
+        //$("#alternatives").click(function () {
+        //    console.log("hiding div");
+        //    var i = event.target.name[event.target.name.length - 1]
+        //    $("#myDiv" + i).hide()
+        //    var str = event.target.name.substring(0, event.target.name.length - 1);
+        //    $("#" + i).append(str)
+        //});
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");
