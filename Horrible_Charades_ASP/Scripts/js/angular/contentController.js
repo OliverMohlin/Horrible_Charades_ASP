@@ -23,7 +23,7 @@
 
             if (signalRService.game.GameState === 4) {
                 $(".timer").text(5);
-                console.log("Set timer to " + 5)
+                console.log("Set timer to " + 5);
             } else {
                 $(".timer").text(10);
             }
@@ -53,7 +53,7 @@
         hub.client.startTimer = function () {
             console.log("calling vm.startTimer");
             vm.stopTimer();
-            //vm.startTimer();
+            vm.startTimer();
         };
 
         // Stops the timer. Called from startTimer.
@@ -93,7 +93,8 @@
 
         //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            hub.server.redirectToPreCharade(signalRService.game.GameCode);
+            console.log("Redirect to pre charade");
+            hub.server.redirectToPreCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         // Redirects to Charade View
@@ -240,7 +241,7 @@
         };
 
         $(".led").click(function () {
-            alert("jQuery-click works contentController")
+            alert("jQuery-click works contentController");
         });
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });

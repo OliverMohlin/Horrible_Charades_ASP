@@ -137,7 +137,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         public RuleChanger GetRuleChanger(string type)
         {
 
-            var tmpList = _charadeContext.RuleChangers.Where(r => r.Type == type).ToList();
+            var tmpList = _charadeContext.RuleChangers.Where(r => r.Description == type).ToList();
 
             int modifierID = RandomUtils.ReturnValue(tmpList.Count());
             // todo: Ställa tillbaka så att den returnerar random value of RuleChanger
