@@ -5,7 +5,7 @@
         <p class="info-text">Your charade is: </p>
     </div>
     <br />
-    <p>POWERUPS</p>
+    <h1 class="powerup-header">POWERUPS</h1>
     <div id="powerUpContainer">
         <ul>
             <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>
@@ -18,6 +18,8 @@
     <input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
 
     <input type="button" data-ng-click="vm.timer()" value="Klicka för timer" />
+
+    <br />
 
     <a href="#CharadeActor">Next Phase (Actor)</a>
 
