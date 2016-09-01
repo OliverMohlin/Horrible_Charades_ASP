@@ -195,6 +195,19 @@ namespace Horrible_Charades_ASP
             }
         }
 
+        /// <summary>
+        /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
+        /// </summary>
+        /// <param name="gameCode"></param>
+        public void ShuffleCharade(string gameCode)
+        {
+            Game game = GameState.Instance.ShuffleCharade(gameCode);
+            Clients.Caller.InsertCharadeHTML(game, "noun");
+            Clients.Caller.InsertCharadeHTML(game, "adjective");
+            Clients.Caller.InsertCharadeHTML(game, "verb");
+            Clients.Group(gameCode).resetTimer(10);
+        }
+
         public void AffectCharadeTime(string gameCode, string direction)
         {
             Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
@@ -219,17 +232,5 @@ namespace Horrible_Charades_ASP
             Clients.Group(game.GameCode).redirectToView("/#/Score");
         }
 
-        /// <summary>
-        /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
-        /// </summary>
-        /// <param name="gameCode"></param>
-        public void ShuffleCharade(string gameCode)
-        {
-            Game game = GameState.Instance.ShuffleCharade(gameCode);
-            Clients.Caller.InsertCharadeHTML(game, "noun");
-            Clients.Caller.InsertCharadeHTML(game, "adjective");
-            Clients.Caller.InsertCharadeHTML(game, "verb");
-            Clients.Group(gameCode).resetTimer(10);
-        }
     }
 }

@@ -17,11 +17,6 @@ namespace Horrible_Charades_ASP.Models
             GameState.Instance.getRuleChangers(this);
         }
 
-        private void AddRuleChangers()
-        {
-            
-        }
-
         public string ConnectionID { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }

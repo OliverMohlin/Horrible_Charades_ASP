@@ -12,7 +12,7 @@
         // Updates contentController to fit the locally persisted data in gameServic    e. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
-        vm.timeLeft = 3000;
+        vm.timeLeft = 65;
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
@@ -23,10 +23,9 @@
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(5);
-                console.log("Set timer to " + 5);
+                $(".timer").text(65);
             } else {
-                $(".timer").text(10);
+                $(".timer").text(5);
             }
             vm.promise = $interval(timer, 1000);
         };
@@ -34,7 +33,6 @@
         function timer() {
             vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
-            console.log(vm.timeLeft + "seconds left");
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
@@ -68,7 +66,7 @@
 
         //Calls JoinGame function on Server-Side when a teamName and GameCode is submitted in CreateTeamGuest
         vm.joinGame = function () {
-            hub.server.joinGame($("#GameCode").val(), $("#TeamName").val());
+            hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
 
@@ -116,19 +114,6 @@
             hub.server.shuffleCharade(signalRService.game.GameCode);
         };
 
-        //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
-
-        $(".add-adjective").click(function () {
-            console.log("clicked on add Adjectrive");
-            hub.server.updateCharade("adjective", signalRService.game.GameCode);
-        });
-
-        //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
-        $(".add-verb").click(function () {
-            console.log("clicked on add Verb");
-            hub.server.updateCharade("verb", signalRService.game.GameCode);
-        });
-
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
             // Allt fungerar förutom att sätta tiden till 10 !!!
@@ -136,12 +121,6 @@
             console.log("timeLeft");
             console.log(vm.timeLeft);
         };
-
-        //// Call GetRuleChanger on server-side to get RuleChangers from Database when "Start Game" button is pressed. 
-        //vm.getRuleChanger = function () {
-        //    hub.server.getRuleChanger(signalRService.game.GameCode);
-        //};
-
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
@@ -151,10 +130,10 @@
                 hub.server.affectCharadeTime(signalRService.game.GameCode, "minus");
             }
             if (Id === 4) {
-                vm.getAdjective();
+                hub.server.updateCharade("adjective", signalRService.game.GameCode);
             }
             if (Id === 5) {
-                vm.getVerb();
+                hub.server.updateCharade("verb", signalRService.game.GameCode);
             }
         };
 
@@ -196,7 +175,7 @@
                     tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
 
                     for (var j = 0; j < alternatives[i].length; j++) {
-                        tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
+                        tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>";
                     };
 
                     tmpstr += "</ul> </div> </br></br>";
@@ -227,7 +206,7 @@
 
         vm.submitGuess = function () {
             console.log("submitGuess");
-            alert('clicked')
+            alert('clicked');
             //vm.guessed = true;
         };
 

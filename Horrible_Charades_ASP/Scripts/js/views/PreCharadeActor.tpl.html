@@ -8,16 +8,18 @@
     <h1 class="powerup-header">POWERUPS</h1>
     <div id="powerUpContainer">
         <ul>
-            <li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>
+            <!--<li data-ng-repeat="PowerUp in vm.gameData.Teams[vm.myTeam].PowerUps"><button class="btn btn-default" data-ng-click="vm.activatePowerUp(PowerUp.ID)">{{PowerUp.Description}}</button></li>-->
         </ul>
+        <div class='btn powerup' data-ng-click='vm.activatePowerUp(2)'><p class='funkup-text'><span class='add'>Shuffle</span><br />Charade</p></div>
+
     </div>
 
     <!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
     <button data-ng-click="vm.getAdjective()">Klicka för Adjektiv</button>
 
-    <input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
+    <!--<input type="button" data-ng-click="vm.getVerb()" value="Klicka för Verb" />
 
-    <input type="button" data-ng-click="vm.timer()" value="Klicka för timer" />
+    <input type="button" data-ng-click="vm.timer()" value="Klicka för timer" />-->
 
     <br />
 
