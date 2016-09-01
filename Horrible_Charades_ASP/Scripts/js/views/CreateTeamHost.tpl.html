@@ -9,7 +9,15 @@
             <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
             <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" class="text-input" required /> <!--data-ng-model="vm.Team.Name"-->
             <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
-            <button id="createTeamButton" data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.createTeam()">Submit</button>
+            <button id="createTeamButton" data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.createTeam(); vm.playKnappvalj()">Submit</button>
+
         </div>
     </div>
+
+
+    <script>
+
+
+
+    </script>
 </div>
