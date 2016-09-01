@@ -29,6 +29,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
     line-height: 1;
+    margin-top: 10px;
 }
 
 ol, ul {
@@ -90,14 +91,15 @@ a {
 }
 
 .info-text {
-    font-size: 22px;
+    font-size: 16px;
+    font-family: "Bungee";
     margin: 0.5em;
 }
 
 .gamecode-text {
     font-family: 'Source Code Pro';
     font-weight: 900;
-    font-size: 44px;
+    font-size: 39px;
 }
 
 .container-fluid {
@@ -107,7 +109,7 @@ a {
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
     .header-page {
-        font-size: 26px;
+        font-size: 36px;
         margin-top: 0.3em;
         margin-bottom: 0.3em;
     }
@@ -161,7 +163,7 @@ a {
     margin-right: auto;
     border: none;
     color: white;
-    font-size: 34px;
+    font-size: 33px;
     line-height: 1.13em;
     position: relative;
     -webkit-transition: all 0.15s;
@@ -180,7 +182,7 @@ a {
 /* -------------- Media queries - Main menu ----------*/
 @media screen and (min-width: 280px) and (max-width: 640px) and (orientation:portrait) {
     .main-menu-btn {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #face-container {
@@ -191,7 +193,7 @@ a {
 
 @media screen and (min-height: 500px) and (max-height: 740px) and (orientation:landscape) {
     .main-menu-btn {
-        font-size: 23px;
+        font-size: 16px;
     }
 
     #face-container {
@@ -207,7 +209,7 @@ a {
 
 @media screen and (min-height: 200px) and (max-height: 500px) and (orientation:landscape) {
     .main-menu-btn {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     #face-container {
@@ -224,7 +226,7 @@ a {
 
 @media screen and (min-height: 200px) and (max-height: 340px) and (orientation:landscape) {
     .main-menu-btn {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     #face-container {
@@ -242,9 +244,9 @@ a {
    Create Team
    -------------------------------------- */
 
-.text-input, #joinTeamButton, #createTeamButton, #GameCode, #TeamName {
+.text-input, #joinTeamButton, #createTeamButton, #GameCode, #GameCodeGuest, #TeamName {
     text-align: center;
-    font-size: 50px;
+    font-size: 39px;
     display: block;
     width: 10em;
     border: none;
@@ -258,19 +260,23 @@ a {
 #GameCode {
     background-color: #848484;
     border-radius: 10px 10px 0 0;
+    padding: 35px 0px 35px 0px;
 }
 
-div#GameCode {
-    padding: 35px;
+#GameCodeGuest {
+    background-color: #848484;
+    border-radius: 10px 10px 0 0;
+    padding: 0px 0px 0px 0px;
 }
 
 #TeamName {
     background-color: #616262;
+    padding: 4px 0px 4px 0px;
 }
 
 #joinTeamButton, #createTeamButton {
     background-color: #EF5451;
-    padding: 40px 10px 40px 5px;
+    padding: 35px 0px 35px 0px;
     border-radius: 0 0 10px 10px;
 }
 
@@ -299,7 +305,7 @@ input:-moz-placeholder {
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
     .text-input, #joinTeamButton, #createTeamButton, #GameCode, #TeamName {
-        font-size: 30px;
+        font-size: 27px;
         width: 16em;
     }
 
@@ -309,6 +315,10 @@ input:-moz-placeholder {
 
     #joinTeamButton, #createTeamButton {
         padding: 20px;
+    }
+
+    #TeamName {
+        padding: 0px 0px 0px 0px;
     }
 }
 /* --------------------------------------
@@ -320,7 +330,7 @@ input:-moz-placeholder {
 
 .lobby-code {
     margin-bottom: 15px;
-    font-size: 20px;
+    font-size: 27px;
 }
 
 .teamList {
@@ -330,11 +340,11 @@ input:-moz-placeholder {
 .lobby-teamList {
     font-family: "Bungee";
     font-weight: 100;
-    font-size: 34px;
+    font-size: 39px;
     color: white;
     display: inline-table;
     background-color: #616262;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 12px;
     margin: 7px;
     width: 40%;
@@ -343,12 +353,12 @@ input:-moz-placeholder {
 #startGameButton {
     font-family: "Bungee";
     font-weight: 100;
-    font-size: 34px;
+    font-size: 39px;
     color: white;
     display: inline-table;
     background-color: #EF5451;
-    border-radius: 20px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 12px;
     margin: 5px 0 20px 0;
     width: 40%;
     border: none;
@@ -357,11 +367,11 @@ input:-moz-placeholder {
 #waitingForHost {
     font-family: "Bungee";
     font-weight: 100;
-    font-size: 34px;
+    font-size: 39px;
     color: white;
     display: inline-table;
     background-color: #848484;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 10px;
     margin: 5px 0 20px 0;
     width: 40%;
@@ -371,11 +381,11 @@ input:-moz-placeholder {
 /*--------------------- Media queries - Lobby ---------------------*/
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
     .lobby-teamList {
-        font-size: 20px;
+        font-size: 27px;
     }
 
     #startGameButton {
-        font-size: 20px;
+        font-size: 27px;
     }
 
     .lobby-code {
@@ -383,7 +393,7 @@ input:-moz-placeholder {
     }
 
     .teamList {
-        height: 55%;
+        height: 42%;
     }
 }
 
@@ -391,7 +401,7 @@ input:-moz-placeholder {
    PreCharade
    -------------------------------------- */
 .time-text {
-    font-size: 110px;
+    font-size: 104px;
     margin-top: 0.7em;
     padding: 0 1rem;
     margin-bottom: 0;
@@ -402,7 +412,14 @@ time-container {
 }
 
 .timer-description {
-    font-size: 26px;
+    font-size: 16px;
+    font-family: "Bungee";
+}
+
+.powerup-header {
+    font-size: 27px;
+    font-family: "Bungee";
+    margin-bottom: 0.5em;
 }
 
 /* --------------------------------------
@@ -412,7 +429,7 @@ time-container {
 .charadeContainer {
     background-color: #E0E0E0;
     text-align: center;
-    padding: 2em 0 3em 0;
+    padding: 0.5em 0 1.5em 0;
     width: 95vw;
     margin-top: 2em;
     border-radius: 10px;
@@ -421,7 +438,7 @@ time-container {
 }
 
 #noun, #verb, #adjective {
-    font-size: 60px;
+    font-size: 52px;
     font-family: Bungee;
 }
 
@@ -430,6 +447,11 @@ time-container {
         padding: 0.2em 0 1em 0;
         margin-top: 2em;
     }
+
+    #noun, #verb, #adjective {
+        font-size: 36px;
+        font-family: Bungee;
+    }
 }
 
 /* --------------------------------------
@@ -437,7 +459,7 @@ time-container {
    -------------------------------------- */
 .charadeContainer > li {
     display: inline;
-        font-size: 60px;
+    font-size: 52px;
     font-family: Bungee;
 }
 /* --------------------------------------
@@ -472,7 +494,7 @@ time-container {
     color: white;
     padding: 1.2em 0;
     font-family: Bungee;
-    font-size: 56px;
+    font-size: 52px;
     line-height: 76px;
 }
 
@@ -481,12 +503,12 @@ time-container {
 }
 
 .add {
-    font-size: 160px;
+    font-size: 52px;
 }
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
     .time-text {
-        font-size: 42px;
+        font-size: 52px;
     }
 
     #pre-charade-participant-container > div > p {
@@ -498,12 +520,12 @@ time-container {
         margin: 0 1em 1em 0;
         width: 10rem;
         height: 10rem;
-        font-size: 22px;
+        font-size: 27px;
         line-height: 24px;
     }
 
     .add {
-        font-size: 64px;
+        font-size: 52px;
     }
 }
 
@@ -523,15 +545,11 @@ time-container {
 
 #waitingRoomActorButton {
     background-color: #EF5451;
-    padding: 65px 15px 65px 10px;
-    border-radius: 0 0 10px 10px;
+    padding: 19px 0px 19px 0px;
+    border-radius: 10px;
     margin-bottom: 3em;
-}
-
-#waitingRoomActorButton {
     text-align: center;
-    font-size: 25px;
-    padding: 20px 10px 20px 5px;
+    font-size: 27px;
     display: block;
     width: 50%;
     border: none;
@@ -583,4 +601,48 @@ time-container {
         color: #EF5451;
         text-shadow: .25em 0 0 #EF5451, .5em 0 0 #EF5451;
     }
+}
+
+/* --------------------------------------
+   ScoreViews
+   -------------------------------------- */
+#score-container {
+}
+
+.score-teamList {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 27px;
+    color: white;
+    display: inline-table;
+    background-color: #616262;
+    border-radius: 10px 0px 0px 10px;
+    padding: 12px;
+    margin: 7px;
+    width: 100%;
+}
+
+.score-scoreList {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 27px;
+    color: white;
+    display: inline-table;
+    background-color: #848484;
+    border-radius: 0px 10px 10px 0px;
+    padding: 12px;
+    margin: 7px;
+    width: 100%;
+}
+
+.a {
+    width: 50%;
+    float: left;
+    margin-left: 15%;
+}
+
+.b {
+    width: 15%;
+    float: left;
+    text-align: center;
 }
