@@ -209,7 +209,7 @@ namespace Horrible_Charades_ASP
             List<List<Word>> inCorrectAnswers = new List<List<Word>>();
             inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
 
-            Clients.Caller.DisplayAlternatives(inCorrectAnswers);
+            Clients.Caller.displayAlternatives(inCorrectAnswers);
         }
         public void PointCounter(string gameCode, int timeLeft)
         {
