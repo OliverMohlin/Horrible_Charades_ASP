@@ -136,13 +136,6 @@ namespace Horrible_Charades_ASP
             Clients.Caller.redirectToView("/#/PreCharadeActor");
             Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
 
-
-            //Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
-            //Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
-
-
-            Clients.Group(gameCode).debugMessage("red.ToPreCharade Sleeping thread for 0.5sek");
-            Thread.Sleep(500);
             Clients.Group(game.GameCode).startTimer();
         }
 
