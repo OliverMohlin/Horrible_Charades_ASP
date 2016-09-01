@@ -5,25 +5,28 @@
     angular.module("mainContent")
         .controller("contentController", contentController);
 
-    function contentController(signalRService, $interval) {
+    function contentController(signalRService, $interval, $timeout, $compile) {
         var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
-        // Updates contentController to fit the locally persisted data in gameService. 
+        // Updates contentController to fit the locally persisted data in gameServic    e. 
         vm.gameData = signalRService.game;
         vm.myTeam = signalRService.myTeam;
         vm.timeLeft = 3000;
         vm.promise;
         vm.time = signalRService.time;
         vm.guessed = false;
+        vm.alternatives;
+        vm.test = ["a", "b", "c"];
 
         //Starts timer on CharadeActor
         vm.startTimer = function (time) {
 
             if (signalRService.game.GameState === 4) {
-                $(".timer").text(3000);
+                $(".timer").text(5);
+                console.log("Set timer to " + 5);
             } else {
-                $(".timer").text(60);
+                $(".timer").text(10);
             }
             vm.promise = $interval(timer, 1000);
         };
@@ -31,6 +34,7 @@
         function timer() {
             vm.timeLeft = $(".timer").text();
             vm.timeLeft--;
+            console.log(vm.timeLeft + "seconds left");
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
@@ -74,6 +78,10 @@
             hub.server.createTeam(signalRService.game.GameCode, $("#TeamName").val());
         };
 
+        hub.client.setTeamName = function (teamName) {
+            signalRService.teamName = teamName;
+        };
+
         //Calls StartCharade on Server-Side when a the host presses start
         hub.client.startCharade = function () {
             hub.server.startCharade(signalRService.game.GameCode);
@@ -86,13 +94,15 @@
 
         //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            hub.server.redirectToPreCharade(signalRService.game.GameCode);
+            console.log("Redirect to pre charade");
+            hub.server.redirectToPreCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         // Redirects to Charade View
         vm.redirectToCharade = function () {
             console.log("Redirecting to Charade");
-            hub.server.redirectToCharade(signalRService.game.GameCode);
+            console.log(signalRService.teamName);
+            hub.server.redirectToCharade(signalRService.game.GameCode, signalRService.teamName);
         };
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
@@ -106,19 +116,18 @@
             hub.server.shuffleCharade(signalRService.game.GameCode);
         };
 
-        vm.funkUp = function (id) {
-            console.log(id);
-        };
         //Calls UpdateCharade function on Server-Side when "Get Adjective"-button is pressed
-        vm.getAdjective = function () {
+
+        $(".add-adjective").click(function () {
+            console.log("clicked on add Adjectrive");
             hub.server.updateCharade("adjective", signalRService.game.GameCode);
-        };
+        });
 
         //Calls UpdateCharade function on Server-Side when "Get Verb"-button is pressed
-        vm.getVerb = function () {
+        $(".add-verb").click(function () {
+            console.log("clicked on add Verb");
             hub.server.updateCharade("verb", signalRService.game.GameCode);
-        };
-
+        });
 
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function (reset) {
@@ -133,14 +142,13 @@
         //    hub.server.getRuleChanger(signalRService.game.GameCode);
         //};
 
+
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
-            // Här får jag lov att sätta tiden till 10. Men inte när jag återanropar! :S
-            //vm.timeLeft = 10;
             console.log("initiating activateFunkUp");
             console.log(Id);
             if (Id === 3) {
-                hub.server.affectCaradeTime(signalRService.game.GameCode, "minus");
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "minus");
             }
             if (Id === 4) {
                 vm.getAdjective();
@@ -177,11 +185,38 @@
 
             $("#charade").append("<li>" + signalRService.game.CurrentCharade.Noun.Description + " </li>");
 
-            for ( i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
+            for (i = 0; i < signalRService.game.CurrentCharade.Verb.length; i++) {
                 $("#charade").append("<li>" + signalRService.game.CurrentCharade.Verb[i].Description + "</li>");
             }
         };
 
+        hub.client.displayAlternatives = function (alternatives) {
+                var tmpstr = "";
+                for (var i = 0; i < alternatives.length; i++) {
+                    tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
+
+                    for (var j = 0; j < alternatives[i].length; j++) {
+                        tmpstr += "<li> <button name='" + alternatives[i][j].Description + i + "' data-ng-click='vm.submitGuess()'>" + alternatives[i][j].Description + "</button> </li>"
+                    };
+
+                    tmpstr += "</ul> </div> </br></br>";
+                    
+
+
+                }
+      
+           
+                var newStr = $compile(tmpstr)(vm);
+            //angular.element(document.getElementById('alternatives')).append(newStr);
+            $('#alternatives').append(newStr);
+                //$scope.$apply();
+            };
+
+        //hub.client.displayAlternatives = function (alternatives) {
+            
+        //    vm.alternatives = alternatives;
+        //    console.log(vm.alternatives);
+        //};
         vm.hideDiv = function () {
             console.log("hiding div");
             //var i = event.target.name[event.target.name.length - 1]
@@ -191,10 +226,18 @@
         };
 
         vm.submitGuess = function () {
-            vm.guessed = true;
+            console.log("submitGuess");
+            alert('clicked')
+            //vm.guessed = true;
         };
+
+        $(".led").click(function () {
+            alert("jQuery-click works contentController");
+        });
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub              
         });
+    };
 
-    }
-})();
+
+}
+)();

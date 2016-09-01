@@ -138,38 +138,40 @@ namespace Horrible_Charades_ASP
 
         internal Game GetRuleChanger(Game game, int index)
         {
-            //Ändra för olika antal funkups
-            for (int i = 0; i < 3; i++)
+            foreach (var team in game.Teams)
             {
-                RuleChanger ruleChanger = new RuleChanger();
-                do
+                //Ändra för olika antal funkups
+                for (int i = 0; i < 3; i++)
                 {
-                    ruleChanger = _dbUtils.GetRuleChanger();
-                } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
+                    RuleChanger ruleChanger = new RuleChanger();
+                    do
+                    {
+                        ruleChanger = _dbUtils.GetRuleChanger();
+                    } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
 
-                if (ruleChanger.Type == "PowerUp")
-                {
-                    game.Teams[index].PowerUps.Add(ruleChanger);
-                }
-                else if (ruleChanger.Type == "FunkUp")
-                {
-                    if (ruleChanger.Description == "Add Adjective")
+                    if (ruleChanger.Type == "PowerUp")
                     {
-                        ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
+                        team.PowerUps.Add(ruleChanger);
                     }
-                    else if (ruleChanger.Description == "Add Verb")
+                    else if (ruleChanger.Type == "FunkUp")
                     {
-                        ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
+                        if (ruleChanger.Description == "Add Adjective")
+                        {
+                            ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
+                        }
+                        else if (ruleChanger.Description == "Add Verb")
+                        {
+                            ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
+                        }
+                        else
+                        {
+                            ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
+                        }
+                        team.FunkUps.Add(ruleChanger);
                     }
-                    else
-                    {
-                        ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
-                    }
-                    game.Teams[index].FunkUps.Add(ruleChanger);
                 }
             }
-            return game;
-
+                return game;
         }
         internal Game GetAdjective(string gameCode)
         {

@@ -58,14 +58,17 @@ namespace Horrible_Charades_ASP
                 {
 
                     Clients.Group(game.GameCode).updateGameState(game);
+                    Clients.Caller.setTeamName(teamName);
                     Clients.Caller.redirectToView("/#/LobbyHost");
                 }
-                else {
+                else
+                {
                     Clients.Group(game.GameCode).updateGameState(game);
                     Clients.Group(game.GameCode).pushToTeamList(teamName);
+                    Clients.Caller.setTeamName(teamName);
                     Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
-    
+
             }
         }
 
@@ -119,33 +122,50 @@ namespace Horrible_Charades_ASP
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
-        public void RedirectToPreCharade(string gameCode)
+        public void RedirectToPreCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
+            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
 
             Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
             Clients.Group(gameCode).debugMessage(game.GameState);
             Clients.Group(gameCode).debugMessage(game.Teams);
-            //game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
-            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+
+            Clients.Caller.redirectToView("/#/PreCharadeActor");
+            Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
+
+
+            //Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeActor");
+            //Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/PreCharadeParticipant");
+
+
             Clients.Group(gameCode).debugMessage("red.ToPreCharade Sleeping thread for 0.5sek");
             Thread.Sleep(500);
             Clients.Group(game.GameCode).startTimer();
         }
 
-        public void RedirectToCharade(string gameCode)
+        public void RedirectToCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
+            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 5;
-            Clients.Group(gameCode).updateGameState(game);
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/CharadeActor");
-            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/CharadeParticipant");
-            Clients.Group(gameCode).debugMessage("red.ToCharade Sleeping thread for 0.5sek");
+            Clients.Caller.updateGameState(game);
+
+            if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
+            {
+                Clients.Caller.redirectToView("/#/CharadeActor");
+                //Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
+            }
+            else
+            {
+                Clients.Caller.redirectToView("/#/CharadeParticipant");
+            }
+
+            Clients.Caller.debugMessage("red.ToCharade Sleeping thread for 0.5sek");
             Thread.Sleep(500);
-            Clients.Group(game.GameCode).startTimer();
+            Clients.Caller.startTimer();
         }
 
         /// <summary>
@@ -210,7 +230,7 @@ namespace Horrible_Charades_ASP
         /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
         /// </summary>
         /// <param name="gameCode"></param>
-        public void ShuffleCharade (string gameCode)
+        public void ShuffleCharade(string gameCode)
         {
             Game game = GameState.Instance.ShuffleCharade(gameCode);
             Clients.Caller.InsertCharadeHTML(game, "noun");
