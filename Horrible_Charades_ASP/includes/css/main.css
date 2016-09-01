@@ -304,7 +304,7 @@ input:-moz-placeholder {
 }
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
-    .text-input, #joinTeamButton, #createTeamButton, #GameCode, #TeamName {
+    .text-input, #joinTeamButton, #createTeamButton, #GameCode, #GameCodeGuest, #TeamName {
         font-size: 27px;
         width: 16em;
     }
@@ -606,8 +606,6 @@ time-container {
 /* --------------------------------------
    ScoreViews
    -------------------------------------- */
-#score-container {
-}
 
 .score-teamList {
     font-family: "Bungee";

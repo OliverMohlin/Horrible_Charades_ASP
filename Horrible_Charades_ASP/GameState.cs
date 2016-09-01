@@ -138,7 +138,7 @@ namespace Horrible_Charades_ASP
 
         internal void getRuleChangers(Team team)
         {
-            
+
             team.PowerUps.Add(_dbUtils.GetRuleChanger("Shuffle"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Adjective"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Activity"));
@@ -180,7 +180,7 @@ namespace Horrible_Charades_ASP
                     }
                 }
             }
-                return game;
+            return game;
         }
         internal Game GetAdjective(string gameCode)
         {
@@ -318,12 +318,12 @@ namespace Horrible_Charades_ASP
             if (game.WhosTurn.ConnectionID == conId)
             {
                 team.TurnPoint *= 2;
+                foreach (var loopTeams in game.Teams)
+                {
+                    loopTeams.TotalPoints += loopTeams.TurnPoint;
+                }
             }
 
-            foreach (var loopTeams in game.Teams)
-            {
-                loopTeams.TotalPoints += loopTeams.TurnPoint;
-            }
 
             return game;
         }
@@ -380,7 +380,7 @@ namespace Horrible_Charades_ASP
                 }
             }
 
-          
+
             return game;
         }
     }

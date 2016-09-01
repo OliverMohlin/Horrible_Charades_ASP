@@ -195,34 +195,6 @@ namespace Horrible_Charades_ASP
             }
         }
 
-        public void AffectCharadeTime(string gameCode, string direction)
-        {
-            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
-            Clients.Group(gameCode).affectCharadeTime(direction);
-            Clients.Group(gameCode).resetTimer(10);
-        }
-
-
-        public void GetIncorrectAnswers(string gameCode)
-        {
-            Game game = GameState.Instance.GetGame(gameCode);
-            List<List<Word>> inCorrectAnswers = new List<List<Word>>();
-            inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
-            Clients.Caller.DisplayAlternatives(inCorrectAnswers);
-        }
-        public void PointCounter(string gameCode, int timeLeft)
-        {
-            
-            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
-            Clients.Group(game.GameCode).updateGameState(game);
-            Clients.Group(game.GameCode).redirectToView("/#/Score");
-        }
-        public void CalculateScoreP(string gameCode, int timeLeft, string guess)
-        {
-            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
-            
-        }
-
         /// <summary>
         /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
         /// </summary>
@@ -235,5 +207,31 @@ namespace Horrible_Charades_ASP
             Clients.Caller.InsertCharadeHTML(game, "verb");
             Clients.Group(gameCode).resetTimer(10);
         }
+
+        public void AffectCharadeTime(string gameCode, string direction)
+        {
+            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
+            Clients.Group(gameCode).affectCharadeTime(direction);
+            Clients.Group(gameCode).resetTimer(10);
+        }
+
+        public void GetIncorrectAnswers(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            List<List<Word>> inCorrectAnswers = new List<List<Word>>();
+            inCorrectAnswers = GameState.Instance.GetIncorrectAnswers(gameCode);
+            Clients.Caller.DisplayAlternatives(inCorrectAnswers);
+        }
+        public void PointCounter(string gameCode, int timeLeft)
+        {
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
+            Clients.Group(game.GameCode).updateGameState(game);
+            Clients.Group(game.GameCode).redirectToView("/#/Score");
+        }
+        public void CalculateScoreP(string gameCode, int timeLeft, string guess)
+        {
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
+        }
+
     }
 }
