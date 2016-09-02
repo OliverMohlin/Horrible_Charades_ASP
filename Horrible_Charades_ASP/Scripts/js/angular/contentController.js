@@ -26,11 +26,11 @@
                 $(".timer").text(10);
             } else if (signalRService.game.GameState === 5) {
                 $(".timer").text(60);
-            } else if (signalRService.game.GameState === 6){
+            } else if (signalRService.game.GameState === 6) {
                 $(".timer").text(5);
             } else {
                 $(".timer").text(5);
-        }
+            }
             vm.promise = $interval(timer, 1000);
         };
 
@@ -49,8 +49,7 @@
                 }
                 else if (signalRService.game.GameState === 6) {
                     hub.server.redirectToTotalScore(signalRService.game.GameCode);
-                } else if (signalRService.game.GameState === 7)
-                {
+                } else if (signalRService.game.GameState === 7) {
                     vm.leaveLobby(signalRService.game.GameCode);
                 }
                 else {
@@ -81,7 +80,7 @@
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
-     
+
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
@@ -195,8 +194,8 @@
 
                 tmpstr += "</ul> </div> </br></br>";
 
-                $('#alternatives').append(tmpstr);
             }
+            $('#alternatives').append(tmpstr);
         };
 
         vm.submitGuess = function () {
@@ -211,10 +210,9 @@
             //hub.server.calculateScoreP(signalRService.game.GameCode);
         };
 
-        vm.showTeams = function () {
-            console.log("inne i showTeams", signalRService.game.Teams)
+        vm.showStandings = function () {
+            console.log("inne i showStandings", signalRService.game.Teams)
 
-           //hub.server.getTeams() 
         }
 
         vm.playKnappJoin = function () {
