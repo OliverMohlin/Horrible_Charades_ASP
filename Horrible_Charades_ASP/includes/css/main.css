@@ -20,6 +20,8 @@ time, mark, audio, video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    font-family: "Bungee";
+    font-weight: normal;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -583,6 +585,60 @@ time-container {
     }
 }
 /* --------------------------------------
+   CharadeParticipant
+   -------------------------------------- */
+.altButton {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 16px;
+    color: white;
+    display: inline-table;
+    background-color: #848484;
+    border-radius: 10px;
+    border: none;
+    padding: 8px;
+    margin: 3px;
+    width: 30%;
+}
+
+    .altButton:hover {
+        background-color: white;
+        color: black;
+        /*padding: 6px 0 6px 0;*/
+        -webkit-transition: all 0.15s;
+        -moz-transition: all 0.15s;
+        transition: all 0.15s;
+    }
+
+.chosenAlt {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 16px;
+    color: white;
+    display: inline-table;
+    background-color: #616262;
+    border-radius: 10px;
+    border: none;
+    padding: 8px;
+    margin: 3px;
+    width: 30%;
+}
+
+#submitGuessButton {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 26px;
+    color: white;
+    display: inline-table;
+    background-color: #ef5451;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    margin: 3px;
+    width: 40%;
+}
+
+/* --------------------------------------
    PreCharadeParticipant
    -------------------------------------- */
 
@@ -758,7 +814,7 @@ time-container {
 }
 
 .b {
-    width: 15%;
+    width: 20%;
     float: left;
     text-align: center;
 }

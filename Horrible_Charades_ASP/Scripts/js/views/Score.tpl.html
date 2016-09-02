@@ -1,14 +1,14 @@
-﻿<div class="container-fluid" id="score-container">
+﻿<div class="container-fluid" id="score-container" data-ng-init="vm.showStandings()">
     <h1 class="header-page">Score - Other Teams' Guesses</h1>
-    <div data-ng-repeat="team in vm.gameData.Teams" id="TeamName-list-item" class="a">
+    <div  id="TeamName-list-item" class="a">
         <ul>
-            <li class="score-teamList">{{team.Name}}</li>
+            <li data-ng-repeat="team in vm.gameData.Teams" class="score-teamList">{{team.Name}}</li>
         </ul>
 
     </div>
-    <div data-ng-repeat="team in vm.gameData.Teams" id="TeamName-list-item" class="b">
+    <div  id="TeamName-list-item" class="b">
         <ul>
-            <li class="score-scoreList">{{team.TurnPoint}}</li>
+            <li data-ng-repeat="team in vm.gameData.Teams" class="score-scoreList">{{team.TurnPoint}}</li>
         </ul>
 
     </div>
