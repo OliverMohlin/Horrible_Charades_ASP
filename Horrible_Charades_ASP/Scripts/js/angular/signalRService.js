@@ -1,4 +1,5 @@
 ﻿/// <reference path="signalRService.js" />
+/// <reference path="signalRService.js" />
 (function () {
     "use strict";
 
