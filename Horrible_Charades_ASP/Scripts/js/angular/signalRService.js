@@ -49,7 +49,7 @@
             if (direction === "plus") {
                 signalRService.time += 15;
             }
-            if (dicretion === "minus") {
+            if (direction === "minus") {
                 signalRService.time -= 15;
             }
         };

@@ -30,7 +30,7 @@
                 $(".timer").text(5);
             } else {
                 $(".timer").text(5);
-        }
+            }
             vm.promise = $interval(timer, 1000);
         };
 
@@ -49,8 +49,7 @@
                 }
                 else if (signalRService.game.GameState === 6) {
                     hub.server.redirectToTotalScore(signalRService.game.GameCode);
-                } else if (signalRService.game.GameState === 7)
-                {
+                } else if (signalRService.game.GameState === 7) {
                     vm.leaveLobby(signalRService.game.GameCode);
                 }
                 else {
@@ -81,7 +80,7 @@
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
-     
+
         //Calls CreateTeam function on Server-Side when a teamName in CreateTeamHost is submitted
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
@@ -195,8 +194,8 @@
 
                 tmpstr += "</ul> </div> </br></br>";
 
-                $('#alternatives').append(tmpstr);
             }
+            $('#alternatives').append(tmpstr);
         };
 
         vm.submitGuess = function () {

@@ -16,15 +16,15 @@
     <script>
         var guess = "";
 
-        var checkBtn = function (event) {
-            var click = 0;
-            var i = event.target.name[event.target.name.length - 1]
-            $("#myDiv" + i).hide()
-            var str = event.target.name.substring(0, event.target.name.length - 1);
-            $("#" + i).append(str);
-            guess += str;
-            $("#hidden").text(guess);
-            click++;
+    var checkBtn = function (event) {
+        var click = 0;
+        var i = event.target.name[event.target.name.length - 1]
+        $("#myDiv" + i).hide()
+        var str = event.target.name.substring(0, event.target.name.length - 1);
+        $("#" + i).append(str + " ");
+        guess += str;
+        $("#hidden").text(guess);
+        click++;
 
             if (click === 1) {
                 $("#enter").html(" Don't forget to submit your Guess! ");
