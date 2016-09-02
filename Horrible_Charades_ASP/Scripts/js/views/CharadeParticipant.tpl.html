@@ -1,32 +1,34 @@
-﻿<h1 data-ng-init="vm.getIncorrectAnswers()">Charade - Participant</h1>
+﻿<div class="container-fluid">
+    <h1 data-ng-init="vm.getIncorrectAnswers()" class="header-page">Charade - Participant</h1>
 
-<h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
+    <h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
 
-<div id="alternatives" data-ng-hide="vm.guessed">
-</div>
+    <div id="alternatives" data-ng-hide="vm.guessed">
+    </div>
 
-<div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
+    <div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
 
-<div id="enter"></div>
-<button data-ng-click="vm.submitGuess()">Submit Guess</button>
-<label id="hidden" data-ng-show="vm.hide"></label>
-<a href="#Score">Next Phase</a>
+    <div id="enter"></div>
+    <button data-ng-click="vm.submitGuess()" id="submitGuessButton">Submit Guess</button>
+    <label id="hidden" data-ng-show="vm.hide"></label>
+    <a href="#Score">Next Phase</a>
 
-<script>
-    var guess = "";
+    <script>
+        var guess = "";
 
-    var checkBtn = function (event) {
-        var click = 0;
-        var i = event.target.name[event.target.name.length - 1]
-        $("#myDiv" + i).hide()
-        var str = event.target.name.substring(0, event.target.name.length - 1);
-        $("#" + i).append(str);
-        guess += str;
-        $("#hidden").text(guess);
-        click++;
+        var checkBtn = function (event) {
+            var click = 0;
+            var i = event.target.name[event.target.name.length - 1]
+            $("#myDiv" + i).hide()
+            var str = event.target.name.substring(0, event.target.name.length - 1);
+            $("#" + i).append(str);
+            guess += str;
+            $("#hidden").text(guess);
+            click++;
 
-        if (click === 1) {
-            $("#enter").html(" Don't forget to submit your Guess! ");
+            if (click === 1) {
+                $("#enter").html(" Don't forget to submit your Guess! ");
+            }
         }
-    }
-</script>
+    </script>
+</div>

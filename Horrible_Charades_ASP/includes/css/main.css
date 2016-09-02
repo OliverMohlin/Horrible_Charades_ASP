@@ -20,6 +20,8 @@ time, mark, audio, video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    font-family: "Bungee";
+    font-weight: normal;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -539,6 +541,61 @@ time-container {
     font-size: 52px;
     font-family: Bungee;
 }
+
+/* --------------------------------------
+   CharadeParticipant
+   -------------------------------------- */
+.altButton {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 16px;
+    color: white;
+    display: inline-table;
+    background-color: #848484;
+    border-radius: 10px;
+    border: none;
+    padding: 8px;
+    margin: 3px;
+    width: 30%;
+}
+
+    .altButton:hover {
+        background-color: white;
+        color: black;
+        /*padding: 6px 0 6px 0;*/
+        -webkit-transition: all 0.15s;
+        -moz-transition: all 0.15s;
+        transition: all 0.15s;
+    }
+
+.chosenAlt {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 16px;
+    color: white;
+    display: inline-table;
+    background-color: #616262;
+    border-radius: 10px;
+    border: none;
+    padding: 8px;
+    margin: 3px;
+    width: 30%;
+}
+
+#submitGuessButton {
+    font-family: "Bungee";
+    font-weight: 100;
+    font-size: 26px;
+    color: white;
+    display: inline-table;
+    background-color: #ef5451;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    margin: 3px;
+    width: 40%;
+}
+
 /* --------------------------------------
    PreCharadeParticipant
    -------------------------------------- */
@@ -565,8 +622,8 @@ time-container {
     display: inline-block;
     background-color: #EF5451;
     margin: 0 0.5em 1em 0.5em;
-    width:8em;
-    height:6em;
+    width: 8em;
+    height: 6em;
     color: white;
     font-family: Bungee;
     font-size: 26px;
@@ -574,7 +631,7 @@ time-container {
 }
 
 .funkup-text {
-    margin-top:1.6em;
+    margin-top: 1.6em;
 }
 /*FIXA HÄR*/
 .add {

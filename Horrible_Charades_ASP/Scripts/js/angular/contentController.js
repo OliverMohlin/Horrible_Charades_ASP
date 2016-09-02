@@ -25,7 +25,7 @@
             if (signalRService.game.GameState === 4) {
                 $(".timer").text(10);
             } else if (signalRService.game.GameState === 5) {
-                $(".timer").text(60);
+                $(".timer").text(6000);
             } else if (signalRService.game.GameState === 6){
                 $(".timer").text(5);
             } else {
@@ -187,10 +187,10 @@
         hub.client.displayAlternatives = function (alternatives) {
             var tmpstr = "";
             for (var i = 0; i < alternatives.length; i++) {
-                tmpstr += "<div id='" + i + "'></div><div id='myDiv" + i + "'> <ul>";
+                tmpstr += "<div id='" + i + "' class='chosenAlt'></div><div id='myDiv" + i + "'> <ul>";
 
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + [i][j] + "'><button name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
                 };
 
                 tmpstr += "</ul> </div> </br></br>";
