@@ -12,7 +12,6 @@
 
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
-            console.log("mainMenuController loaded");
         });
     };
 })();

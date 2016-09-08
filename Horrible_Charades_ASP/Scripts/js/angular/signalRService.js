@@ -9,7 +9,7 @@
     function signalRService($compile) {
 
         var self = this;
-        self.timeLeft = 60;
+        //self.timeLeft = 10;
         self.game = {};
         self.teamName;
         self.charadeTime = 60;
@@ -94,6 +94,17 @@
             }
         };
 
+        hub.client.displayAlternatives = function (alternatives) {
+            var tmpstr = "";
+            for (var i = 0; i < alternatives.length; i++) {
+                tmpstr += "<div id='" + i + "' class='chosenAlt'></div><div id='myDiv" + i + "'> <ul>";
+                for (var j = 0; j < alternatives[i].length; j++) {
+                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                };
+                tmpstr += "</ul> </div> </br></br>";
+            }
+            $('#alternatives').append(tmpstr);
+        };
 
         $("#charade").onload = function () {
             console.log("initiating getNoun");

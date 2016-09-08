@@ -15,14 +15,10 @@
         vm.time = signalRService.timeLeft;
 
         $.connection.hub.start().done(function () {
-            console.log(vm);
-            console.log("preCharadePartiController loaded and connected to GameHub");
         });
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (Id) {
-            console.log("initiating activateFunkUp");
-            console.log(Id);
             if (Id === 3) {
                 hub.server.affectCharadeTime(signalRService.game.GameCode, "minus");
             }
@@ -37,8 +33,6 @@
 
         // Redirects to Charade View
         vm.redirectToCharade = function () {
-            console.log("Redirecting to Charade");
-            console.log(vm.teamName);
             hub.server.redirectToCharade(vm.game.GameCode, vm.teamName);
         };
 
@@ -63,15 +57,15 @@
         };
 
         // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
-        hub.client.startTimer = function () {
-            console.log("calling vm.startTimer");
-            vm.stopTimer();
-            vm.startTimer();
-        };
+        //hub.client.startTimer = function () {
+        //    console.log("calling vm.startTimer");
+        //    vm.stopTimer();
+        //    vm.startTimer();
+        //};
 
-        // Stops the timer. Called from startTimer.
-        vm.stopTimer = function () {
-            $interval.cancel(vm.promise);
-        };
+        //// Stops the timer. Called from startTimer.
+        //vm.stopTimer = function () {
+        //    $interval.cancel(vm.promise);
+        //};
     };
 })();

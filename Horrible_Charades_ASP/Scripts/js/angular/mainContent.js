@@ -60,13 +60,13 @@
          })
 
         .when("/CharadeActor", {
-            controller: "contentController",
+            controller: "charadeActorController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/CharadeActor.tpl.html"
         })
 
          .when("/CharadeParticipant", {
-             controller: "contentController",
+             controller: "charadePartiController",
              controllerAs: "vm",
              templateUrl: "Scripts/js/views/CharadeParticipant.tpl.html"
          })

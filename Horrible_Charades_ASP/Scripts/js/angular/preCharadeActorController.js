@@ -10,13 +10,11 @@
         var hub = $.connection.gameHub;
         vm.game = signalRService.game;
         vm.teamName = signalRService.teamName;
-        vm.timeLeft = 65;
+        vm.timeLeft = 15;
         vm.promise;
-        vm.time = signalRService.timeLeft;
+        //vm.time = signalRService.timeLeft;
 
         $.connection.hub.start().done(function () {
-            console.log(vm);
-            console.log("preCharadeActorController loaded and connected to GameHub");
         });
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
@@ -36,8 +34,6 @@
 
         // Redirects to Charade View
         vm.redirectToCharade = function () {
-            console.log("Redirecting to Charade");
-            console.log(signalRService.teamName);
             hub.server.redirectToCharade(vm.game.GameCode, vm.teamName);
         };
 
@@ -61,16 +57,15 @@
             };
         };
 
-        // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
-        hub.client.startTimer = function () {
-            console.log("calling vm.startTimer");
-            vm.stopTimer();
-            vm.startTimer();
-        };
+        //// Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
+        //hub.client.startTimer = function () {
+        //    vm.stopTimer();
+        //    vm.startTimer();
+        //};
 
-        // Stops the timer. Called from startTimer.
-        vm.stopTimer = function () {
-            $interval.cancel(vm.promise);
-        };
+        //// Stops the timer. Called from startTimer.
+        //vm.stopTimer = function () {
+        //    $interval.cancel(vm.promise);
+        //};
     };
 })();

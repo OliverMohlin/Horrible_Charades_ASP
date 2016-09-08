@@ -13,12 +13,10 @@
         vm.teamName = signalRService.teamName;
 
         vm.leaveLobby = function () {
-            console.log("leaveLobby in lobbyController");
             hub.server.getRuleChanger(signalRService.game.GameCode);
         };
 
         $.connection.hub.start().done(function () {
-            console.log("lobbyController loaded");
         });
     };
 })();

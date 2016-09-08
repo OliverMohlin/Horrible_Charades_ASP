@@ -218,6 +218,8 @@
     <Content Include="includes\images\face_lines.svg" />
     <Content Include="includes\images\horrible_charades_logo.svg" />
     <Content Include="includes\images\powerup.png" />
+    <Content Include="Scripts\js\angular\charadeActorController.js" />
+    <Content Include="Scripts\js\angular\charadePartiController.js" />
     <Content Include="Scripts\js\angular\ctgController.js" />
     <Content Include="Scripts\js\angular\cthController.js" />
     <Content Include="Scripts\js\angular\lobbyController.js" />

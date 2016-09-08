@@ -3,7 +3,7 @@
 
     <h1><span class="time-text"><label class="timer"></label></span><br /> seconds to go..</h1>
 
-    <div id="alternatives" data-ng-hide="vm.guessed">
+    <div id="alternatives" data-ng-init="vm.startTimer()" data-ng-hide="vm.guessed">
     </div>
 
     <div id="submit" data-ng-show="vm.guessed"> Your guess</div> <!--Visas när de har gissat-->
