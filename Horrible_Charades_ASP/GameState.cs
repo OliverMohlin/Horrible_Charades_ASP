@@ -284,11 +284,10 @@ namespace Horrible_Charades_ASP
             return adjectiveList;
         }
 
-        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, out int index)
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
         {
             Game game = GetGame(gameCode);
 
-            index = GetTeam(game, connectionId);
             // We are now hardcoding the rulechangers at start. 
             //GetRuleChanger(game, index);
             game.CurrentCharade.Adjective.Clear();

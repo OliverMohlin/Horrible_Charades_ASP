@@ -1,12 +1,12 @@
-﻿<div data-ng-controller="contentController as vm">
+﻿<div>
     <div>
         <ul id="result"></ul>
     </div>
 
     <div class="container" id="login-container">
         <div class="col-centered">
-            <h1 class="header-page">Join a <br /> Game</h1>
-
+            <h1 class="header-page">Join a <br /> Game</h1>                 <!--contentController har ingen motsvarighet till vm.Team.GameCode-->
+                                                                                        <!--Vad är tanken ska hända med denna?-->
             <input type="text" placeholder="Game Code" id="GameCodeGuest" name="GameCode" data-ng-model="vm.Team.GameCode" required />
             <span data-ng-if="TeamNameForm.GameCode.$error.required && TeamNameForm.GameCode.$dirty">Enter a game code!</span>
 

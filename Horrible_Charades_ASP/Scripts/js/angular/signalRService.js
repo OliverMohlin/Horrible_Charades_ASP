@@ -11,9 +11,9 @@
         var self = this;
         self.timeLeft = 60;
         self.game = {};
-        self.myTeam = {};
         self.teamName;
-        //var vm = contentController;
+        self.charadeTime = 60;
+
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
 
         //Write out the GameCode in CreateTeamHost
@@ -28,10 +28,11 @@
         hub.client.updateGameState = function (game) {
             self.game = game;
         };
-        // Update the Local players index in games List of Teams 
-        hub.client.updateMyTeam = function (index) {
-            self.myTeam = index;
+        //Updates this players teamName
+        hub.client.setTeamName = function (teamName) {
+            self.teamName = teamName;
         };
+
         //Redirects to next view
         hub.client.redirectToView = function (nextView) {
             window.location.href = nextView;
@@ -47,11 +48,17 @@
         hub.client.affectCharadeTime = function (direction) {
             console.log(direction);
             if (direction === "plus") {
-                signalRService.time += 15;
+                self.charadeTime += 15;
             }
             if (dicretion === "minus") {
-                signalRService.time -= 15;
+                self.charadeTime -= 15;
             }
+        };
+
+        // Receives a call to reset the Timer in Clients Browsers.
+        hub.client.resetTimer = function () {
+            console.log("SignalRService changing timeLeft to 10");
+            $(".timer").text(10);
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)

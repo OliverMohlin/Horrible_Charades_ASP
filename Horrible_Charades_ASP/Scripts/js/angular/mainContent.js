@@ -6,55 +6,55 @@
 
         $routeProvider
             .when("/", {
-                controller: "contentController",
+                controller: "mainMenuController",
                 controllerAs: "vm",
                 templateUrl: "Scripts/js/views/MainMenu.tpl.html"
             })
 
         .when("/CreateTeamHost", {
-            controller: "contentController",
+            controller: "cthController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/CreateTeamHost.tpl.html"
         })
         .when("/CreateTeamGuest", {
-            controller: "contentController",
+            controller: "ctgController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/CreateTeamGuest.tpl.html"
         })
 
         .when("/LobbyHost", {
-            controller: "contentController",
+            controller: "lobbyController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/LobbyHost.tpl.html"
         })
 
         .when("/LobbyGuest", {
-            controller: "contentController",
+            controller: "lobbyController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/LobbyGuest.tpl.html"
         })
 
         .when("/WaitingRoomActor", {
-            controller: "contentController",
+            controller: "waitingRoomController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/WaitingRoomActor.tpl.html"
         })
 
          .when("/WaitingRoomOpponent", {
-             controller: "contentController",
+             controller: "waitingRoomController",
              controllerAs: "vm",
              templateUrl: "Scripts/js/views/WaitingRoomOpponent.tpl.html"
          })
 
 
         .when("/PreCharadeActor", {
-            controller: "contentController",
+            controller: "preCharadeActorController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/PreCharadeActor.tpl.html"
         })
 
          .when("/PreCharadeParticipant", {
-             controller: "contentController",
+             controller: "preCharadePartiController",
              controllerAs: "vm",
              templateUrl: "Scripts/js/views/PreCharadeParticipant.tpl.html"
          })

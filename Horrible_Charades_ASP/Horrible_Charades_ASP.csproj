@@ -218,6 +218,13 @@
     <Content Include="includes\images\face_lines.svg" />
     <Content Include="includes\images\horrible_charades_logo.svg" />
     <Content Include="includes\images\powerup.png" />
+    <Content Include="Scripts\js\angular\ctgController.js" />
+    <Content Include="Scripts\js\angular\cthController.js" />
+    <Content Include="Scripts\js\angular\lobbyController.js" />
+    <Content Include="Scripts\js\angular\mainMenuController.js" />
+    <Content Include="Scripts\js\angular\preCharadeActorController.js" />
+    <Content Include="Scripts\js\angular\PreCharadePartiController.js" />
+    <Content Include="Scripts\js\angular\waitingRoomController.js" />
     <Content Include="Scripts\libs\angular-sanitize.js" />
     <Content Include="Scripts\libs\angular-sanitize.min.js" />
     <Content Include="Scripts\js\angular\contentController.js" />

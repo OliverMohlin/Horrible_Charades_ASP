@@ -1,10 +1,10 @@
 ﻿<div class="container-fluid" id="lobby-container">
     <h1 class="header-page">Lobby for Guest</h1>
-    <h3 class="lobby-code">Code to join: {{vm.gameData.GameCode}}</h3>
+    <h3 class="lobby-code">Code to join: {{vm.game.GameCode}}</h3>
 
     <div>
         <ul class="teamList">
-            <li data-ng-repeat="team in vm.gameData.Teams" class="lobby-teamList">{{team.Name}}</li>
+            <li data-ng-repeat="team in vm.game.Teams" class="lobby-teamList">{{team.Name}}</li>
         </ul>
     </div>
 

@@ -46,7 +46,6 @@ namespace Horrible_Charades_ASP
         public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
         {
             Team team = GameState.Instance.GetTeam(teamName, gameCode);
-
             if (team != null)
             {
                 Clients.Caller.displayMessage("There is already a team in this game with that name");
@@ -68,7 +67,6 @@ namespace Horrible_Charades_ASP
                     Clients.Caller.setTeamName(teamName);
                     Clients.Caller.redirectToView("/#/LobbyGuest");
                 }
-
             }
         }
 
@@ -81,16 +79,9 @@ namespace Horrible_Charades_ASP
         {
             Game game = GameState.Instance.GetGame(gameCode);
             if (game == null)
-            {
-                //Clients.Caller.NoGameExist(false);
                 Clients.Caller.DisplayMessage("No such game exist. Revise your GameCode");
-            }
             else
-            {
                 CreateTeam(gameCode, teamName);
-                //Clients.Caller.NoGameExist(true);
-            }
-
         }
 
         /// <summary>
@@ -99,23 +90,19 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void GetRuleChanger(string gameCode)
         {
-            int index = 0;
-            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode, out index);
-            Clients.Caller.updateMyTeam(index);
+            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             Clients.Group(gameCode).updateGameState(game);
-            Clients.Group(gameCode).startCharade();
+            StartCharade(game);
         }
 
         /// <summary>
         /// Shuffles and assigns which Team is going to do the charade and redirects the client
         /// </summary>
         /// <param name="gameCode"></param>
-        public void StartCharade(string gameCode)
+        public void StartCharade(Game Game)
         {
-            Game game = GameState.Instance.GetGame(gameCode);
-            Clients.Group(gameCode).updateGameState(game);
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomActor");
-            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView("/#/WaitingRoomOpponent");
+            Clients.Caller.redirectToView("/#/WaitingRoomActor");
+            Clients.OthersInGroup(Game.GameCode).redirectToView("/#/WaitingRoomOpponent");
         }
 
         /// <summary>
@@ -128,50 +115,10 @@ namespace Horrible_Charades_ASP
             Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
             Clients.Group(gameCode).updateGameState(game);
-
-            //Clients.Group(gameCode).debugMessage("RedirectToPrecharade says: ");
-            //Clients.Group(gameCode).debugMessage(game.GameState);
-            //Clients.Group(gameCode).debugMessage(game.Teams);
-
+            
             Clients.Caller.redirectToView("/#/PreCharadeActor");
             Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
-
-            Clients.Group(game.GameCode).startTimer();
         }
-
-        public void RedirectToCharade(string gameCode, string teamName)
-        {
-            Game game = GameState.Instance.GetGame(gameCode);
-            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
-            game.GameState = 5;
-            Clients.Caller.updateGameState(game);
-
-            if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
-            {
-                Clients.Caller.redirectToView("/#/CharadeActor");
-                //Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
-            }
-            else
-            {
-                Clients.Caller.redirectToView("/#/CharadeParticipant");
-            }
-
-            Clients.Caller.debugMessage("red.ToCharade Sleeping thread for 0.5sek");
-            Thread.Sleep(500);
-            Clients.Caller.startTimer();
-        }
-
-        /// <summary>
-        /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
-        ///  Pushes to Client-side
-        /// </summary>
-        public void GetNoun(string gameCode)
-        {
-            Game game = GameState.Instance.GetGame(gameCode);
-            //Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
-            Clients.Group(gameCode).InsertCharadeHTML(game, "noun");
-        }
-
         /// <summary>
         /// Updates the current charade serverSide with either adjective or verb.
         /// Called upon when charade:Opponenet uses a the respective FunkUp
@@ -205,7 +152,7 @@ namespace Horrible_Charades_ASP
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
-            Clients.Group(gameCode).resetTimer(10);
+            Clients.Group(gameCode).resetTimer();
         }
 
         /// <summary>
@@ -218,6 +165,38 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
             Clients.Group(gameCode).affectCharadeTime(direction);
             Clients.Group(gameCode).resetTimer(10);
+        }
+        public void RedirectToCharade(string gameCode, string teamName)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
+            game.GameState = 5;
+            Clients.Caller.updateGameState(game);
+
+            if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
+            {
+                Clients.Caller.redirectToView("/#/CharadeActor");
+                //Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
+            }
+            else
+            {
+                Clients.Caller.redirectToView("/#/CharadeParticipant");
+            }
+
+            Clients.Caller.debugMessage("red.ToCharade Sleeping thread for 0.5sek");
+            Thread.Sleep(500);
+            Clients.Caller.startTimer();
+        }
+
+        /// <summary>
+        /// Gets a Noun from Database Table Nouns and Converts it into a Charade.
+        ///  Pushes to Client-side
+        /// </summary>
+        public void GetNoun(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            //Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
+            Clients.Group(gameCode).InsertCharadeHTML(game, "noun");
         }
 
         /// <summary>
