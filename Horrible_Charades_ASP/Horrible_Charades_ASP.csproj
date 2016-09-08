@@ -226,6 +226,8 @@
     <Content Include="Scripts\js\angular\mainMenuController.js" />
     <Content Include="Scripts\js\angular\preCharadeActorController.js" />
     <Content Include="Scripts\js\angular\PreCharadePartiController.js" />
+    <Content Include="Scripts\js\angular\ScoreController.js" />
+    <Content Include="Scripts\js\angular\totalScoreController.js" />
     <Content Include="Scripts\js\angular\waitingRoomController.js" />
     <Content Include="Scripts\libs\angular-sanitize.js" />
     <Content Include="Scripts\libs\angular-sanitize.min.js" />

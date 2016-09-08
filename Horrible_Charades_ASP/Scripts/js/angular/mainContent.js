@@ -72,13 +72,13 @@
          })
 
         .when("/Score", {
-            controller: "contentController",
+            controller: "scoreController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/Score.tpl.html"
         })
 
         .when("/TotalScore", {
-            controller: "contentController",
+            controller: "totalScoreController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/TotalScore.tpl.html"
         });

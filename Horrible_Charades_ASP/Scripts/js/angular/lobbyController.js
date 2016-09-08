@@ -13,7 +13,7 @@
         vm.teamName = signalRService.teamName;
 
         vm.leaveLobby = function () {
-            hub.server.getRuleChanger(signalRService.game.GameCode);
+            hub.server.getRuleChanger(vm.game.GameCode);
         };
 
         $.connection.hub.start().done(function () {

@@ -3,15 +3,15 @@
 <div class="container-fluid" id="score-container">
     <h1 class="header-page">Total Score</h1>
 
-    <div id="TeamName-list-item" class="a">
+    <div data-ng-init="vm.startTimer()" id="TeamName-list-item" class="a">
         <ul>
-            <li data-ng-repeat="team in vm.gameData.Teams | orderBy: '-TotalPoints'" class="score-teamList">{{team.Name}}</li>
+            <li data-ng-repeat="team in vm.game.Teams | orderBy: '-TotalPoints'" class="score-teamList">{{team.Name}}</li>
         </ul>
 
     </div>
     <div id="TeamName-list-item" class="b">
         <ul>
-            <li data-ng-repeat="team in vm.gameData.Teams | orderBy: '-TotalPoints'" class="score-scoreList">{{team.TotalPoints}}</li>
+            <li data-ng-repeat="team in vm.game.Teams | orderBy: '-TotalPoints'" class="score-scoreList">{{team.TotalPoints}}</li>
         </ul>
 
     </div>

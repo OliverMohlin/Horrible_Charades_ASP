@@ -9,7 +9,6 @@
     function signalRService($compile) {
 
         var self = this;
-        //self.timeLeft = 10;
         self.game = {};
         self.teamName;
         self.charadeTime = 60;
