@@ -1,30 +1,19 @@
-﻿<!--<div class="container-fluid" id="score-container">
-    <h1 class="header-page">Total Score</h1>
-    <ul class="teamList">
-        <li class="score-teamList">Team1</li>
-        <li class="score-teamList">Team2</li>
-        <li class="score-teamList">Team3</li>
-    </ul>
-
-    <a href="#WaitingRoom">Next Phase</a>
-</div>-->
+﻿
 
 <div class="container-fluid" id="score-container">
     <h1 class="header-page">Total Score</h1>
-    <div class="a">
+
+    <div id="TeamName-list-item" class="a">
         <ul>
-            <li class="score-teamList">Team1</li>
-            <li class="score-teamList">Team2</li>
-            <li class="score-teamList">Team3</li>
+            <li data-ng-repeat="team in vm.gameData.Teams | orderBy: '-TotalPoints'" class="score-teamList">{{team.Name}}</li>
         </ul>
+
     </div>
-    <div class="b">
+    <div id="TeamName-list-item" class="b">
         <ul>
-            <li class="score-scoreList">300</li>
-            <li class="score-scoreList">205</li>
-            <li class="score-scoreList">160</li>
+            <li data-ng-repeat="team in vm.gameData.Teams | orderBy: '-TotalPoints'" class="score-scoreList">{{team.TotalPoints}}</li>
         </ul>
+
     </div>
-    <label data-ng-show="false" class="timer">5</label>
 </div>
 <a href="#WaitingRoom">Main Menu</a>
