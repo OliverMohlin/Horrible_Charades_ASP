@@ -12,7 +12,6 @@
         vm.teamName = signalRService.teamName;
         vm.timeLeft = 15;
         vm.promise;
-        //vm.time = signalRService.timeLeft;
 
         $.connection.hub.start().done(function () {
         });
@@ -36,6 +35,10 @@
         vm.redirectToCharade = function () {
             hub.server.redirectToCharade(vm.game.GameCode, vm.teamName);
         };
+
+        $(".powerup").click(function () {
+            $(".powerup").hide();
+        });
 
         ///HÄR ÄR TIMER
 

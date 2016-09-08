@@ -10,7 +10,7 @@
         var hub = $.connection.gameHub;
 
         vm.game = signalRService.game;
-        vm.promies;
+        vm.promise;
         vm.timeLeft = 5;
 
         ///HÄR ÄR TIMER

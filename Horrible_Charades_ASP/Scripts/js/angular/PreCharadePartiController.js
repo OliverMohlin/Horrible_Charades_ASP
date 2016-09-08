@@ -56,6 +56,14 @@
             };
         };
 
+        $(".add-adjective").click(function () {
+            $(".add-adjective").hide();
+        });
+
+        $(".add-verb").click(function () {
+            $(".add-verb").hide();
+        });
+
         // Called upon when redirecting to PreCharade or Charade view. Starts the Timer for the View.
         //hub.client.startTimer = function () {
         //    console.log("calling vm.startTimer");

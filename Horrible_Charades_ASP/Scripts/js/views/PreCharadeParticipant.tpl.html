@@ -3,13 +3,13 @@
     <h4 class="time-container"><span class="time-text timer">10</span></h4>
     <p class="timer-description"> until charade starts..</p>
     <div data-ng-init="vm.startTimer()" class="row" id="funkUpContainer">
-        <p class="info-text">{Team}'s turn! funk up their charade!</p>
+        <p class="info-text">{{vm.game.WhosTurn.Name}}'s turn! funk up their charade!</p>
         <ul id="funkup-list">
             <li id="funkup-list-item">
             </li>
         </ul>
-        <div class='btn funkup add-adjective clickable-button' data-ng-click='vm.activateFunkUp(4); vm.playLightsThunder()'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>
-        <div class='btn funkup add-verb clickable-button' data-ng-click='vm.activateFunkUp(5); vm.playLightsThunder()'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>
+        <div class='btn funkup add-adjective clickable-button' data-ng-click='vm.activateFunkUp(4); vm.hideDiv(".add-adjective"); vm.playLightsThunder()'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>
+        <div class='btn funkup add-verb clickable-button' data-ng-click='vm.activateFunkUp(5); vm.hideDiv(".add-verb");vm.playLightsThunder()'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>
 
     </div>
 </div>

@@ -90,6 +90,12 @@ namespace Horrible_Charades_ASP
             if (game.Turn == 0)
             {
                 game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+                game.Turn++;
+            }
+            else if (game.Turn >= game.TurnOrder.Count())
+            {
+                game.Turn = 0;
+                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
             }
 
             foreach (Team team in game.Teams)
@@ -99,7 +105,6 @@ namespace Horrible_Charades_ASP
                     game.WhosTurn = team;
                 }
             }
-            game.Turn++;
             game.GameState = 3;
         }
 
@@ -135,6 +140,19 @@ namespace Horrible_Charades_ASP
 
             return game;
         }
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
+        {
+            Game game = GetGame(gameCode);
+
+            // We are now hardcoding the rulechangers at start. 
+            //GetRuleChanger(game, index);
+            game.CurrentCharade.Adjective.Clear();
+            game.CurrentCharade.Verb.Clear();
+            GetNoun(gameCode);
+            AssignWhosTurn(game);
+            return game;
+        }
+
 
         internal void getRuleChangers(Team team)
         {
@@ -248,6 +266,16 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
+        internal Game PrepareNewRound(string gameCode, string conId)
+        {
+            Game game = GetGame(gameCode);
+            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
+
+            team.TurnPoint = 0;
+            AssignWhosTurn(game);
+            return game;
+        }
+
         private List<Verb> ShuffleVerbsToCurrentCharade(Game game)
         {
             var verbList = new List<Verb>();
@@ -282,19 +310,6 @@ namespace Horrible_Charades_ASP
                 adjectiveList.Add(tmpNewAdjective);
             }
             return adjectiveList;
-        }
-
-        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
-        {
-            Game game = GetGame(gameCode);
-
-            // We are now hardcoding the rulechangers at start. 
-            //GetRuleChanger(game, index);
-            game.CurrentCharade.Adjective.Clear();
-            game.CurrentCharade.Verb.Clear();
-            GetNoun(gameCode);
-            AssignWhosTurn(game);
-            return game;
         }
 
         internal Game AssignPoints(string gameCode, int timeLeft, string conId)
@@ -364,19 +379,19 @@ namespace Horrible_Charades_ASP
                 int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
                 if (timeLeft > 45)
                 {
-                    team.TurnPoint = 40 * charadewords;
+                    team.TurnPoint = 100 * charadewords;
                 }
                 else if (timeLeft > 30)
                 {
-                    team.TurnPoint = 30 * charadewords;
+                    team.TurnPoint = 80 * charadewords;
                 }
                 else if (timeLeft > 15)
                 {
-                    team.TurnPoint = 20 * charadewords;
+                    team.TurnPoint = 60 * charadewords;
                 }
                 else if (timeLeft > 0)
                 {
-                    team.TurnPoint = 10 * charadewords;
+                    team.TurnPoint = 40 * charadewords;
                 }
                 if (game.WhosTurn.ConnectionID == conId)
                 {

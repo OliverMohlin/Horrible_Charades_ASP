@@ -33,7 +33,8 @@
         };
 
         //Redirects to next view
-        hub.client.redirectToView = function (nextView) {
+        hub.client.redirectToView = function (game, nextView) {
+            self.game = game;
             window.location.href = nextView;
         };
         //Use this to print out a message to console.log

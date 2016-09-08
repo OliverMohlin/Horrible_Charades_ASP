@@ -12,12 +12,15 @@
         vm.game = signalRService.game;
 
         $.connection.hub.start().done(function () {
-            console.log("ctgController loaded and connected to GameHub");  // verkar köras 2 ggr just nu..
             console.log(vm);
         });
 
+        vm.pressEnter = function (keyEvent) {
+            if (keyEvent.which === 13)
+                vm.joinGame();
+        };
+
         vm.joinGame = function () {
-            console.log("vm.joinGame initiated");
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 

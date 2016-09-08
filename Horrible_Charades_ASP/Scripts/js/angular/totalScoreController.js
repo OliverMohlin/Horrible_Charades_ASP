@@ -10,7 +10,7 @@
         var hub = $.connection.gameHub;
 
         vm.game = signalRService.game;
-        vm.promies;
+        vm.promise;
         vm.timeLeft = 5;
 
         ///HÄR ÄR TIMER
@@ -25,7 +25,7 @@
             vm.timeLeft--;
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
-                hub.server.getRuleChanger(vm.game.GameCode);
+                hub.server.startNextCharade(vm.game.GameCode);
             };
         };
 

@@ -56,16 +56,14 @@ namespace Horrible_Charades_ASP
                 if (game.Teams.Count == 1)
                 {
 
-                    Clients.Group(game.GameCode).updateGameState(game);
                     Clients.Caller.setTeamName(teamName);
-                    Clients.Caller.redirectToView("/#/LobbyHost");
+                    Clients.Caller.redirectToView(game, "/#/LobbyHost");
                 }
                 else
                 {
-                    Clients.Group(game.GameCode).updateGameState(game);
                     Clients.Group(game.GameCode).pushToTeamList(teamName);
                     Clients.Caller.setTeamName(teamName);
-                    Clients.Caller.redirectToView("/#/LobbyGuest");
+                    Clients.Caller.redirectToView(game, "/#/LobbyGuest");
                 }
             }
         }
@@ -91,7 +89,6 @@ namespace Horrible_Charades_ASP
         public void GetRuleChanger(string gameCode)
         {
             Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
-            Clients.Group(gameCode).updateGameState(game);
             StartCharade(game);
         }
 
@@ -99,26 +96,39 @@ namespace Horrible_Charades_ASP
         /// Shuffles and assigns which Team is going to do the charade and redirects the client
         /// </summary>
         /// <param name="gameCode"></param>
-        public void StartCharade(Game Game)
+        public void StartCharade(Game game)
         {
-            Clients.Caller.redirectToView("/#/WaitingRoomActor");
-            Clients.OthersInGroup(Game.GameCode).redirectToView("/#/WaitingRoomOpponent");
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomActor");
+            Clients.Group(game.GameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomOpponent");
+
         }
 
         /// <summary>
         /// Redirects the client to PreCharadeActor and PreCharadeParticipant
         /// </summary>
         /// <param name="gameCode"></param>
+        /// <param name="teamName"></param>
+        /// 
+
+
         public void RedirectToPreCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
             Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
-            Clients.Group(gameCode).updateGameState(game);
-            
-            Clients.Caller.redirectToView("/#/PreCharadeActor");
-            Clients.OthersInGroup(gameCode).redirectToView("/#/PreCharadeParticipant");
+
+            //if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
+            //{
+            //    Clients.Caller.redirectToView("/#/PreCharadeActor");
+            //    Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
+            //}
+            //else
+            //{
+            Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeActor");
+            Clients.Group(gameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeParticipant");
+            //}
         }
+
         /// <summary>
         /// Updates the current charade serverSide with either adjective or verb.
         /// Called upon when charade:Opponenet uses a the respective FunkUp
@@ -166,26 +176,22 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).affectCharadeTime(direction);
             Clients.Group(gameCode).resetTimer(10);
         }
+
+
         public void RedirectToCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
             Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 5;
-            Clients.Caller.updateGameState(game);
 
             if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
             {
-                Clients.Caller.redirectToView("/#/CharadeActor");
-                //Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
+                Clients.Caller.redirectToView(game, "/#/CharadeActor");
             }
             else
             {
-                Clients.Caller.redirectToView("/#/CharadeParticipant");
+                Clients.Caller.redirectToView(game, "/#/CharadeParticipant");
             }
-
-            Clients.Caller.debugMessage("red.ToCharade Sleeping thread for 0.5sek");
-            Thread.Sleep(500);
-            Clients.Caller.startTimer();
         }
 
         /// <summary>
@@ -195,7 +201,6 @@ namespace Horrible_Charades_ASP
         public void GetNoun(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
-            //Clients.Group(gameCode).debugMessage("Hub GetNoun is preparing to Print Noun for Charade");
             Clients.Group(gameCode).InsertCharadeHTML(game, "noun");
         }
 
@@ -221,7 +226,7 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
 
             Clients.Group(game.GameCode).updateGameState(game);
-            Clients.Group(game.GameCode).redirectToView("/#/Score");
+            Clients.Group(game.GameCode).redirectToView(game, "/#/Score");
         }
         public void CalculateScoreP(string gameCode, int timeLeft, string guess)
         {
@@ -232,9 +237,23 @@ namespace Horrible_Charades_ASP
         {
             Game game = GameState.Instance.GetGame(gameCode);
             game.GameState = 7;
-            Clients.Group(game.GameCode).updateGameState(game);
-            Clients.Group(gameCode).redirectToView("/#/TotalScore");
-            Clients.Group(gameCode).startTimer();
+            Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
+        }
+
+        public void StartNextCharade(string gameCode)
+        {
+            Game game = GameState.Instance.PrepareNewRound(gameCode, Context.ConnectionId);
+            // TODO: Den knäppar ur totalt här! Behöver sitta ner ett par timmar och debugga, kanske bygga om "AssignWhosTurn"
+            if (Context.ConnectionId == game.WhosTurn.ConnectionID)
+            {
+                game.Turn++;
+                Clients.Group(gameCode).updateGameState(game);
+                Clients.Caller.redirectToView(game, "/#/WaitingRoomActor");
+            }
+            else
+            {
+                Clients.Caller.redirectToView(game, "/#/WaitingRoomOpponent");
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
         var hub = $.connection.gameHub;
 
         vm.game = signalRService.game;
-        vm.promies;
+        vm.promise;
         vm.timeLeft = signalRService.charadeTime;
         vm.guessed = false;
         vm.alternatives = ["a", "b", "c"];
@@ -39,6 +39,10 @@
             hub.server.pointCounter(vm.game.GameCode, timeLeft);
         };
 
+        $("#submitGuessButton").click(function () {
+            $("#submitGuessButton").hide();
+            $("#enter").hide();
+        });
 
         ///HÄR ÄR TIMER
 

@@ -15,7 +15,7 @@
 
         //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            hub.server.redirectToPreCharade(signalRService.game.GameCode, signalRService.teamName);
+            hub.server.redirectToPreCharade(vm.game.GameCode, vm.teamName);
         };
     };
 })();

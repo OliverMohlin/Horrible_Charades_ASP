@@ -18,6 +18,11 @@
             hub.server.createGame();
         };
 
+        vm.pressEnter = function (keyEvent) {
+            if (keyEvent.which === 13)
+                vm.createTeam();
+        };
+
         vm.createTeam = function () {
             signalRService.game.GameCode = $("#GameCode").text();
             hub.server.createTeam($("#GameCode").text(), $("#TeamName").val());
