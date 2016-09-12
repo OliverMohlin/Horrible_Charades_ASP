@@ -225,7 +225,6 @@ namespace Horrible_Charades_ASP
         {
             Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
 
-            Clients.Group(game.GameCode).updateGameState(game);
             Clients.Group(game.GameCode).redirectToView(game, "/#/Score");
         }
         public void CalculateScoreP(string gameCode, int timeLeft, string guess)
@@ -236,18 +235,27 @@ namespace Horrible_Charades_ASP
         public void RedirectToTotalScore(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
-            game.GameState = 7;
-            Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
+            if (Context.ConnectionId == game.WhosTurn.ConnectionID)
+            {
+                game = GameState.Instance.PrepareNewRound(gameCode, Context.ConnectionId);
+                game.GameState = 7;
+                Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
+                Clients.Caller.debugMessage(game);
+            }
+            else
+            {
+                Clients.Caller.debugMessage(game);
+            }
         }
 
         public void StartNextCharade(string gameCode)
         {
-            Game game = GameState.Instance.PrepareNewRound(gameCode, Context.ConnectionId);
+
+            Game game = GameState.Instance.EmptyTurnScores(gameCode, Context.ConnectionId);
+            //Game game = GameState.Instance.PrepareNewRound(gameCode, Context.ConnectionId);
             // TODO: Den knäppar ur totalt här! Behöver sitta ner ett par timmar och debugga, kanske bygga om "AssignWhosTurn"
             if (Context.ConnectionId == game.WhosTurn.ConnectionID)
             {
-                game.Turn++;
-                Clients.Group(gameCode).updateGameState(game);
                 Clients.Caller.redirectToView(game, "/#/WaitingRoomActor");
             }
             else

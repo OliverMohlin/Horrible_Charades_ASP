@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -90,12 +91,10 @@ namespace Horrible_Charades_ASP
             if (game.Turn == 0)
             {
                 game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
-                game.Turn++;
             }
             else if (game.Turn >= game.TurnOrder.Count())
             {
                 game.Turn = 0;
-                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
             }
 
             foreach (Team team in game.Teams)
@@ -266,14 +265,29 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal Game PrepareNewRound(string gameCode, string conId)
+        internal Game EmptyTurnScores(string gameCode, string conId)
         {
             Game game = GetGame(gameCode);
             Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
 
+            game.CurrentCharade.Adjective.Clear();
+            game.CurrentCharade.Verb.Clear();
+            GetNoun(gameCode);
             team.TurnPoint = 0;
-            AssignWhosTurn(game);
+
             return game;
+        }
+
+        internal Game PrepareNewRound(string gameCode, string conId)
+        {
+
+            Game game = GetGame(gameCode);
+
+            game.Turn++;
+            AssignWhosTurn(game);
+
+            return game;
+
         }
 
         private List<Verb> ShuffleVerbsToCurrentCharade(Game game)

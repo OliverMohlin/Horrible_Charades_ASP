@@ -29,7 +29,6 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-            console.log("vm.startTimer har börjat köra");
             $(".timer").text(vm.timeLeft);
             vm.promise = $interval(timer, 1000);
         };
@@ -46,7 +45,6 @@
 
         vm.pointCounter = function () {
             $interval.cancel(vm.promise);
-            console.log("You're in vm.pointcounter");
             var timeLeft = $(".timer").text();
             hub.server.pointCounter(vm.game.GameCode, timeLeft);
         };

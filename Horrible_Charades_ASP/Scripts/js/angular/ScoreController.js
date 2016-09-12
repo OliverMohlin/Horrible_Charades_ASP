@@ -17,7 +17,6 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-            console.log("vm.startTimer har börjat köra");
             vm.promise = $interval(timer, 1000);
         };
 

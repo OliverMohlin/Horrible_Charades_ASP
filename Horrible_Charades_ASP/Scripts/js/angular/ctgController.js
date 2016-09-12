@@ -12,7 +12,6 @@
         vm.game = signalRService.game;
 
         $.connection.hub.start().done(function () {
-            console.log(vm);
         });
 
         vm.pressEnter = function (keyEvent) {

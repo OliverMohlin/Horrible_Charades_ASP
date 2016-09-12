@@ -18,23 +18,18 @@
         // Gets incorrect fromAnswers to Display from 
         vm.getIncorrectAnswers = function () {
             hub.server.getIncorrectAnswers(vm.game.GameCode);
-            console.log("trying to call getIncorrectAnswers");
         };
 
         vm.submitGuess = function () {
-            console.log("Inne i submit guess");
             vm.guessed = true;
             var guess = $("#hidden").text() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
             $("#submit").append(" " + guess);
             var timeLeft = $(".timer").text();
-            console.log(timeLeft);
             hub.server.calculateScoreP(vm.game.GameCode, timeLeft, guess);
-            console.log("har anropat calculateScoreP");
         };
 
         vm.pointCounter = function () {
             $interval.cancel(vm.promise);
-            console.log("You're in pointcounter");
             var timeLeft = $(".timer").text();
             hub.server.pointCounter(vm.game.GameCode, timeLeft);
         };
@@ -49,7 +44,6 @@
         //Starts timer on CharadeActor
         vm.startTimer = function () {
 
-            console.log("vm.startTimer har börjat köra");
             $(".timer").text(vm.timeLeft);
             vm.promise = $interval(timer, 1000);
         };
