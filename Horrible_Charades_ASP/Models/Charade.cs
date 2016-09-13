@@ -18,7 +18,7 @@ namespace Horrible_Charades_ASP.Models
         public int Id { get; set; }
         public int Time { get; set; }
         public Noun Noun { get; set; }
-        public List<Adjective> Adjective { get; set; }
+        public List<Adjective> Adjective { get; set; } //Arrayer(?) Så att vi begränsar antalet adjektiv och verb
         public List<Verb> Verb { get; set; }
 
     }

@@ -81,6 +81,12 @@
             controller: "totalScoreController",
             controllerAs: "vm",
             templateUrl: "Scripts/js/views/TotalScore.tpl.html"
+        })
+
+        .when("/GameOver", {
+            //controller: "totalScoreController", //TODO: Skapa en controller för den här vyn eller ska vi ha totalscore som samma vy(?)
+            //controllerAs: "vm",
+            templateUrl: "Scripts/js/views/GameOver.tpl.html"
         });
 
         $routeProvider.otherwise({ redirectTo: "/" });

@@ -15,7 +15,6 @@
 
         vm.showTeams = function () {
             console.log("inne i showTeams", signalRService.game.Teams);
-
             //hub.server.getTeams() 
         };
 

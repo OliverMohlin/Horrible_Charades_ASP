@@ -88,6 +88,7 @@ namespace Horrible_Charades_ASP
         /// <param name="game"></param>
         internal void AssignWhosTurn(Game game)
         {
+            //TODO: Dela upp shufflingen av turordning och assign whos turn.
             if (game.Turn == 0)
             {
                 game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
@@ -95,6 +96,7 @@ namespace Horrible_Charades_ASP
             else if (game.Turn >= game.TurnOrder.Count())
             {
                 game.Turn = 0;
+                game.Round++;
             }
 
             foreach (Team team in game.Teams)
@@ -104,7 +106,7 @@ namespace Horrible_Charades_ASP
                     game.WhosTurn = team;
                 }
             }
-            game.GameState = 3;
+            game.GameState = 3; //Kanske inte bra att ändra gamestatet här
         }
 
         /// <summary>
@@ -278,10 +280,8 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal Game PrepareNewRound(string gameCode, string conId)
+        internal Game PrepareNewRound(Game game, string conId)
         {
-
-            Game game = GetGame(gameCode);
 
             game.Turn++;
             AssignWhosTurn(game);

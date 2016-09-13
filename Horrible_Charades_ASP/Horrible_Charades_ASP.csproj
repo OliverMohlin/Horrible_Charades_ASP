@@ -229,6 +229,7 @@
     <Content Include="Scripts\js\angular\ScoreController.js" />
     <Content Include="Scripts\js\angular\totalScoreController.js" />
     <Content Include="Scripts\js\angular\waitingRoomController.js" />
+    <Content Include="Scripts\js\views\GameOver.tpl.html" />
     <Content Include="Scripts\libs\angular-sanitize.js" />
     <Content Include="Scripts\libs\angular-sanitize.min.js" />
     <Content Include="Scripts\js\angular\contentController.js" />
@@ -277,7 +278,6 @@
     <Content Include="Scripts\libs\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\libs\respond.min.js" />
     <Content Include="Scripts\libs\_references.js" />
-    <Content Include="Scripts\temp.js" />
     <Content Include="sounds\Jubel.mp3" />
     <Content Include="sounds\Knappjoin.mp3" />
     <Content Include="sounds\Knappvalj.mp3" />

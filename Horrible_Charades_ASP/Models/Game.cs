@@ -14,11 +14,16 @@ namespace Horrible_Charades_ASP.Models
             Teams = new List<Team>();
             CurrentCharade = new Charade();
             GameState = 1;
+            Round = 0;
+            RoundsToPlay = 2; //Hårdkodat in RoundsToPlay nu. ska kunna vara valbart senare
+            
         }
 
         public List<Team> Teams { get; set; }
         public string[] TurnOrder { get; set; }
         public int Turn { get; set; }
+        public int Round { get; set; }
+        public int RoundsToPlay { get; set; }
         public Charade CurrentCharade { get; set; }
         public Team WhosTurn { get; set; }
         public string GameCode { get; set; }

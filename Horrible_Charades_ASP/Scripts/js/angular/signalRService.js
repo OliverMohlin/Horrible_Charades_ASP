@@ -113,7 +113,7 @@
 
         $(".led").click(function () {
             alert("jQuery-click works contentController");
-        });
+        }); //Frågan är om den här behövs
 
         //Adds an adjective to a charade
         $("#getAdjectiveButton").click(function () {
