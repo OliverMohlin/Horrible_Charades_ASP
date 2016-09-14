@@ -237,7 +237,6 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.GetGame(gameCode);
             if (Context.ConnectionId == game.WhosTurn.ConnectionID)
             {
-                game = GameState.Instance.PrepareNewRound(game, Context.ConnectionId);
                 game.GameState = 7;
                 Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
                 Clients.Caller.debugMessage(game);
@@ -250,15 +249,21 @@ namespace Horrible_Charades_ASP
 
         public void StartNextCharade(string gameCode)
         {
-            Game game = GameState.Instance.EmptyTurnScores(gameCode, Context.ConnectionId);
-            //TODO: Antingen skapar vi en ny funktion som säger om turn spelet är slut eller om det ska bli en ny turn. Eller så sätter vi den i EmtyTurnScores, just nu har jag satt logiken här
-            game.GameState = 3;
-            //game = GameState.Instance.PrepareNewRound(gameCode, Context.ConnectionId);
-            // TODO: Den knäppar ur totalt här! Behöver sitta ner ett par timmar och debugga, kanske bygga om "AssignWhosTurn". Tror inte vi behöver kalla på den funktionen här, gör det redan tidigare under rundan
-            if (game.Round == game.RoundsToPlay)
+            //TODO: Det kommer att vara ett raiseCondition här, kommer den som gör charaden in här först kommer det funka annars gör det inte det. Vi behöver lista ut hur vi kan lösa det. 
+            //Alternativet är att lagen får skicka med sin runda som vi kollar.
+            Game game = GameState.Instance.GetGame(gameCode);
+            if (Context.ConnectionId == game.WhosTurn.ConnectionID)
             {
-                Clients.Caller.redirectToView(game, "/#/GameOver");
+                game = GameState.Instance.EmptyTurnScores(game.GameCode, Context.ConnectionId);
+                game.GameState = 3;
+                if (game.Round == game.RoundsToPlay)
+                {
+                    Clients.Group(gameCode).redirectToView(game, "/#/GameOver");
+                }
+                game = GameState.Instance.PrepareNewRound(game, Context.ConnectionId);
+
             }
+            //TODO: Antingen skapar vi en ny funktion som säger om turn spelet är slut eller om det ska bli en ny turn. Eller så sätter vi den i EmtyTurnScores, just nu har jag satt logiken här
             else
             {
                 if (Context.ConnectionId == game.WhosTurn.ConnectionID)
@@ -268,7 +273,7 @@ namespace Horrible_Charades_ASP
                 else
                 {
                     Clients.Caller.redirectToView(game, "/#/WaitingRoomOpponent");
-                }   
+                }
             }
         }
     }

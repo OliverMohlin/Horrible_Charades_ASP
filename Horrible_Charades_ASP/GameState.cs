@@ -88,12 +88,7 @@ namespace Horrible_Charades_ASP
         /// <param name="game"></param>
         internal void AssignWhosTurn(Game game)
         {
-            //TODO: Dela upp shufflingen av turordning och assign whos turn.
-            if (game.Turn == 0)
-            {
-                game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
-            }
-            else if (game.Turn >= game.TurnOrder.Count())
+            if (game.Turn >= game.TurnOrder.Count())
             {
                 game.Turn = 0;
                 game.Round++;
@@ -149,11 +144,19 @@ namespace Horrible_Charades_ASP
             //GetRuleChanger(game, index);
             game.CurrentCharade.Adjective.Clear();
             game.CurrentCharade.Verb.Clear();
+            if (game.Round == 0)
+            {
+                ShuffleTurnOrder(game);
+            }
             GetNoun(gameCode);
             AssignWhosTurn(game);
             return game;
         }
 
+        private void ShuffleTurnOrder(Game game)
+        {
+            game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+        }
 
         internal void getRuleChangers(Team team)
         {
@@ -270,12 +273,14 @@ namespace Horrible_Charades_ASP
         internal Game EmptyTurnScores(string gameCode, string conId)
         {
             Game game = GetGame(gameCode);
-            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
+            foreach (Team team in game.Teams)
+            {
+                team.TurnPoint = 0;
+            }
 
             game.CurrentCharade.Adjective.Clear();
             game.CurrentCharade.Verb.Clear();
             GetNoun(gameCode);
-            team.TurnPoint = 0;
 
             return game;
         }
@@ -334,19 +339,19 @@ namespace Horrible_Charades_ASP
 
             if (timeLeft > 45)
             {
-                team.TurnPoint = 400 * charadewords;
+                team.TurnPoint = 200 * charadewords;
             }
             else if (timeLeft > 30)
             {
-                team.TurnPoint = 300 * charadewords;
+                team.TurnPoint = 150 * charadewords;
             }
             else if (timeLeft > 15)
             {
-                team.TurnPoint = 200 * charadewords;
+                team.TurnPoint = 100 * charadewords;
             }
             else if (timeLeft > 0)
             {
-                team.TurnPoint = 100 * charadewords;
+                team.TurnPoint = 50 * charadewords;
             }
             if (game.WhosTurn.ConnectionID == conId)
             {
@@ -407,12 +412,7 @@ namespace Horrible_Charades_ASP
                 {
                     team.TurnPoint = 40 * charadewords;
                 }
-                if (game.WhosTurn.ConnectionID == conId)
-                {
-                    team.TurnPoint *= 2;
-                }
             }
-
 
             return game;
         }
