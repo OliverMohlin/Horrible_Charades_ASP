@@ -270,7 +270,7 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        internal Game EmptyTurnScores(string gameCode, string conId)
+        internal Game EmptyTurnScores(string gameCode)
         {
             Game game = GetGame(gameCode);
             foreach (Team team in game.Teams)

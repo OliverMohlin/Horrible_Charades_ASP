@@ -10,6 +10,7 @@
         var hub = $.connection.gameHub;
 
         vm.game = signalRService.game;
+        vm.teamName = signalRService.teamName;
         vm.promise;
         vm.timeLeft = 5;
 
@@ -22,7 +23,8 @@
 
         function timer() {
             vm.timeLeft--;
-            if (vm.timeLeft <= 0) {
+            if (vm.timeLeft <= 0 && vm.game.WhosTurn.Name === vm.teamName) {
+                console.log("endTimer");
                 $interval.cancel(vm.promise);
                 hub.server.redirectToTotalScore(vm.game.GameCode);
             };

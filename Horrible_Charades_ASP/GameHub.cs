@@ -40,7 +40,7 @@ namespace Horrible_Charades_ASP
         }
 
         /// <summary>
-        /// Creates a new team if the device don't have a team. 
+        /// Creates a new team in the specific fame
         /// </summary>
         /// <param name="teamName"></param>
         public void CreateTeam(string gameCode, string teamName) //To-do: validera team-name
@@ -75,11 +75,11 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         public void JoinGame(string gameCode, string teamName)
         {
-            Game game = GameState.Instance.GetGame(gameCode);
+            Game game = GameState.Instance.GetGame(gameCode.ToUpper());
             if (game == null)
                 Clients.Caller.DisplayMessage("No such game exist. Revise your GameCode");
             else
-                CreateTeam(gameCode, teamName);
+                CreateTeam(gameCode.ToUpper(), teamName);
         }
 
         /// <summary>
@@ -235,16 +235,9 @@ namespace Horrible_Charades_ASP
         public void RedirectToTotalScore(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
-            if (Context.ConnectionId == game.WhosTurn.ConnectionID)
-            {
-                game.GameState = 7;
-                Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
-                Clients.Caller.debugMessage(game);
-            }
-            else
-            {
-                Clients.Caller.debugMessage(game);
-            }
+            game.GameState = 7;
+            Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
+
         }
 
         public void StartNextCharade(string gameCode)
@@ -252,29 +245,20 @@ namespace Horrible_Charades_ASP
             //TODO: Det kommer att vara ett raiseCondition här, kommer den som gör charaden in här först kommer det funka annars gör det inte det. Vi behöver lista ut hur vi kan lösa det. 
             //Alternativet är att lagen får skicka med sin runda som vi kollar.
             Game game = GameState.Instance.GetGame(gameCode);
-            if (Context.ConnectionId == game.WhosTurn.ConnectionID)
-            {
-                game = GameState.Instance.EmptyTurnScores(game.GameCode, Context.ConnectionId);
-                game.GameState = 3;
-                if (game.Round == game.RoundsToPlay)
-                {
-                    Clients.Group(gameCode).redirectToView(game, "/#/GameOver");
-                }
-                game = GameState.Instance.PrepareNewRound(game, Context.ConnectionId);
 
+            game = GameState.Instance.EmptyTurnScores(game.GameCode);
+            game = GameState.Instance.PrepareNewRound(game, Context.ConnectionId);
+
+            if (game.Round == game.RoundsToPlay)
+            {
+                Clients.Group(gameCode).redirectToView(game, "/#/GameOver");
             }
-            //TODO: Antingen skapar vi en ny funktion som säger om turn spelet är slut eller om det ska bli en ny turn. Eller så sätter vi den i EmtyTurnScores, just nu har jag satt logiken här
             else
             {
-                if (Context.ConnectionId == game.WhosTurn.ConnectionID)
-                {
-                    Clients.Caller.redirectToView(game, "/#/WaitingRoomActor");
-                }
-                else
-                {
-                    Clients.Caller.redirectToView(game, "/#/WaitingRoomOpponent");
-                }
+                Clients.Group(gameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomOpponent");
+                Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomActor");
             }
+
         }
     }
 }

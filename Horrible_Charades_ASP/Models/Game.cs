@@ -50,7 +50,7 @@ namespace Horrible_Charades_ASP.Models
                 }
             }
 
-            return gameCode;
+            return gameCode.ToUpper();
         }
     }
 }
