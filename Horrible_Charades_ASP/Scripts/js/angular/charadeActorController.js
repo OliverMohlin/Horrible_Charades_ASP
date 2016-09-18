@@ -39,14 +39,16 @@
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
-                vm.pointCounter();
+                console.log("calling CalculateScore")
+                hub.server.calculateScore(vm.game.GameCode, 0);
             };
         };
 
         vm.pointCounter = function () {
             $interval.cancel(vm.promise);
             var timeLeft = $(".timer").text();
-            hub.server.pointCounter(vm.game.GameCode, timeLeft);
+            console.log("I'm in pointcounter")
+            hub.server.calculateScore(vm.game.GameCode, timeLeft);
         };
 
 

@@ -20,10 +20,9 @@
         };
 
         vm.joinGame = function () {
-            console.log("joinGame", $("#GameCodeGuest").val())
             hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
         };
 
 
-    };
+    }
 })();

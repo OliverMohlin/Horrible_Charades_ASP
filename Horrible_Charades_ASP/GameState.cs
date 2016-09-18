@@ -29,7 +29,7 @@ namespace Horrible_Charades_ASP
         private readonly ConcurrentDictionary<string, Game> _games =
             new ConcurrentDictionary<string, Game>(StringComparer.OrdinalIgnoreCase);
 
-        public IHubConnectionContext<dynamic> Clients { get; set; }         //Todo: Funkar detta?
+        public IHubConnectionContext<dynamic> Clients { get; set; }         
         public IGroupManager Groups { get; set; }                           //Används för att hålla koll på SignalR grupper
 
         DatabaseUtils _dbUtils = new DatabaseUtils(new CharadeContext());
@@ -127,14 +127,10 @@ namespace Horrible_Charades_ASP
         }
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
-        internal Game GetNoun(string gameCode)
+        internal Noun GetNoun()
         {
             Noun noun = _dbUtils.GetNoun();
-            //List<string> tmpList = _dbUtils.GetIncorrectAnswers(noun);
-            Game game = GetGame(gameCode);
-            game.CurrentCharade.Noun = noun;
-
-            return game;
+            return noun;
         }
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
         {
@@ -142,13 +138,11 @@ namespace Horrible_Charades_ASP
 
             // We are now hardcoding the rulechangers at start. 
             //GetRuleChanger(game, index);
-            game.CurrentCharade.Adjective.Clear();
-            game.CurrentCharade.Verb.Clear();
             if (game.Round == 0)
             {
                 ShuffleTurnOrder(game);
             }
-            GetNoun(gameCode);
+            game.CurrentCharade.Noun = GetNoun();
             AssignWhosTurn(game);
             return game;
         }
@@ -280,7 +274,7 @@ namespace Horrible_Charades_ASP
 
             game.CurrentCharade.Adjective.Clear();
             game.CurrentCharade.Verb.Clear();
-            GetNoun(gameCode);
+            game.CurrentCharade.Noun = GetNoun();
 
             return game;
         }
@@ -331,7 +325,7 @@ namespace Horrible_Charades_ASP
             return adjectiveList;
         }
 
-        internal Game AssignPoints(string gameCode, int timeLeft, string conId)
+        internal Game AssignPoints(string gameCode, int timeLeft, string conId, int points)
         {
             Game game = GetGame(gameCode);
             Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
@@ -339,23 +333,24 @@ namespace Horrible_Charades_ASP
 
             if (timeLeft > 45)
             {
-                team.TurnPoint = 200 * charadewords;
+                team.TurnPoint = points * charadewords;
             }
             else if (timeLeft > 30)
             {
-                team.TurnPoint = 150 * charadewords;
+                team.TurnPoint = (int)(points * charadewords * 0.75);
             }
             else if (timeLeft > 15)
             {
-                team.TurnPoint = 100 * charadewords;
+                team.TurnPoint = (int)(points * charadewords * 0.50);
             }
             else if (timeLeft > 0)
             {
-                team.TurnPoint = 50 * charadewords;
+                team.TurnPoint = (int)(points * charadewords * 0.25);
             }
+
+            //Todo: Ska det här vara här eller när man går mellan Score och TotalScore
             if (game.WhosTurn.ConnectionID == conId)
             {
-                team.TurnPoint *= 2;
                 foreach (var loopTeams in game.Teams)
                 {
                     loopTeams.TotalPoints += loopTeams.TurnPoint;
@@ -365,27 +360,25 @@ namespace Horrible_Charades_ASP
             game.GameState = 6;
             return game;
         }
-        internal Game AssignPoints(string gameCode, int timeLeft, string conId, string guess)
+        internal void AssignPoints(string gameCode, int timeLeft, string conId, int points, string guess)
         {
             Game game = GetGame(gameCode);
-            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == conId);
+            List<string> CurCharade = new List<string>();
 
-            List<string> charade = new List<string>();
-
-            charade.Add(game.CurrentCharade.Noun.Description);
+            CurCharade.Add(game.CurrentCharade.Noun.Description);
 
             int correctwords = 0;
             foreach (Word word in game.CurrentCharade.Adjective)
             {
-                charade.Add(word.Description);
+                CurCharade.Add(word.Description);
             }
 
             foreach (Word word in game.CurrentCharade.Verb)
             {
-                charade.Add(word.Description);
+                CurCharade.Add(word.Description);
             }
 
-            foreach (string word in charade)
+            foreach (string word in CurCharade)
             {
                 if (guess.Contains(word))
                 {
@@ -393,8 +386,10 @@ namespace Horrible_Charades_ASP
                 }
             }
 
-            if (correctwords == charade.Count())
+            if (correctwords == CurCharade.Count())
             {
+                AssignPoints(gameCode, timeLeft, conId, points);
+                /*
                 int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
                 if (timeLeft > 45)
                 {
@@ -412,9 +407,8 @@ namespace Horrible_Charades_ASP
                 {
                     team.TurnPoint = 40 * charadewords;
                 }
+                */
             }
-
-            return game;
         }
     }
 }

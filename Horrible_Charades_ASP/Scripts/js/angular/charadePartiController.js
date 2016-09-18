@@ -25,13 +25,8 @@
             var guess = $("#hidden").text() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
             $("#submit").append(" " + guess);
             var timeLeft = $(".timer").text();
+            console.log("guess submitted")
             hub.server.calculateScoreP(vm.game.GameCode, timeLeft, guess);
-        };
-
-        vm.pointCounter = function () {
-            $interval.cancel(vm.promise);
-            var timeLeft = $(".timer").text();
-            hub.server.pointCounter(vm.game.GameCode, timeLeft);
         };
 
         $("#submitGuessButton").click(function () {
@@ -54,7 +49,6 @@
             $(".timer").text(vm.timeLeft);
             if (vm.timeLeft <= 0) {
                 $interval.cancel(vm.promise);
-                vm.pointCounter();
             };
         };
 

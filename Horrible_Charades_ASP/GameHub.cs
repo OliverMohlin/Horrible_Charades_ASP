@@ -12,16 +12,6 @@ namespace Horrible_Charades_ASP
 {
     public class GameHub : Hub
     {
-
-        /// <summary>
-        /// This function calls the method Hello on Client-Side, with something to write out
-        /// </summary>
-        /// <param name="textToWrite"></param>
-        public void Hello(string textToWrite)
-        {
-            Clients.All.hello(textToWrite);
-        }
-
         /// <summary>
         /// This function is called when a user clicks "New Game"
         /// </summary>
@@ -88,6 +78,7 @@ namespace Horrible_Charades_ASP
         /// <param name="gameCode"></param>
         public void GetRuleChanger(string gameCode)
         {
+            //TODO: Flytta in hela getRuleChanger in i StartCharade(?) och flytta vissa grejer till start charade från GiveAllTeamsRuleChanger
             Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
             StartCharade(game);
         }
@@ -110,23 +101,13 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         /// 
 
-
         public void RedirectToPreCharade(string gameCode, string teamName)
         {
             Game game = GameState.Instance.GetGame(gameCode);
-            Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
+            //Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
-
-            //if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
-            //{
-            //    Clients.Caller.redirectToView("/#/PreCharadeActor");
-            //    Clients.OthersInGroup(gameCode).redirectToView("/#/CharadeParticipant");
-            //}
-            //else
-            //{
             Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeActor");
             Clients.Group(gameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeParticipant");
-            //}
         }
 
         /// <summary>
@@ -221,15 +202,17 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="gameCode"></param>
         /// <param name="timeLeft"></param>
-        public void PointCounter(string gameCode, int timeLeft)
+        public void CalculateScore(string gameCode, int timeLeft)
         {
-            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId);
+            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, 200);
 
             Clients.Group(game.GameCode).redirectToView(game, "/#/Score");
         }
-        public void CalculateScoreP(string gameCode, int timeLeft, string guess)
+        public void CalculateScoreP(string gameCode, int timeLeft, string guess) //SubmitGuess(?)
         {
-            Game game = GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, guess);
+            GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, 100, guess);
+            //Todo: Skriva att den har blivit submittad
+            //Clients.Caller.guessSubmitted();
         }
 
         public void RedirectToTotalScore(string gameCode)
@@ -242,8 +225,6 @@ namespace Horrible_Charades_ASP
 
         public void StartNextCharade(string gameCode)
         {
-            //TODO: Det kommer att vara ett raiseCondition här, kommer den som gör charaden in här först kommer det funka annars gör det inte det. Vi behöver lista ut hur vi kan lösa det. 
-            //Alternativet är att lagen får skicka med sin runda som vi kollar.
             Game game = GameState.Instance.GetGame(gameCode);
 
             game = GameState.Instance.EmptyTurnScores(game.GameCode);
