@@ -11,7 +11,7 @@
         var self = this;
         self.game = {};
         self.teamName;
-        self.charadeTime = 60;
+        self.charadeTime = 1000;
 
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
 

@@ -565,7 +565,7 @@ time-container {
     height: 9.5em;
     width: 9em;
     border-radius: 5.0em;
-    border-width: 3px;
+    border-width: 3.5px;
     border-style: outset;
     background-color: #ef5451;
     margin-top: 8%;
@@ -596,6 +596,7 @@ time-container {
 
     #stop-button:active {
         border-style:inset;
+        border-width:4px;
     }
 
 }
@@ -747,6 +748,7 @@ time-container {
     margin-right: auto;
     margin-left: auto;
 }
+
 
 /* --------------------------------------
    WaitingRoomOpponent
