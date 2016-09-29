@@ -8,8 +8,7 @@
             <li id="funkup-list-item">
                 <div class='btn funkup clickable-button' data-ng-click="vm.activateFunkUp(funkUp); vm.playLightsThunder()" >
                     <p class='funkup-text'>
-                        <span class='add'>{{funkUp.Description}}</span>
-                    </p>
+                        <span class='add' data-ng-if='funkUp.ID !== 3'> Add <br /> </span> {{funkUp.Description}}</p>
                 </div>
             </li>
         </ul>

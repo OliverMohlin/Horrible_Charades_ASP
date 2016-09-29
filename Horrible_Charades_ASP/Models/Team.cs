@@ -14,7 +14,7 @@ namespace Horrible_Charades_ASP.Models
             Id = Guid.NewGuid().ToString("d");
             PowerUps = new List<RuleChanger>();
             FunkUps = new List<RuleChanger>();
-            GameState.Instance.getRuleChangers(this);
+            GameState.Instance.GetRuleChanger(this);
             TotalPoints = 0;
             TurnPoint = 0;
         }

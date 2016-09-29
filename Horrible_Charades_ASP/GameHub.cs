@@ -113,20 +113,19 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="typeOfWord"></param>
         /// <param name="gameCode"></param>
-        public void UpdateCharade(string typeOfWord, string gameCode)
+        public void UpdateCharade(string typeOfWord, string gameCode, int ruleChangerId)
         {
             if (typeOfWord == "adjective")
             {
-                Game game = GameState.Instance.GetAdjective(gameCode);
+                Game game = GameState.Instance.GetAdjective(gameCode, Context.ConnectionId, ruleChangerId);
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
-                Clients.Group(game.GameCode).resetTimer(10);
+                // TODO: behöver inte vara eget hubanrop. kan stoppas in i signalRservice(insertcharadeHtml)
             }
 
             if (typeOfWord == "verb")
             {
-                Game game = GameState.Instance.GetVerb(gameCode);
+                Game game = GameState.Instance.GetVerb(gameCode, Context.ConnectionId, ruleChangerId);
                 Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
-                Clients.Group(game.GameCode).resetTimer(10);
             }
         }
 
@@ -134,13 +133,13 @@ namespace Horrible_Charades_ASP
         /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
         /// </summary>
         /// <param name="gameCode"></param>
-        public void ShuffleCharade(string gameCode)
+        public void ShuffleCharade(string gameCode, int ruleChangerId)
         {
-            Game game = GameState.Instance.ShuffleCharade(gameCode);
+            Game game = GameState.Instance.ShuffleCharade(gameCode, Context.ConnectionId, ruleChangerId);
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
-            Clients.Group(gameCode).resetTimer();
+            Clients.Group(gameCode).shuffleCharadeGameUpdate(game);
         }
 
         /// <summary>
@@ -148,11 +147,10 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="gameCode"></param>
         /// <param name="direction"></param>
-        public void AffectCharadeTime(string gameCode, string direction)
+        public void AffectCharadeTime(string gameCode, string direction, int Id)
         {
-            Clients.Group(gameCode).debugMessage("AffectCharadeTime on serverSide");
-            Clients.Group(gameCode).affectCharadeTime(direction);
-            Clients.Group(gameCode).resetTimer(10);
+            Game game = GameState.Instance.RemoveRuleChanger(gameCode, Context.ConnectionId, Id);
+            Clients.Group(gameCode).affectCharadeTime(direction, game);
         }
 
 
@@ -233,6 +231,7 @@ namespace Horrible_Charades_ASP
             else
             {
                 Clients.Group(gameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomOpponent");
+                Clients.Group(gameCode).resetCharadeTimer();
                 Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomActor");
             }
 

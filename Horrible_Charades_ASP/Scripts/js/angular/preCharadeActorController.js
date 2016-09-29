@@ -24,11 +24,12 @@
         // Sends PowerUp's towards the acting team when a matching button is pressed 
         vm.activatePowerUp = function (clickedPowerUp) {
             if (clickedPowerUp.ID === 1) {
-                hub.server.affectCharadeTime(vm.game.GameCode, "plus");
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus", clickedPowerUp.ID);
                 clickedPowerUp.hide = true;
             }
             if (clickedPowerUp.ID === 2) {
-                hub.server.shuffleCharade(vm.game.GameCode);
+                console.log("shuffle OK in controller");
+                hub.server.shuffleCharade(vm.game.GameCode, clickedPowerUp.ID);
                 clickedPowerUp.hide = true;
             }
         };
