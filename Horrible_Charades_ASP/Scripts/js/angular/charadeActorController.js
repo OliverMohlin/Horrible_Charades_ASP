@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/// <reference path="signalRService.js" />
+(function () {
     "use strict";
 
     angular.module("mainContent")
