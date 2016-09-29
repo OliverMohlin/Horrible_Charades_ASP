@@ -9,38 +9,48 @@
         var vm = this;
         var hub = $.connection.gameHub;
         vm.game = signalRService.game;
-        vm.teamName = signalRService.teamName;
         vm.timeLeft = 65;
         vm.promise;
         vm.time = signalRService.timeLeft;
+        vm.team = signalRService.team;
 
         $.connection.hub.start().done(function () {
         });
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
-        vm.activateFunkUp = function (Id) {
-            if (Id === 3) {
+        vm.activateFunkUp = function (clickedFunkup) {
+            if (clickedFunkup.ID === 3) {
                 hub.server.affectCharadeTime(signalRService.game.GameCode, "minus");
+                clickedFunkup.hide = true;
             }
-            if (Id === 4) {
+            if (clickedFunkup.ID === 4) {
                 hub.server.updateCharade("adjective", signalRService.game.GameCode);
+                //vm.removeFunkUp(Id);
+                clickedFunkup.hide = true;
 
             }
-            if (Id === 5) {
+            if (clickedFunkup.ID === 5) {
                 hub.server.updateCharade("verb", signalRService.game.GameCode);
+                //vm.removeFunkUp(Id);
+                clickedFunkup.hide = true;
+
             }
+        };
+
+        vm.removeFunkUp = function (Id) {
+            vm.$apply();
+            // TODO: Detta funkar inte just nu. 
         };
 
         // Redirects to Charade View
         vm.redirectToCharade = function () {
-            hub.server.redirectToCharade(vm.game.GameCode, vm.teamName);
+            hub.server.redirectToCharade(vm.game.GameCode, vm.team.Name);
         };
 
         ///HÄR ÄR TIMER
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-
             $(".timer").text(15);
             vm.promise = $interval(timer, 1000);
         };

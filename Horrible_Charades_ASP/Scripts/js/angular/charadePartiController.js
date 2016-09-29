@@ -25,7 +25,6 @@
             var guess = $("#hidden").text() + " ";//Lägger vi till fler ord måste vi lägga till en splitchar
             $("#submit").append(" " + guess);
             var timeLeft = $(".timer").text();
-            console.log("guess submitted")
             hub.server.calculateScoreP(vm.game.GameCode, timeLeft, guess);
         };
 
@@ -38,7 +37,6 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-
             $(".timer").text(vm.timeLeft);
             vm.promise = $interval(timer, 1000);
         };

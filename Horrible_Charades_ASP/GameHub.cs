@@ -42,18 +42,15 @@ namespace Horrible_Charades_ASP
             }
             else
             {
-                Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId);
+                Game game = GameState.Instance.CreateTeam(teamName, gameCode, Context.ConnectionId, out team);
                 if (game.Teams.Count == 1)
                 {
-
-                    Clients.Caller.setTeamName(teamName);
-                    Clients.Caller.redirectToView(game, "/#/LobbyHost");
+                    Clients.Caller.setTeam(team, game, "/#/LobbyHost");
                 }
                 else
                 {
                     Clients.Group(game.GameCode).pushToTeamList(teamName);
-                    Clients.Caller.setTeamName(teamName);
-                    Clients.Caller.redirectToView(game, "/#/LobbyGuest");
+                    Clients.Caller.setTeam(team, game, "/#/LobbyGuest");
                 }
             }
         }
@@ -220,7 +217,6 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.GetGame(gameCode);
             game.GameState = 7;
             Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
-
         }
 
         public void StartNextCharade(string gameCode)

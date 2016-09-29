@@ -66,10 +66,10 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        public Game CreateTeam(string teamName, string gameCode, string conId) //Todo: koppla till connectionstring istället för Teamname?
+        public Game CreateTeam(string teamName, string gameCode, string conId, out Team team) //Todo: koppla till connectionstring istället för Teamname?
         {
             Game game = GetGame(gameCode);
-            Team team = new Team(teamName);
+            team = new Team(teamName);
             team.ConnectionID = conId;
             team.GameCode = gameCode;
 
@@ -182,15 +182,18 @@ namespace Horrible_Charades_ASP
                     {
                         if (ruleChanger.Description == "Add Adjective")
                         {
-                            ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
+                            //ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
+                            ruleChanger.Description = "Add <br /> Adjective";
                         }
                         else if (ruleChanger.Description == "Add Verb")
                         {
-                            ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
+                            ruleChanger.Description = "Add <br /> Verb";
+                            //ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
                         }
                         else
                         {
-                            ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
+                            ruleChanger.Description = "+ 15 <br /> sec";
+                            //ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
                         }
                         team.FunkUps.Add(ruleChanger);
                     }

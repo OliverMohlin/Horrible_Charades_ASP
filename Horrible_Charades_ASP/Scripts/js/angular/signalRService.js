@@ -10,10 +10,11 @@
 
         var self = this;
         self.game = {};
-        self.teamName;
+        self.team = {};
         self.charadeTime = 60;
 
-        var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
+        //Saves connection in "hub"-variable
+        var hub = $.connection.gameHub;                 
 
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
@@ -28,8 +29,9 @@
             self.game = game;
         };
         //Updates this players teamName
-        hub.client.setTeamName = function (teamName) {
-            self.teamName = teamName;
+        hub.client.setTeam = function (team, game, nextView) {
+            self.team = team;
+            hub.client.redirectToView(game, nextView);
         };
 
         //Redirects to next view
@@ -45,6 +47,7 @@
         hub.client.pushToTeamList = function (teamName) {
             $(".teamList").append("<li class='lobby-teamList'>" + teamName + "</li>");
         };
+        // When a FunkUp/PowerUp is sent to increase or decrease Charade Time. 
         hub.client.affectCharadeTime = function (direction) {
             console.log(direction);
             if (direction === "plus") {
@@ -99,30 +102,17 @@
             for (var i = 0; i < alternatives.length; i++) {
                 tmpstr += "<div id='" + i + "' class='chosenAlt'></div><div id='myDiv" + i + "'> <ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" +
+                    alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>";
                 };
                 tmpstr += "</ul> </div> </br></br>";
             }
             $('#alternatives').append(tmpstr);
         };
 
-        $("#charade").onload = function () {
-            console.log("initiating getNoun");
-            hub.server.GetNoun(gameService.gameCode);
-        };
-
         $(".led").click(function () {
             alert("jQuery-click works contentController");
         }); //Frågan är om den här behövs
-
-        //Adds an adjective to a charade
-        $("#getAdjectiveButton").click(function () {
-            hub.server.getAdjective();
-        });
-        //Adds a verb to a charade
-        $("#getVerbButton").click(function () {
-            hub.server.getVerb();
-        });
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         });
