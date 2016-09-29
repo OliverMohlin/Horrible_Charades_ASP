@@ -560,12 +560,15 @@ time-container {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0.5em;
+    margin-top: 2.5em;
     border: none;
-    height: 3em;
-    border-radius: 10px;
+    height: 9.5em;
+    width: 9em;
+    border-radius: 5.0em;
+    border-width: 3.5px;
+    border-style: outset;
     background-color: #ef5451;
-    margin-top: 2em;
+    margin-top: 8%;
 }
 
 @media screen and (min-height: 0px) and (max-height: 640px) and (orientation:landscape) {
@@ -584,8 +587,18 @@ time-container {
         margin-top: 0.5em;
         border: none;
         height: 3em;
-        border-radius: 10px;
+        border-radius: 5.0em;
+        border-style:outset;
+        height: 160px;
+        width: 160px;
+        margin-top: 3%;
     }
+
+    #stop-button:active {
+        border-style:inset;
+        border-width:4px;
+    }
+
 }
 /* --------------------------------------
    CharadeParticipant
@@ -735,6 +748,7 @@ time-container {
     margin-right: auto;
     margin-left: auto;
 }
+
 
 /* --------------------------------------
    WaitingRoomOpponent
