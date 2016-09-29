@@ -594,7 +594,7 @@ time-container {
         margin-top: 3%;
     }
 
-    #stop-button:hover {
+    #stop-button:active {
         border-style:inset;
     }
 
