@@ -147,9 +147,9 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="gameCode"></param>
         /// <param name="direction"></param>
-        public void AffectCharadeTime(string gameCode, string direction, int Id)
+        public void AffectCharadeTime(string gameCode, string direction, int ruleChangerId)
         {
-            Game game = GameState.Instance.RemoveRuleChanger(gameCode, Context.ConnectionId, Id);
+            Game game = GameState.Instance.RemoveRuleChanger(gameCode, Context.ConnectionId, ruleChangerId);
             Clients.Group(gameCode).affectCharadeTime(direction, game);
         }
 

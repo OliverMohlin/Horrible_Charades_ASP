@@ -208,11 +208,11 @@ namespace Horrible_Charades_ASP
 
             if (ruleChangerId < 3)
             {
-                team.PowerUps.Remove(team.PowerUps.SingleOrDefault(r => r.ID == ruleChangerId));
+                team.PowerUps.Remove(team.PowerUps.FirstOrDefault(r => r.ID == ruleChangerId));
             }
             else
             {
-                team.FunkUps.Remove(team.FunkUps.SingleOrDefault(r => r.ID == ruleChangerId));
+                team.FunkUps.Remove(team.FunkUps.FirstOrDefault(r => r.ID == ruleChangerId));
             }
             return game;
         }
