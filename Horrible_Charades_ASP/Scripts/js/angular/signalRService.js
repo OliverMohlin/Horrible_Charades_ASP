@@ -15,6 +15,11 @@
 
         var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
 
+        //Submit Options
+        self.submitOptions = function (rounds) {
+            console.log("Submit options in signalR is called")
+        }
+
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
             $("#GameCode").append(game.GameCode);
@@ -110,10 +115,6 @@
             console.log("initiating getNoun");
             hub.server.GetNoun(gameService.gameCode);
         };
-
-        $(".led").click(function () {
-            alert("jQuery-click works contentController");
-        }); //Frågan är om den här behövs
 
         //Adds an adjective to a charade
         $("#getAdjectiveButton").click(function () {
