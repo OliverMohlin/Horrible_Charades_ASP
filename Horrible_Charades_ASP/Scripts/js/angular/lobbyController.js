@@ -9,9 +9,9 @@
         var vm = this;
         var hub = $.connection.gameHub;
 
-
         vm.game = signalRService.game;
-        vm.teamName = signalRService.teamName;
+        //vm.teamName = signalRService.teamName;
+        vm.team = signalRService.team;
         vm.rounds = 2;
 
         vm.openModal = function () {

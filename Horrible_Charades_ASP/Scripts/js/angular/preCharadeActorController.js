@@ -9,7 +9,7 @@
         var vm = this;
         var hub = $.connection.gameHub;
         vm.game = signalRService.game;
-        vm.teamName = signalRService.teamName;
+        vm.team = signalRService.team;
         vm.timeLeft = 15;
         vm.promise;
 
@@ -22,18 +22,21 @@
         };
 
         // Sends PowerUp's towards the acting team when a matching button is pressed 
-        vm.activatePowerUp = function (Id) {
-            if (Id === 1) {
-                hub.server.affectCharadeTime(vm.game.GameCode, "plus");
+        vm.activatePowerUp = function (clickedPowerUp) {
+            if (clickedPowerUp.ID === 1) {
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus", clickedPowerUp.ID);
+                clickedPowerUp.hide = true;
             }
-            if (Id === 2) {
-                hub.server.shuffleCharade(vm.game.GameCode);
+            if (clickedPowerUp.ID === 2) {
+                console.log("shuffle OK in controller");
+                hub.server.shuffleCharade(vm.game.GameCode, clickedPowerUp.ID);
+                clickedPowerUp.hide = true;
             }
         };
 
         // Redirects to Charade View
         vm.redirectToCharade = function () {
-            hub.server.redirectToCharade(vm.game.GameCode, vm.teamName);
+            hub.server.redirectToCharade(vm.game.GameCode, vm.team.Name);
         };
 
         $(".powerup").click(function () {

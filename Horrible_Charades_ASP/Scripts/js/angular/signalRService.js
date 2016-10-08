@@ -10,10 +10,11 @@
 
         var self = this;
         self.game = {};
-        self.teamName;
+        self.team = {};
         self.charadeTime = 60;
 
-        var hub = $.connection.gameHub;                 //Saves connection in "hub"-variable
+        //Saves connection in "hub"-variable
+        var hub = $.connection.gameHub;                 
 
         //Submit Options
         self.submitOptions = function (rounds) {
@@ -33,8 +34,9 @@
             self.game = game;
         };
         //Updates this players teamName
-        hub.client.setTeamName = function (teamName) {
-            self.teamName = teamName;
+        hub.client.setTeam = function (team, game, nextView) {
+            self.team = team;
+            hub.client.redirectToView(game, nextView);
         };
 
         //Redirects to next view
@@ -50,20 +52,35 @@
         hub.client.pushToTeamList = function (teamName) {
             $(".teamList").append("<li class='lobby-teamList'>" + teamName + "</li>");
         };
-        hub.client.affectCharadeTime = function (direction) {
+        // When a FunkUp/PowerUp is sent to increase or decrease Charade Time. 
+        hub.client.affectCharadeTime = function (direction, game) {
             console.log(direction);
             if (direction === "plus") {
                 self.charadeTime += 15;
+                $(".timer").text(10);
             }
-            if (dicretion === "minus") {
+            else {
                 self.charadeTime -= 15;
+                $(".timer").text(10);
             }
+            self.game = game;
+            console.log(self.game);
         };
 
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function () {
             console.log("SignalRService changing timeLeft to 10");
             $(".timer").text(10);
+        };
+
+        hub.client.resetCharadeTimer = function () {
+            self.charadeTime = 60;
+        };
+
+        hub.client.shuffleCharadeGameUpdate = function (game) {
+            $(".timer").text(10);
+            self.game = game;
+            console.log("game was updated");
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
@@ -95,7 +112,7 @@
                     }
                 }
                 hub.client.updateGameState(game);
-
+                $(".timer").text(10);
             }
         };
 
@@ -104,26 +121,15 @@
             for (var i = 0; i < alternatives.length; i++) {
                 tmpstr += "<div id='" + i + "' class='chosenAlt'></div><div id='myDiv" + i + "'> <ul>";
                 for (var j = 0; j < alternatives[i].length; j++) {
-                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" + alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>"
+                    tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" +
+                    alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>";
                 };
                 tmpstr += "</ul> </div> </br></br>";
             }
             $('#alternatives').append(tmpstr);
         };
 
-        $("#charade").onload = function () {
-            console.log("initiating getNoun");
-            hub.server.GetNoun(gameService.gameCode);
-        };
 
-        //Adds an adjective to a charade
-        $("#getAdjectiveButton").click(function () {
-            hub.server.getAdjective();
-        });
-        //Adds a verb to a charade
-        $("#getVerbButton").click(function () {
-            hub.server.getVerb();
-        });
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         });

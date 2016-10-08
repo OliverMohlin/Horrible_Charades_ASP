@@ -10,7 +10,7 @@
         var hub = $.connection.gameHub;
 
         vm.game = signalRService.game;
-        vm.teamName = signalRService.teamName;
+        vm.team = signalRService.team;
         vm.promise;
         vm.timeLeft = 5;
 
@@ -18,12 +18,13 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
+            console.log(vm.game);
             vm.promise = $interval(timer, 1000);
         };
 
         function timer() {
             vm.timeLeft--;
-            if (vm.timeLeft <= 0 && vm.game.WhosTurn.Name === vm.teamName) {
+            if (vm.timeLeft <= 0 && vm.game.WhosTurn.Name === vm.team.Name) {
                 $interval.cancel(vm.promise);
                 hub.server.startNextCharade(vm.game.GameCode);
             };

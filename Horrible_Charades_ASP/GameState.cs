@@ -29,7 +29,7 @@ namespace Horrible_Charades_ASP
         private readonly ConcurrentDictionary<string, Game> _games =
             new ConcurrentDictionary<string, Game>(StringComparer.OrdinalIgnoreCase);
 
-        public IHubConnectionContext<dynamic> Clients { get; set; }         
+        public IHubConnectionContext<dynamic> Clients { get; set; }
         public IGroupManager Groups { get; set; }                           //Används för att hålla koll på SignalR grupper
 
         DatabaseUtils _dbUtils = new DatabaseUtils(new CharadeContext());
@@ -66,10 +66,10 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="teamName"></param>
         /// <returns></returns>
-        public Game CreateTeam(string teamName, string gameCode, string conId) //Todo: koppla till connectionstring istället för Teamname?
+        public Game CreateTeam(string teamName, string gameCode, string conId, out Team team) //Todo: koppla till connectionstring istället för Teamname?
         {
             Game game = GetGame(gameCode);
-            Team team = new Team(teamName);
+            team = new Team(teamName);
             team.ConnectionID = conId;
             team.GameCode = gameCode;
 
@@ -158,47 +158,66 @@ namespace Horrible_Charades_ASP
             team.PowerUps.Add(_dbUtils.GetRuleChanger("Shuffle"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Adjective"));
             team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Activity"));
+            //Game game, int index
 
         }
 
-        internal Game GetRuleChanger(Game game, int index)
+        internal void GetRuleChanger(Team team)
         {
-            foreach (var team in game.Teams)
+            //foreach (var team in game.Teams)
+            //{
+            //Ändra för olika antal funkups
+            for (int i = 0; i < 3; i++)
             {
-                //Ändra för olika antal funkups
-                for (int i = 0; i < 3; i++)
-                {
-                    RuleChanger ruleChanger = new RuleChanger();
-                    do
-                    {
-                        ruleChanger = _dbUtils.GetRuleChanger();
-                    } while (ruleChanger.ID == 1 || ruleChanger.ID == 3);
+                RuleChanger ruleChanger = new RuleChanger();
 
-                    if (ruleChanger.Type == "PowerUp")
-                    {
-                        team.PowerUps.Add(ruleChanger);
-                    }
-                    else if (ruleChanger.Type == "FunkUp")
-                    {
-                        if (ruleChanger.Description == "Add Adjective")
-                        {
-                            ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
-                        }
-                        else if (ruleChanger.Description == "Add Verb")
-                        {
-                            ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
-                        }
-                        else
-                        {
-                            ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
-                        }
-                        team.FunkUps.Add(ruleChanger);
-                    }
+                ruleChanger = _dbUtils.GetRuleChanger();
+
+                if (ruleChanger.Type == "PowerUp")
+                {
+                    team.PowerUps.Add(ruleChanger);
                 }
+                else if (ruleChanger.Type == "FunkUp")
+                {
+                    if (ruleChanger.ID == 4)
+                    {
+                        //ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
+                        ruleChanger.Description = "Adjective";
+                    }
+                    else if (ruleChanger.ID == 5)
+                    {
+                        ruleChanger.Description = "Verb";
+                        //ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
+                    }
+                    else
+                    {
+                        ruleChanger.Description = "- 15 sec";
+                        //ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
+                    }
+                    team.FunkUps.Add(ruleChanger);
+                }
+            }
+            //}
+            //return team;
+        }
+
+        internal Game RemoveRuleChanger(string gameCode, string connectionId, int ruleChangerId)
+        {
+            Game game = GetGame(gameCode);
+            Team team = game.Teams.SingleOrDefault(t => t.ConnectionID == connectionId);
+
+            if (ruleChangerId < 3)
+            {
+                team.PowerUps.Remove(team.PowerUps.FirstOrDefault(r => r.ID == ruleChangerId));
+            }
+            else
+            {
+                team.FunkUps.Remove(team.FunkUps.FirstOrDefault(r => r.ID == ruleChangerId));
             }
             return game;
         }
-        internal Game GetAdjective(string gameCode)
+
+        internal Game GetAdjective(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);
             if (game.CurrentCharade.Adjective.Count >= 2)
@@ -206,12 +225,12 @@ namespace Horrible_Charades_ASP
                 return game;
             }
 
-
             game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
+            game = RemoveRuleChanger(gameCode, connectionId, ruleChangerId);
             return game;
         }
 
-        internal Game GetVerb(string gameCode)
+        internal Game GetVerb(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);
             if (game.CurrentCharade.Verb.Count >= 2)
@@ -219,6 +238,7 @@ namespace Horrible_Charades_ASP
                 return game;
             }
             game.CurrentCharade.Verb.Add(_dbUtils.GetVerb());
+            game = RemoveRuleChanger(gameCode, connectionId, ruleChangerId);
 
             return game;
         }
@@ -243,7 +263,7 @@ namespace Horrible_Charades_ASP
             return tmpList;
         }
 
-        internal Game ShuffleCharade(string gameCode)
+        internal Game ShuffleCharade(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);
 
@@ -261,6 +281,7 @@ namespace Horrible_Charades_ASP
             game.CurrentCharade.Adjective = adjectiveList;
             game.CurrentCharade.Verb = verbList;
 
+            game = RemoveRuleChanger(gameCode, connectionId, ruleChangerId);
             return game;
         }
 
