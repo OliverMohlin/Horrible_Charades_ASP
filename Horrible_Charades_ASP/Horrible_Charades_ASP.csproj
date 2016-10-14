@@ -230,6 +230,7 @@
     <Content Include="Scripts\js\angular\totalScoreController.js" />
     <Content Include="Scripts\js\angular\waitingRoomController.js" />
     <Content Include="Scripts\js\views\GameOver.tpl.html" />
+    <Content Include="Scripts\js\views\LobbyOptionsModal.tpl.html" />
     <Content Include="Scripts\libs\angular-sanitize.js" />
     <Content Include="Scripts\libs\angular-sanitize.min.js" />
     <Content Include="Scripts\js\angular\contentController.js" />

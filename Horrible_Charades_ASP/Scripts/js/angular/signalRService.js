@@ -16,6 +16,11 @@
         //Saves connection in "hub"-variable
         var hub = $.connection.gameHub;                 
 
+        //Submit Options
+        self.submitOptions = function (rounds) {
+            console.log("Submit options in signalR is called")
+        }
+
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
             $("#GameCode").append(game.GameCode);
@@ -120,9 +125,7 @@
             $('#alternatives').append(tmpstr);
         };
 
-        $(".led").click(function () {
-            alert("jQuery-click works contentController");
-        }); //Frågan är om den här behövs
+
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         });
