@@ -181,19 +181,17 @@ namespace Horrible_Charades_ASP
                 {
                     if (ruleChanger.ID == 4)
                     {
-                        //ruleChanger.HTMLString = "<div class='btn funkup add-adjective' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span><br />Adjective</p></div>";
                         ruleChanger.Description = "Adjective";
                     }
                     else if (ruleChanger.ID == 5)
                     {
                         ruleChanger.Description = "Verb";
-                        //ruleChanger.HTMLString = "<div class='btn funkup add-verb' data-ng-click='vm.activateFunkUp(FunkUp.ID)'><p class='funkup-text'><span class='add'>Add</span> <br />Verb</p></div>";
                     }
-                    else
-                    {
-                        ruleChanger.Description = "- 15 sec";
-                        //ruleChanger.HTMLString = "<div class='btn funkup reduce-time' data-ng-click='vm.activateFunkUp(FunkUp.ID)'>+ <br />15 Seconds</div>";
-                    }
+                    //else
+                    //{
+                    //    ruleChanger.Description = "- 15 sec";
+                    //}
+
                     team.FunkUps.Add(ruleChanger);
                 }
             }

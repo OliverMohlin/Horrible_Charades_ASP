@@ -19,13 +19,11 @@
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (clickedFunkup) {
-            console.log(vm.game);
             if (clickedFunkup.ID === 3) {
                 hub.server.affectCharadeTime(signalRService.game.GameCode, "minus", clickedFunkup.ID);
                 clickedFunkup.hide = true;
             }
             if (clickedFunkup.ID === 4) {
-                console.log("update charade ok in controller");
                 hub.server.updateCharade("adjective", signalRService.game.GameCode, clickedFunkup.ID);
                 clickedFunkup.hide = true;
 

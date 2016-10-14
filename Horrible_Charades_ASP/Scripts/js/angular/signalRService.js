@@ -49,7 +49,6 @@
         };
         // When a FunkUp/PowerUp is sent to increase or decrease Charade Time. 
         hub.client.affectCharadeTime = function (direction, game) {
-            console.log(direction);
             if (direction === "plus") {
                 self.charadeTime += 15;
                 $(".timer").text(10);
@@ -59,12 +58,10 @@
                 $(".timer").text(10);
             }
             self.game = game;
-            console.log(self.game);
         };
 
         // Receives a call to reset the Timer in Clients Browsers.
         hub.client.resetTimer = function () {
-            console.log("SignalRService changing timeLeft to 10");
             $(".timer").text(10);
         };
 
@@ -75,7 +72,6 @@
         hub.client.shuffleCharadeGameUpdate = function (game) {
             $(".timer").text(10);
             self.game = game;
-            console.log("game was updated");
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
