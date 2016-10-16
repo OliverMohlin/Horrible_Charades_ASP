@@ -42,5 +42,39 @@
             //    $mdDialog.hide(answer);
             //};
         }
+
+        vm.entities = [{
+            name: 'three',
+            value: 3,
+            checked: true
+        },
+     {
+         name: 'four',
+         value: 4,
+         checked: false
+     },
+     {
+         name: 'five',
+         value: 5,
+         checked: false
+     }
+        ]
+
+        vm.updateSelection = function (position, entities) {
+            angular.forEach(entities, function (subscription, index) {
+                if (position != index)
+                    subscription.checked = false;
+            });
+        }
+
+        //vm.checkRoundsToPlay = function (entities) {
+        //    //default-value is 3
+        //    var roundsToPlay = 3;
+        //    for (var i = 0; i < entities.length; i++) {
+        //        if (entities[i].checked === true)
+        //            roundsToPlay = entities[i].value;
+        //    }
+        //    return roundsToPlay;
+        //}
     };
 })();

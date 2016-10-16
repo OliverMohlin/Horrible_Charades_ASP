@@ -9,4 +9,18 @@
     <button data-ng-click="vm.leaveLobby(); vm.playKnappJoin()" id="startGameButton" class="clickable-button">Start Game</button>
     <button id="startGameButton" class="clickable-button" data-ng-click="vm.openModal()">Options</button>
 
+    <div>
+        <h1>Rounds To Play:</h1>
+        <table>
+            <tr ng-repeat="subscription in vm.entities">
+             
+                <td>
+                    <label>{{subscription.name}}</label>
+                    <input type="checkbox" ng-model="subscription.checked" data-ng-click="vm.updateSelection($index, vm.entities)" />
+                </td>
+            </tr>
+        </table>
+        <p>{{vm.entities}}</p>
+    </div>
+
 </div>
