@@ -49,7 +49,5 @@
             var timeLeft = $(".timer").text();
             hub.server.calculateScore(vm.game.GameCode, timeLeft);
         };
-
-
     };
 })();

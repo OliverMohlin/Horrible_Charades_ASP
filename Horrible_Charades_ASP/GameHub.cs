@@ -73,10 +73,10 @@ namespace Horrible_Charades_ASP
         /// Serverside activation of Getting RuleChangers. Called when leaving Waiting room.
         /// </summary>
         /// <param name="gameCode"></param>
-        public void GetRuleChanger(string gameCode)
+        public void GetRuleChanger(string gameCode, int roundsToPlay)
         {
             //TODO: Flytta in hela getRuleChanger in i StartCharade(?) och flytta vissa grejer till start charade från GiveAllTeamsRuleChanger
-            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode);
+            Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode, roundsToPlay);
             StartCharade(game);
         }
 
@@ -205,7 +205,7 @@ namespace Horrible_Charades_ASP
         }
         public void CalculateScoreP(string gameCode, int timeLeft, string guess) //SubmitGuess(?)
         {
-            GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, 100, guess);
+            GameState.Instance.AssignPoints(gameCode, timeLeft, Context.ConnectionId, 70, guess);
             //Todo: Skriva att den har blivit submittad
             //Clients.Caller.guessSubmitted();
         }

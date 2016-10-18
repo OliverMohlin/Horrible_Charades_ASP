@@ -4,10 +4,11 @@
 
     angular.module("mainContent")
         .controller("lobbyController", lobbyController, ['signalRService', '$mdDialog']);
-        function lobbyController(signalRService, $mdDialog) {
+    function lobbyController(signalRService, $mdDialog) {
 
         var vm = this;
         var hub = $.connection.gameHub;
+        vm.roundsToPlay;
 
         vm.game = signalRService.game;
         //vm.teamName = signalRService.teamName;
@@ -23,7 +24,9 @@
             })
         };
         vm.leaveLobby = function () {
-            hub.server.getRuleChanger(vm.game.GameCode);
+            vm.entities.forEach(vm.checkRoundsToPlay);
+            console.log(vm.roundsToPlay);
+            hub.server.getRuleChanger(vm.game.GameCode, vm.roundsToPlay);
         };
 
         $.connection.hub.start().done(function () {
@@ -41,7 +44,7 @@
             //$scope.answer = function (answer) {
             //    $mdDialog.hide(answer);
             //};
-        }
+        };
 
         vm.entities = [{
             name: 'three',
@@ -58,23 +61,24 @@
          value: 5,
          checked: false
      }
-        ]
+        ];
 
         vm.updateSelection = function (position, entities) {
-            angular.forEach(entities, function (subscription, index) {
-                if (position != index)
-                    subscription.checked = false;
+            angular.forEach(entities, function (entity, index) {
+                if (position !== index)
+                    entity.checked = false;
             });
-        }
+        };
 
-        //vm.checkRoundsToPlay = function (entities) {
-        //    //default-value is 3
-        //    var roundsToPlay = 3;
-        //    for (var i = 0; i < entities.length; i++) {
-        //        if (entities[i].checked === true)
-        //            roundsToPlay = entities[i].value;
-        //    }
-        //    return roundsToPlay;
-        //}
+        vm.checkRoundsToPlay = function (entity) {
+            
+            if (entity.checked === true) {
+                console.log("inne i if", entity);
+                vm.roundsToPlay = entity.value;
+            }
+            else {
+                console.log("inne i else", entity);
+            }
+        };
     };
 })();

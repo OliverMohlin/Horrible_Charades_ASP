@@ -132,7 +132,7 @@ namespace Horrible_Charades_ASP
             Noun noun = _dbUtils.GetNoun();
             return noun;
         }
-        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode)
+        internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, int roundsToPlay)
         {
             Game game = GetGame(gameCode);
 
@@ -140,6 +140,7 @@ namespace Horrible_Charades_ASP
             //GetRuleChanger(game, index);
             if (game.Round == 0)
             {
+                game.RoundsToPlay = roundsToPlay;
                 ShuffleTurnOrder(game);
             }
             game.CurrentCharade.Noun = GetNoun();
@@ -365,6 +366,11 @@ namespace Horrible_Charades_ASP
             else if (timeLeft > 0)
             {
                 team.TurnPoint = (int)(points * charadewords * 0.25);
+            }
+
+            if (team.TurnPoint > 0)
+            {
+
             }
 
             //Todo: Ska det här vara här eller när man går mellan Score och TotalScore
