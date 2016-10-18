@@ -135,13 +135,16 @@ namespace Horrible_Charades_ASP
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, int roundsToPlay)
         {
             Game game = GetGame(gameCode);
-
             // We are now hardcoding the rulechangers at start. 
             //GetRuleChanger(game, index);
             if (game.Round == 0)
             {
                 game.RoundsToPlay = roundsToPlay;
                 ShuffleTurnOrder(game);
+            }
+            foreach (Team team in game.Teams)
+            {
+                GetRuleChangers(team, roundsToPlay);
             }
             game.CurrentCharade.Noun = GetNoun();
             AssignWhosTurn(game);
@@ -153,51 +156,43 @@ namespace Horrible_Charades_ASP
             game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
         }
 
-        internal void getRuleChangers(Team team)
+        private void getRuleChanger(Team team)
         {
 
-            team.PowerUps.Add(_dbUtils.GetRuleChanger("Shuffle"));
-            team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Adjective"));
-            team.FunkUps.Add(_dbUtils.GetRuleChanger("Add Activity"));
-            //Game game, int index
+            RuleChanger ruleChanger = new RuleChanger();
+
+            ruleChanger = _dbUtils.GetRuleChanger();
+
+            if (ruleChanger.Type == "PowerUp")
+            {
+                team.PowerUps.Add(ruleChanger);
+            }
+            else if (ruleChanger.Type == "FunkUp")
+            {
+                if (ruleChanger.ID == 4)
+                {
+                    ruleChanger.Description = "Adjective";
+                }
+                else if (ruleChanger.ID == 5)
+                {
+                    ruleChanger.Description = "Verb";
+                }
+                //else
+                //{
+                //    ruleChanger.Description = "- 15 sec";
+                //}
+
+                team.FunkUps.Add(ruleChanger);
+            }
 
         }
 
-        internal void GetRuleChanger(Team team)
+        internal void GetRuleChangers(Team team, int roundsToPlay)
         {
-            //foreach (var team in game.Teams)
-            //{
-            //Ändra för olika antal funkups
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < roundsToPlay; i++)
             {
-                RuleChanger ruleChanger = new RuleChanger();
-
-                ruleChanger = _dbUtils.GetRuleChanger();
-
-                if (ruleChanger.Type == "PowerUp")
-                {
-                    team.PowerUps.Add(ruleChanger);
-                }
-                else if (ruleChanger.Type == "FunkUp")
-                {
-                    if (ruleChanger.ID == 4)
-                    {
-                        ruleChanger.Description = "Adjective";
-                    }
-                    else if (ruleChanger.ID == 5)
-                    {
-                        ruleChanger.Description = "Verb";
-                    }
-                    //else
-                    //{
-                    //    ruleChanger.Description = "- 15 sec";
-                    //}
-
-                    team.FunkUps.Add(ruleChanger);
-                }
+                getRuleChanger(team);  
             }
-            //}
-            //return team;
         }
 
         internal Game RemoveRuleChanger(string gameCode, string connectionId, int ruleChangerId)
@@ -370,7 +365,7 @@ namespace Horrible_Charades_ASP
 
             if (team.TurnPoint > 0)
             {
-
+                getRuleChanger(team);
             }
 
             //Todo: Ska det här vara här eller när man går mellan Score och TotalScore
