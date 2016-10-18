@@ -151,23 +151,21 @@ namespace Horrible_Charades_ASP
             return game;
         }
 
-        private void ShuffleTurnOrder(Game game)
-        {
-            game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
-        }
-
         private void getRuleChanger(Team team)
         {
+            if (team.PowerUps.Count >= 2 && team.FunkUps.Count >= 2)
+            {
+                return;
+            }
 
             RuleChanger ruleChanger = new RuleChanger();
 
-            ruleChanger = _dbUtils.GetRuleChanger();
-
-            if (ruleChanger.Type == "PowerUp")
+            ruleChanger = _dbUtils.GetRuleChanger("PowerUp");
+            if (ruleChanger.Type == "PowerUp" && team.PowerUps.Count < 2)
             {
                 team.PowerUps.Add(ruleChanger);
             }
-            else if (ruleChanger.Type == "FunkUp")
+            else if (ruleChanger.Type == "FunkUp" && team.FunkUps.Count < 2)
             {
                 if (ruleChanger.ID == 4)
                 {
@@ -177,24 +175,40 @@ namespace Horrible_Charades_ASP
                 {
                     ruleChanger.Description = "Verb";
                 }
-                //else
-                //{
-                //    ruleChanger.Description = "- 15 sec";
-                //}
-
                 team.FunkUps.Add(ruleChanger);
             }
+            else if (ruleChanger.Type == "PowerUp" && team.FunkUps.Count < 2)
+            {
+                ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
+                if (ruleChanger.ID == 4)
+                {
+                    ruleChanger.Description = "Adjective";
+                }
+                else if (ruleChanger.ID == 5)
+                {
+                    ruleChanger.Description = "Verb";
+                }
+                team.FunkUps.Add(ruleChanger);
+            }
+            else
+            {
+                ruleChanger = _dbUtils.GetRuleChanger("PowerUp");
+                team.PowerUps.Add(ruleChanger);
+            }
 
         }
-
+        /// <summary>
+        /// Takes in roundsToPlay and subtract two to know how many rulechangers to give
+        /// </summary>
+        /// <param name="team"></param>
+        /// <param name="roundsToPlay"></param>
         internal void GetRuleChangers(Team team, int roundsToPlay)
         {
-            for (int i = 0; i < roundsToPlay; i++)
+            for (int i = 0; i < roundsToPlay - 2; i++)
             {
-                getRuleChanger(team);  
+                getRuleChanger(team);
             }
         }
-
         internal Game RemoveRuleChanger(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);
@@ -210,7 +224,10 @@ namespace Horrible_Charades_ASP
             }
             return game;
         }
-
+        private void ShuffleTurnOrder(Game game)
+        {
+            game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+        }
         internal Game GetAdjective(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);

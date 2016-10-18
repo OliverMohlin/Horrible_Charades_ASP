@@ -108,7 +108,6 @@ namespace Horrible_Charades_ASP
             {
                 if (team != game.WhosTurn)
                 {
-
                     Clients.Client(team.ConnectionID).setTeam(team, game, "/#/PreCharadeParticipant");
                 }
 
