@@ -18,6 +18,7 @@
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
+            console.log(vm.team);
             hub.server.getNoun(vm.game.GameCode);
         };
 

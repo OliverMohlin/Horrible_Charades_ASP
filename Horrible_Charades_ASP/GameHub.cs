@@ -103,8 +103,16 @@ namespace Horrible_Charades_ASP
             Game game = GameState.Instance.GetGame(gameCode);
             //Team myTeam = game.Teams.FirstOrDefault(t => t.Name == teamName);
             game.GameState = 4;
-            Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeActor");
-            Clients.Group(gameCode, game.WhosTurn.ConnectionID).redirectToView(game, "/#/PreCharadeParticipant");
+            Clients.Client(game.WhosTurn.ConnectionID).setTeam(game.WhosTurn, game, "/#/PreCharadeActor");
+            foreach (Team team in game.Teams)
+            {
+                if (team != game.WhosTurn)
+                {
+
+                    Clients.Client(team.ConnectionID).setTeam(team, game, "/#/PreCharadeParticipant");
+                }
+
+            }
         }
 
         /// <summary>
