@@ -222,6 +222,7 @@
     <Content Include="Scripts\js\angular\charadePartiController.js" />
     <Content Include="Scripts\js\angular\ctgController.js" />
     <Content Include="Scripts\js\angular\cthController.js" />
+    <Content Include="Scripts\js\angular\gameOverController.js" />
     <Content Include="Scripts\js\angular\lobbyController.js" />
     <Content Include="Scripts\js\angular\mainMenuController.js" />
     <Content Include="Scripts\js\angular\preCharadeActorController.js" />

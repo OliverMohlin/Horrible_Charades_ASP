@@ -84,8 +84,8 @@
         })
 
         .when("/GameOver", {
-            //controller: "totalScoreController", //TODO: Skapa en controller för den här vyn eller ska vi ha totalscore som samma vy(?)
-            //controllerAs: "vm",
+            controller: "gameOverController",
+            controllerAs: "vm",
             templateUrl: "Scripts/js/views/GameOver.tpl.html"
         });
 

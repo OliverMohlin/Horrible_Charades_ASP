@@ -73,12 +73,8 @@
         vm.checkRoundsToPlay = function (entity) {
             
             if (entity.checked === true) {
-                console.log("inne i if", entity);
                 vm.roundsToPlay = entity.value;
-            }
-            else {
-                console.log("inne i else", entity);
-            }
+            } 
         };
     };
 })();
