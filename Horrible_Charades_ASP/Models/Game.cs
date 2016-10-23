@@ -29,6 +29,7 @@ namespace Horrible_Charades_ASP.Models
         public string GameCode { get; set; }
         public int GameState { get; set; }
         public int ID { get; set; }
+        public Team Winner { get; set; }
 
 
         //Genererar en kod som användare skriver in för att komma in på samma spel

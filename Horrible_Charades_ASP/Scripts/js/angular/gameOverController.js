@@ -13,9 +13,11 @@
         $.connection.hub.start().done(function () {
         });
 
-        //Redirects to PreCharade View
+        vm.playAgain = function () {
+            hub.server.playAgain(vm.game.GameCode);
+        }
+        //Redirects to mainmenu again
         //vm.redirectToPreCharade = function () {
-        //    console.log(vm.game);
         //    hub.server.redirectToPreCharade(vm.game.GameCode, vm.teamName);
         //};
     };

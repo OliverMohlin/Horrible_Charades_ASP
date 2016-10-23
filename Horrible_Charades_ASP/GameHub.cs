@@ -224,6 +224,12 @@ namespace Horrible_Charades_ASP
             Clients.Group(gameCode).redirectToView(game, "/#/TotalScore");
         }
 
+        public void playAgain(string gameCode)
+        {
+            Game game = GameState.Instance.GetGame(gameCode);
+            Clients.Caller.redirectToView(game, "/#/MainMenu");
+        }
+
         public void StartNextCharade(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
@@ -233,6 +239,7 @@ namespace Horrible_Charades_ASP
 
             if (game.Round == game.RoundsToPlay)
             {
+                game = GameState.Instance.AssignWinner(game.GameCode);
                 Clients.Group(gameCode).redirectToView(game, "/#/GameOver");
             }
             else

@@ -447,5 +447,27 @@ namespace Horrible_Charades_ASP
                 */
             }
         }
+
+        internal Game AssignWinner(string gameCode)
+        {
+            Game game = GetGame(gameCode);
+
+            int? maxVal = null; 
+            int index = -1;
+            for (int i = 0; i < game.Teams.Count; i++)
+            {
+                int thisNum = game.Teams[i].TotalPoints;
+                if (!maxVal.HasValue || thisNum > maxVal.Value)
+                {
+                    maxVal = thisNum;
+                    index = i;
+                }
+            }
+
+            game.Winner = game.Teams[index]; 
+
+            return game;
+        }
+
     }
 }
