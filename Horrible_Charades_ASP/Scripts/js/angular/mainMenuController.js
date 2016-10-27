@@ -7,11 +7,15 @@
 
     function mainMenuController(signalRService, $scope) {
 
-        var mainMenu = this;
+        var vm = this;
         var hub = $.connection.gameHub; //Saves connection in "hub"-variable
 
 
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
         });
+
+        vm.createGame = function () {
+            hub.server.createGame();
+        };
     };
 })();

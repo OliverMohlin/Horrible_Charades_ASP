@@ -13,10 +13,9 @@
         $.connection.hub.start().done(function () {                         //Opens connection to the Hub
 
         });
-
-        vm.createGame = function () {
-            hub.server.createGame();
-        };
+        vm.printGameCode = function () {
+            $("#GameCode").append(signalRService.game.GameCode);
+        }
 
         vm.pressEnter = function (keyEvent) {
             if (keyEvent.which === 13)

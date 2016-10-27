@@ -18,7 +18,7 @@ namespace Horrible_Charades_ASP
         public void CreateGame()
         {
             Game game = GameState.Instance.CreateGame();
-            Clients.Caller.printGameCode(game); //Todo: skapa printGameCode på klientsidan
+            Clients.Caller.redirectToView(game, "/#/CreateTeamHost");
         }
         /// <summary>
         /// This function calls the method InsertCharadeHTML on Client-Side, which inserts provided string in a <div>-tag

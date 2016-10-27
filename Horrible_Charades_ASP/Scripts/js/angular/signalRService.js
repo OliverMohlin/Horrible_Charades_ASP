@@ -41,6 +41,7 @@
 
         //Redirects to next view
         hub.client.redirectToView = function (game, nextView) {
+            console.log("redirectToView", game);
             self.game = game;
             window.location.href = nextView;
         };
