@@ -43,7 +43,7 @@
 
         //Starts timer on CharadeActor
         vm.startTimer = function () {
-            $(".timer").text(15);
+            $(".timer").text(10);
             vm.promise = $interval(timer, 1000);
         };
 

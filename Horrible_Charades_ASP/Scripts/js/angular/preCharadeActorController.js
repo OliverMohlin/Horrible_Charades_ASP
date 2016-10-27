@@ -10,7 +10,7 @@
         var hub = $.connection.gameHub;
         vm.game = signalRService.game;
         vm.team = signalRService.team;
-        vm.timeLeft = 15;
+        vm.timeLeft = 10;
         vm.promise;
 
         $.connection.hub.start().done(function () {
@@ -49,7 +49,7 @@
         //Starts timer on CharadeActor
         vm.startTimer = function () {
 
-            $(".timer").text(15);
+            $(".timer").text(10);
             vm.promise = $interval(timer, 1000);
         };
 
