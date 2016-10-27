@@ -16,9 +16,6 @@
         vm.playAgain = function () {
             hub.server.playAgain(vm.game.GameCode);
         }
-        //Redirects to mainmenu again
-        //vm.redirectToPreCharade = function () {
-        //    hub.server.redirectToPreCharade(vm.game.GameCode, vm.teamName);
-        //};
+
     };
 })();

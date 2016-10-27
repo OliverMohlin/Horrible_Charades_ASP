@@ -227,7 +227,7 @@ namespace Horrible_Charades_ASP
         public void playAgain(string gameCode)
         {
             Game game = GameState.Instance.GetGame(gameCode);
-             Clients.Caller.redirectToView(game, "/#/CharadeActor");
+             Clients.Caller.redirectToView(game, "/#/MainMenu");
         }
 
         public void StartNextCharade(string gameCode)

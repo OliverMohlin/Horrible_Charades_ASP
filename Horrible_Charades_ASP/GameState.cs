@@ -135,8 +135,7 @@ namespace Horrible_Charades_ASP
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, int roundsToPlay)
         {
             Game game = GetGame(gameCode);
-            // We are now hardcoding the rulechangers at start. 
-            //GetRuleChanger(game, index);
+
             if (game.Round == 0)
             {
                 game.RoundsToPlay = roundsToPlay;
