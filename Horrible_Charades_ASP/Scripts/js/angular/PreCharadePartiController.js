@@ -19,17 +19,18 @@
 
         // Sends FunkUp's towards the acting team when a matching button is pressed 
         vm.activateFunkUp = function (clickedFunkup) {
+
             if (clickedFunkup.ID === 3) {
-                hub.server.affectCharadeTime(signalRService.game.GameCode, "minus", clickedFunkup.ID);
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "minus", clickedFunkup.ID, vm.team);
                 clickedFunkup.hide = true;
             }
             if (clickedFunkup.ID === 4) {
-                hub.server.updateCharade("adjective", signalRService.game.GameCode, clickedFunkup.ID);
+                hub.server.updateCharade("adjective", signalRService.game.GameCode, clickedFunkup.ID, vm.team);
                 clickedFunkup.hide = true;
 
             }
             if (clickedFunkup.ID === 5) {
-                hub.server.updateCharade("verb", signalRService.game.GameCode, clickedFunkup.ID);
+                hub.server.updateCharade("verb", signalRService.game.GameCode, clickedFunkup.ID, vm.team);
                 clickedFunkup.hide = true;
             }
         };

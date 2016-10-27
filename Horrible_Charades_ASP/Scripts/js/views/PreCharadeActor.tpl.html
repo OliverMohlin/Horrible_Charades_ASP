@@ -5,6 +5,7 @@
     <div class="charadeContainer" data-ng-init="vm.getNoun(); vm.startTimer()">
         <p class="info-text">Your charade is: </p>
     </div>
+    <div id="rulechangerAction"></div>
     <!--<h1 class="powerup-header">POWERUPS</h1>-->
     <div id="powerUpContainer">
         <ul data-ng-repeat="PowerUp in vm.team.PowerUps" data-ng-hide="PowerUp.hide">
@@ -13,16 +14,5 @@
             </li>
         </ul>
     </div>
-
-
-    <!--<data-ng-repeat="PowerUp in vm.team.PowerUps"iv class='btn powerup clickable-button' ><span class="glyphicon glyphicon-refresh"><br />
-    </span><p class='powerup-text'> Shuffle<br />Charade</p></div>-->
-
-    <!--Knappen hämtar ett Adjektiv och lägger till det på sidan.-->
     <br />
-
-    <!--Knapp för att testa Timern inom controllern-->
-    <!--<button data-ng-click="vm.startTimer()">start timer</button>-->
-
-    <!--<a href="#CharadeParticipant">Next Phase (Participant)</a>-->
 </div>

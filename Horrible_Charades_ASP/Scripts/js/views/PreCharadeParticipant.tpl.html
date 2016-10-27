@@ -2,19 +2,20 @@
     <h1 class="header-page">Charade Setup</h1>
     <h4 class="time-container"><span class="time-text timer">10</span></h4>
     <p class="timer-description"> until charade starts..</p>
+
     <div data-ng-init="vm.startTimer()" class="row" id="funkUpContainer">
         <p class="info-text">{{vm.game.WhosTurn.Name}}'s turn! funk up their charade!</p>
+    </div>
+        <div id="rulechangerAction"></div>
         <ul id="funkup-list" data-ng-repeat="funkUp in vm.team.FunkUps" data-ng-hide="funkUp.hide">
+
             <li id="funkup-list-item">
+
                 <div class='btn funkup clickable-button' data-ng-click="vm.activateFunkUp(funkUp); vm.playLightsThunder()" >
                     <p class='funkup-text'>
                         <span class='add' data-ng-if='funkUp.ID !== 3'> Add <br /> </span> {{funkUp.Description}}</p>
                 </div>
             </li>
         </ul>
-    </div>
+    
 </div>
-
- <!--hideDiv(".add-funkup")-->
-<!--data-ng-hide="vm.hide"-->
-<!--vm.hideDiv(add-funkup{$index});-->

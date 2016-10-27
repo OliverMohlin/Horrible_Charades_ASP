@@ -16,6 +16,7 @@ namespace Horrible_Charades_ASP.Models
             GameState = 1;
             Round = 0;
             RoundsToPlay = 2; //Hårdkodat in RoundsToPlay nu. ska kunna vara valbart senare
+            Winner = new List<Team>();
             
         }
 
@@ -29,8 +30,7 @@ namespace Horrible_Charades_ASP.Models
         public string GameCode { get; set; }
         public int GameState { get; set; }
         public int ID { get; set; }
-        public Team Winner { get; set; }
-
+        public List<Team> Winner { get; set; }
 
         //Genererar en kod som användare skriver in för att komma in på samma spel
         private string GenerateCode()

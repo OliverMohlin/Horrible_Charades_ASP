@@ -121,19 +121,19 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="typeOfWord"></param>
         /// <param name="gameCode"></param>
-        public void UpdateCharade(string typeOfWord, string gameCode, int ruleChangerId)
+        public void UpdateCharade(string typeOfWord, string gameCode, int ruleChangerId, Team team)
         {
             if (typeOfWord == "adjective")
             {
                 Game game = GameState.Instance.GetAdjective(gameCode, Context.ConnectionId, ruleChangerId);
-                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective");
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective", team);
                 // TODO: behöver inte vara eget hubanrop. kan stoppas in i signalRservice(insertcharadeHtml)
             }
 
             if (typeOfWord == "verb")
             {
                 Game game = GameState.Instance.GetVerb(gameCode, Context.ConnectionId, ruleChangerId);
-                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb");
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb", team);
             }
         }
 
@@ -141,13 +141,13 @@ namespace Horrible_Charades_ASP
         /// Shuffles the active Charades. Activated when Charade:Actor uses the respectrive PowerUp
         /// </summary>
         /// <param name="gameCode"></param>
-        public void ShuffleCharade(string gameCode, int ruleChangerId)
+        public void ShuffleCharade(string gameCode, int ruleChangerId, Team team)
         {
             Game game = GameState.Instance.ShuffleCharade(gameCode, Context.ConnectionId, ruleChangerId);
             Clients.Caller.InsertCharadeHTML(game, "noun");
             Clients.Caller.InsertCharadeHTML(game, "adjective");
             Clients.Caller.InsertCharadeHTML(game, "verb");
-            Clients.Group(gameCode).shuffleCharadeGameUpdate(game);
+            Clients.Group(gameCode).shuffleCharadeGameUpdate(game, team);
         }
 
         /// <summary>
@@ -155,10 +155,10 @@ namespace Horrible_Charades_ASP
         /// </summary>
         /// <param name="gameCode"></param>
         /// <param name="direction"></param>
-        public void AffectCharadeTime(string gameCode, string direction, int ruleChangerId)
+        public void AffectCharadeTime(string gameCode, string direction, int ruleChangerId, Team team)
         {
             Game game = GameState.Instance.RemoveRuleChanger(gameCode, Context.ConnectionId, ruleChangerId);
-            Clients.Group(gameCode).affectCharadeTime(direction, game);
+            Clients.Group(gameCode).affectCharadeTime(direction, game, team);
         }
 
 

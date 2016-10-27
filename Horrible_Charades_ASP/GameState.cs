@@ -425,25 +425,6 @@ namespace Horrible_Charades_ASP
             if (correctwords == CurCharade.Count())
             {
                 AssignPoints(gameCode, timeLeft, conId, points);
-                /*
-                int charadewords = game.CurrentCharade.Adjective.Count() + game.CurrentCharade.Verb.Count() + 1;
-                if (timeLeft > 45)
-                {
-                    team.TurnPoint = 100 * charadewords;
-                }
-                else if (timeLeft > 30)
-                {
-                    team.TurnPoint = 80 * charadewords;
-                }
-                else if (timeLeft > 15)
-                {
-                    team.TurnPoint = 60 * charadewords;
-                }
-                else if (timeLeft > 0)
-                {
-                    team.TurnPoint = 40 * charadewords;
-                }
-                */
             }
         }
 
@@ -451,19 +432,24 @@ namespace Horrible_Charades_ASP
         {
             Game game = GetGame(gameCode);
 
-            int? maxVal = null; 
-            int index = -1;
+            int? maxVal = null;
             for (int i = 0; i < game.Teams.Count; i++)
             {
                 int thisNum = game.Teams[i].TotalPoints;
                 if (!maxVal.HasValue || thisNum > maxVal.Value)
                 {
                     maxVal = thisNum;
-                    index = i;
                 }
             }
 
-            game.Winner = game.Teams[index]; 
+            foreach (var team in game.Teams)
+            {
+                if (team.TotalPoints == maxVal)
+                {
+                    game.Winner.Add(team);
+
+                }
+            }
 
             return game;
         }

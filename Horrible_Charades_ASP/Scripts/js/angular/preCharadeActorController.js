@@ -18,19 +18,18 @@
 
         //Calls GetCharade function on Server-Side when PreCharadeActor is loaded
         vm.getNoun = function () {
-            console.log(vm.team);
             hub.server.getNoun(vm.game.GameCode);
         };
 
         // Sends PowerUp's towards the acting team when a matching button is pressed 
         vm.activatePowerUp = function (clickedPowerUp) {
             if (clickedPowerUp.ID === 1) {
-                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus", clickedPowerUp.ID);
+                hub.server.affectCharadeTime(signalRService.game.GameCode, "plus", clickedPowerUp.ID, vm.team);
                 clickedPowerUp.hide = true;
             }
             if (clickedPowerUp.ID === 2) {
                 console.log("shuffle OK in controller");
-                hub.server.shuffleCharade(vm.game.GameCode, clickedPowerUp.ID);
+                hub.server.shuffleCharade(vm.game.GameCode, clickedPowerUp.ID, vm.team);
                 clickedPowerUp.hide = true;
             }
         };

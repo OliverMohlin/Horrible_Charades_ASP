@@ -14,7 +14,7 @@
         self.charadeTime = 60;
 
         //Saves connection in "hub"-variable
-        var hub = $.connection.gameHub;                 
+        var hub = $.connection.gameHub;
 
         //Submit Options
         self.submitOptions = function (rounds) {
@@ -41,7 +41,6 @@
 
         //Redirects to next view
         hub.client.redirectToView = function (game, nextView) {
-            console.log("redirectToView", game);
             self.game = game;
             window.location.href = nextView;
         };
@@ -54,14 +53,16 @@
             $(".teamList").append("<li class='lobby-teamList'>" + teamName + "</li>");
         };
         // When a FunkUp/PowerUp is sent to increase or decrease Charade Time. 
-        hub.client.affectCharadeTime = function (direction, game) {
+        hub.client.affectCharadeTime = function (direction, game, team) {
             if (direction === "plus") {
                 self.charadeTime += 15;
                 $(".timer").text(10);
+                $("#rulechangerAction").html(team.Name + " added 15 sec");
             }
             else {
                 self.charadeTime -= 15;
                 $(".timer").text(10);
+                $("#rulechangerAction").html(team.Name + " reduced 15 sec");
             }
             self.game = game;
         };
@@ -75,13 +76,14 @@
             self.charadeTime = 60;
         };
 
-        hub.client.shuffleCharadeGameUpdate = function (game) {
+        hub.client.shuffleCharadeGameUpdate = function (game, team) {
             $(".timer").text(10);
+            $("#rulechangerAction").html(team.Name + " shuffled their charade");
             self.game = game;
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
-        hub.client.InsertCharadeHTML = function (game, typeOfWord) {
+        hub.client.InsertCharadeHTML = function (game, typeOfWord, team) {
             if (typeOfWord === "noun") {
                 $(".charadeContainer").html("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
@@ -93,6 +95,7 @@
                     $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[i].Description + " " + "</div>");
                 }
                 hub.client.updateGameState(game);
+                $("#rulechangerAction").html(team.Name + " added an adjective");
             }
             if (typeOfWord === "verb") {
 
@@ -109,8 +112,10 @@
                     }
                 }
                 hub.client.updateGameState(game);
-                $(".timer").text(10);
+                $("#rulechangerAction").html(team.Name + " added an adjective");
+
             }
+            $(".timer").text(10);
         };
 
         hub.client.displayAlternatives = function (alternatives) {
