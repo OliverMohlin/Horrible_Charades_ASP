@@ -62,11 +62,12 @@ namespace Horrible_Charades_ASP
         /// <param name="teamName"></param>
         public void JoinGame(string gameCode, string teamName)
         {
-            Game game = GameState.Instance.GetGame(gameCode.ToUpper());
+            string trimmedCode = gameCode.ToUpper().Trim();
+            Game game = GameState.Instance.GetGame(trimmedCode);
             if (game == null)
                 Clients.Caller.DisplayMessage("No such game exist. Revise your GameCode");
             else
-                CreateTeam(gameCode.ToUpper(), teamName);
+                CreateTeam(trimmedCode, teamName);
         }
 
         /// <summary>
