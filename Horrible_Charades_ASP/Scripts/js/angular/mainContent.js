@@ -46,7 +46,6 @@
              templateUrl: "Scripts/js/views/WaitingRoomOpponent.tpl.html"
          })
 
-
         .when("/PreCharadeActor", {
             controller: "preCharadeActorController",
             controllerAs: "vm",

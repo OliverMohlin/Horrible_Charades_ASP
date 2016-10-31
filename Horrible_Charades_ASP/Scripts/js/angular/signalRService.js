@@ -24,10 +24,14 @@
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
             $("#GameCode").append(game.GameCode);
+            
         };
         //Write out a message in Alert Popup
         hub.client.displayMessage = function (message) {
-            alert(message);
+            $(".errorMessage").html(message);
+            setTimeout(function () {
+                $(".errorMessage").html("");
+            }, 3000);
         };
         //Updates game on clientSide
         hub.client.updateGameState = function (game) {

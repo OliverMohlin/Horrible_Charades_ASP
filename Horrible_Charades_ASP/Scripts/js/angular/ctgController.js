@@ -20,7 +20,15 @@
         };
 
         vm.joinGame = function () {
-            hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
+            if ($("#TeamName").val().length >= 20) {
+                $(".errorMessage").html("Your team name is too long, Max length is 20 characters");
+                setTimeout(function () {
+                    $(".errorMessage").html("");
+                }, 3000);
+            }
+            else {
+                hub.server.joinGame($("#GameCodeGuest").val(), $("#TeamName").val());
+            }
         };
 
 

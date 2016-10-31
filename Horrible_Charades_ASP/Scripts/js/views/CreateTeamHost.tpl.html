@@ -10,6 +10,7 @@
             <input type="text" placeholder="Team Name" id="TeamName" name="TeamName" class="text-input" data-ng-keydown="vm.pressEnter($event)" required />
             <span data-ng-if="TeamNameForm.TeamName.$error.required && TeamNameForm.TeamName.$dirty">Enter a team name!</span>
             <button id="createTeamButton" data-ng-disabled="TeamNameForm.$invalid" data-ng-click="vm.createTeam(); vm.playKnappvalj()">Submit</button>
+            <div class="errorMessage text-center"></div>
 
         </div>
     </div>
