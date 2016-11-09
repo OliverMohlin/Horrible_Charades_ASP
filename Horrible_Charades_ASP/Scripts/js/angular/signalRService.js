@@ -116,7 +116,7 @@
                     }
                 }
                 hub.client.updateGameState(game);
-                $("#rulechangerAction").html(team.Name + " added an adjective");
+                $("#rulechangerAction").html(team.Name + " added a verb");
 
             }
             $(".timer").text(10);
