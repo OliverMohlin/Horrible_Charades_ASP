@@ -126,14 +126,14 @@ namespace Horrible_Charades_ASP
             if (typeOfWord == "adjective")
             {
                 Game game = GameState.Instance.GetAdjective(gameCode, Context.ConnectionId, ruleChangerId);
-                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective", team);
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "adjective", team.Name);
                 // TODO: behöver inte vara eget hubanrop. kan stoppas in i signalRservice(insertcharadeHtml)
             }
 
             if (typeOfWord == "verb")
             {
                 Game game = GameState.Instance.GetVerb(gameCode, Context.ConnectionId, ruleChangerId);
-                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb", team);
+                Clients.Group(game.GameCode).InsertCharadeHTML(game, "verb", team.Name);
             }
         }
 

@@ -10,7 +10,7 @@
             <h1 class="header-page">Game Over</h1>
             <br/>
             <br/>
-            <div id="GameCode" data-ng-if="vm.game.Winner.length == 1">WINNING TEAM IS: <br /> {{vm.game.Winner.Name}} </div>
+            <div id="GameCode" data-ng-if="vm.game.Winner.length == 1">WINNING TEAM IS: <br /> {{vm.game.Winner[0].Name}} </div>
             <div id="GameCode" data-ng-if="vm.game.Winner.length > 1">It's a draw</div>
             <button id="createTeamButton" data-ng-click="vm.playAgain(); vm.playKnappvalj()">Play Again</button>
         </div>

@@ -87,7 +87,7 @@
         };
 
         //Write out and append new words to a charade in Pre-Charade(?)
-        hub.client.InsertCharadeHTML = function (game, typeOfWord, team) {
+        hub.client.InsertCharadeHTML = function (game, typeOfWord, teamName) {
             if (typeOfWord === "noun") {
                 $(".charadeContainer").html("<div id='noun' style='display:inline''>" + game.CurrentCharade.Noun.Description + "</div>");
                 hub.client.updateGameState(game);
@@ -98,8 +98,8 @@
                 for (var i = 0; i < game.CurrentCharade.Adjective.length; i++) {
                     $("#noun").prepend("<div class='adjective' style='display:inline'>" + game.CurrentCharade.Adjective[i].Description + " " + "</div>");
                 }
+                $("#rulechangerAction").html(teamName + " added an adjective");
                 hub.client.updateGameState(game);
-                $("#rulechangerAction").html(team.Name + " added an adjective");
             }
             if (typeOfWord === "verb") {
 
@@ -115,8 +115,8 @@
 
                     }
                 }
+                $("#rulechangerAction").html(teamName + " added a verb");
                 hub.client.updateGameState(game);
-                $("#rulechangerAction").html(team.Name + " added a verb");
 
             }
             $(".timer").text(10);
