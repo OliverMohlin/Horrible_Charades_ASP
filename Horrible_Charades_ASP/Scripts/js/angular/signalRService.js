@@ -82,7 +82,7 @@
 
         hub.client.shuffleCharadeGameUpdate = function (game, team) {
             $(".timer").text(10);
-            $("#rulechangerAction").html(team.Name + " shuffled their charade");
+            $("#rulechangerAction").html(team.Name + " shuffled the charade");
             self.game = game;
         };
 
