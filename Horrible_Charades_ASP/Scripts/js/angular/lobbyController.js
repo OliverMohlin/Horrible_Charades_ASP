@@ -25,7 +25,6 @@
         };
         vm.leaveLobby = function () {
             vm.entities.forEach(vm.checkRoundsToPlay);
-            console.log(vm.roundsToPlay);
             hub.server.getRuleChanger(vm.game.GameCode, vm.roundsToPlay);
         };
 

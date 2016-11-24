@@ -15,7 +15,6 @@
 
         //Redirects to PreCharade View
         vm.redirectToPreCharade = function () {
-            console.log(vm.game);
             hub.server.redirectToPreCharade(vm.game.GameCode, vm.teamName);
         };
     };

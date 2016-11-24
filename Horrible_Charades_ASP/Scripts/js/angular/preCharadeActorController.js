@@ -28,7 +28,6 @@
                 clickedPowerUp.hide = true;
             }
             if (clickedPowerUp.ID === 2) {
-                console.log("shuffle OK in controller");
                 hub.server.shuffleCharade(vm.game.GameCode, clickedPowerUp.ID, vm.team);
                 clickedPowerUp.hide = true;
             }

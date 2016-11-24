@@ -20,8 +20,17 @@
         };
 
         vm.joinGame = function () {
-            if ($("#TeamName").val().length >= 20) {
+
+            var teamNameInput = $("#TeamName").val().trim();
+
+            if (teamNameInput.length >= 20) {
                 $(".errorMessage").html("Your team name is too long, Max length is 20 characters");
+                setTimeout(function () {
+                    $(".errorMessage").html("");
+                }, 3000);
+            }
+            else if(teamNameInput.length < 1) {
+                $(".errorMessage").html("Enter a team name!");
                 setTimeout(function () {
                     $(".errorMessage").html("");
                 }, 3000);
