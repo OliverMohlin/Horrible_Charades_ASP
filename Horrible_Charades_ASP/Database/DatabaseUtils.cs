@@ -141,7 +141,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
             return tmpList[modifierID];
         }
 
-        //NOT USED RIGHT NOW
+        //NOT USED? 
         public RuleChanger GetRuleChanger()
         {
             var tmpList = new List<RuleChanger>();

@@ -159,7 +159,9 @@ namespace Horrible_Charades_ASP
 
             RuleChanger ruleChanger = new RuleChanger();
 
+            //Goes wrong here in debug
             ruleChanger = _dbUtils.GetRuleChanger("PowerUp");
+
             if (ruleChanger.Type == "PowerUp" && team.PowerUps.Count < 2)
             {
                 team.PowerUps.Add(ruleChanger);
