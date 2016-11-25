@@ -11,7 +11,6 @@
         vm.roundsToPlay;
 
         vm.game = signalRService.game;
-        //vm.teamName = signalRService.teamName;
         vm.team = signalRService.team;
         vm.rounds = 2;
 
@@ -24,7 +23,7 @@
             })
         };
         vm.leaveLobby = function () {
-            vm.entities.forEach(vm.checkRoundsToPlay);
+            vm.roundOptions.forEach(vm.checkRoundsToPlay);
             hub.server.getRuleChanger(vm.game.GameCode, vm.roundsToPlay);
         };
 
@@ -45,34 +44,34 @@
             //};
         };
 
-        vm.entities = [{
-            name: 'three',
-            value: 3,
-            checked: true
-        },
-     {
-         name: 'four',
-         value: 4,
-         checked: false
-     },
-     {
-         name: 'five',
-         value: 5,
-         checked: false
-     }
+        vm.roundOptions = [{
+                name: 'three',
+                value: 3,
+                checked: true
+            },
+            {
+                name: 'four',
+                value: 4,
+                checked: false
+            },
+            {
+                name: 'five',
+                value: 5,
+                checked: false
+            }
         ];
 
-        vm.updateSelection = function (position, entities) {
-            angular.forEach(entities, function (entity, index) {
+        vm.updateSelection = function (position, r) {
+            angular.forEach(r, function (r, index) {
                 if (position !== index)
-                    entity.checked = false;
+                    r.checked = false;
             });
         };
 
-        vm.checkRoundsToPlay = function (entity) {
+        vm.checkRoundsToPlay = function (r) {
             
-            if (entity.checked === true) {
-                vm.roundsToPlay = entity.value;
+            if (r.checked === true) {
+                vm.roundsToPlay = r.value;
             } 
         };
     };
