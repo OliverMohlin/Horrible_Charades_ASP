@@ -15,7 +15,7 @@ namespace Horrible_Charades_ASP.Models
             CurrentCharade = new Charade();
             GameState = 1;
             Round = 0;
-            RoundsToPlay = 2; //Hårdkodat in RoundsToPlay nu. ska kunna vara valbart senare
+            RoundsToPlay = 3; 
             Winner = new List<Team>();
             
         }
