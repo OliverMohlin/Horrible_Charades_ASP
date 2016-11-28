@@ -159,8 +159,7 @@ namespace Horrible_Charades_ASP
 
             RuleChanger ruleChanger = new RuleChanger();
 
-            //Goes wrong here in debug
-            ruleChanger = _dbUtils.GetRuleChanger("PowerUp");
+            ruleChanger = _dbUtils.GetRandomRuleChanger();
 
             if (ruleChanger.Type == "PowerUp" && team.PowerUps.Count < 2)
             {
@@ -180,7 +179,7 @@ namespace Horrible_Charades_ASP
             }
             else if (ruleChanger.Type == "PowerUp" && team.FunkUps.Count < 2)
             {
-                ruleChanger = _dbUtils.GetRuleChanger("FunkUp");
+                ruleChanger = _dbUtils.GetRuleChangerByType("FunkUp");
                 if (ruleChanger.ID == 4)
                 {
                     ruleChanger.Description = "Adjective";
@@ -193,7 +192,7 @@ namespace Horrible_Charades_ASP
             }
             else
             {
-                ruleChanger = _dbUtils.GetRuleChanger("PowerUp");
+                ruleChanger = _dbUtils.GetRuleChangerByType("PowerUp");
                 team.PowerUps.Add(ruleChanger);
             }
 
