@@ -21,7 +21,10 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// <returns>random Word</returns>
         public Noun GetNoun(List<Charade> usedCharades = null)
         {
-            
+            if (usedCharades == null)
+            {
+                usedCharades = new List<Charade>();
+            }
             Noun qResult = null;
             do
             {
@@ -47,15 +50,23 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Adjective baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Adjective GetAdjective()
+        public Adjective GetAdjective(List<Charade> usedCharades)
         {
-      
+
             Adjective qResult = null;
             do
             {
                 var adjectiveID = RandomUtils.ReturnValue(_charadeContext.Adjectives.Count() - 1);
                 qResult = _charadeContext.Adjectives
-            .SingleOrDefault(n => n.ID == adjectiveID);
+                .SingleOrDefault(n => n.ID == adjectiveID);
+                foreach (var c in usedCharades)
+                {
+                    if (c.Adjective.Contains(qResult))
+                    {
+                        qResult = null;
+                        break;
+                    }
+                }
             } while (qResult == null);
 
             return qResult;
@@ -65,17 +76,24 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Verb baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Verb GetVerb()
+        public Verb GetVerb(List<Charade> usedCharades)
         {
-          
             Verb qResult = null;
             do
             {
                 var verbID = RandomUtils.ReturnValue(_charadeContext.Verbs.Count() - 1);
                 qResult = _charadeContext.Verbs
-            .SingleOrDefault(n => n.ID == verbID);
+                .SingleOrDefault(n => n.ID == verbID);
+                foreach (var c in usedCharades)
+                {
+                    if (c.Verb.Contains(qResult))
+                    {
+                        qResult = null;
+                        break;
+                    }
+                }
             } while (qResult == null);
-            
+
             return qResult;
         }
 
@@ -146,7 +164,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         public RuleChanger GetRuleChangerByType(string type)
         {
             var tmpList = _charadeContext.RuleChangers.Where(r => r.Type == type).ToList();
-            int modifierID = RandomUtils.ReturnValue(tmpList.Count()-1);
+            int modifierID = RandomUtils.ReturnValue(tmpList.Count());
             return tmpList[modifierID];
         }
 
@@ -154,7 +172,7 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         {
             var tmpList = _charadeContext.RuleChangers.Where(r => r.ID > 0).ToList();
 
-            int modifierID = RandomUtils.ReturnValue(tmpList.Count()-1);
+            int modifierID = RandomUtils.ReturnValue(tmpList.Count());
             return tmpList[modifierID];
         }
     }

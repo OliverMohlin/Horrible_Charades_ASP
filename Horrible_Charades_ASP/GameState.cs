@@ -237,7 +237,7 @@ namespace Horrible_Charades_ASP
                 return game;
             }
 
-            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective());
+            game.CurrentCharade.Adjective.Add(_dbUtils.GetAdjective(game.UsedCharades));
             game = RemoveRuleChanger(gameCode, connectionId, ruleChangerId);
             return game;
         }
@@ -249,7 +249,7 @@ namespace Horrible_Charades_ASP
             {
                 return game;
             }
-            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb());
+            game.CurrentCharade.Verb.Add(_dbUtils.GetVerb(game.UsedCharades));
             game = RemoveRuleChanger(gameCode, connectionId, ruleChangerId);
 
             return game;
@@ -329,11 +329,11 @@ namespace Horrible_Charades_ASP
             for (int i = 0; i < game.CurrentCharade.Verb.Count(); i++)
             {
                 Verb lastVerb = game.CurrentCharade.Verb[i];
-                Verb tmpNewVerb = _dbUtils.GetVerb();
+                Verb tmpNewVerb = _dbUtils.GetVerb(game.UsedCharades);
 
                 if (tmpNewVerb.Description == lastVerb.Description)
                 {
-                    tmpNewVerb = _dbUtils.GetVerb();
+                    tmpNewVerb = _dbUtils.GetVerb(game.UsedCharades);
                 }
                 verbList.Add(tmpNewVerb);
             }
@@ -347,11 +347,11 @@ namespace Horrible_Charades_ASP
             for (int i = 0; i < game.CurrentCharade.Adjective.Count(); i++)
             {
                 Adjective lastAdjective = game.CurrentCharade.Adjective[i];
-                Adjective tmpNewAdjective = _dbUtils.GetAdjective();
+                Adjective tmpNewAdjective = _dbUtils.GetAdjective(game.UsedCharades);
 
                 if (tmpNewAdjective.Description == lastAdjective.Description)
                 {
-                    tmpNewAdjective = _dbUtils.GetAdjective();
+                    tmpNewAdjective = _dbUtils.GetAdjective(game.UsedCharades);
                 }
                 adjectiveList.Add(tmpNewAdjective);
             }
