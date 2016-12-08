@@ -171,6 +171,7 @@ namespace Horrible_Charades_ASP
             if (myTeam.ConnectionID == game.WhosTurn.ConnectionID)
             {
                 Clients.Caller.redirectToView(game, "/#/CharadeActor");
+                game.AddToUsedCharades();
             }
             else
             {

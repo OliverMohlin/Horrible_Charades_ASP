@@ -19,15 +19,24 @@ namespace Horrible_Charades_ASP.Database    //Todo: när vi byter namn på mapp 
         /// Hämtar ett Noun baserat på framslumpat ID.
         /// </summary>
         /// <returns>random Word</returns>
-        public Noun GetNoun()
+        public Noun GetNoun(List<Charade> usedCharades = null)
         {
-          
+            
             Noun qResult = null;
             do
             {
                 var nounID = RandomUtils.ReturnValue(_charadeContext.Nouns.Count() - 1);
                 qResult = _charadeContext.Nouns
                .SingleOrDefault(n => n.ID == nounID);
+
+                foreach (var c in usedCharades)
+                {
+                    if (c.Noun == qResult)
+                    {
+                        qResult = null;
+                        break;
+                    }
+                }
 
             } while (qResult == null);
 

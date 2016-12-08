@@ -127,9 +127,9 @@ namespace Horrible_Charades_ASP
         }
 
         // Todo: Se över hur vi ska hämta ut och lämna över listorna med felaktiga gissningar
-        internal Noun GetNoun()
+        internal Noun GetNoun(List<Charade> usedCharades)
         {
-            Noun noun = _dbUtils.GetNoun();
+            Noun noun = _dbUtils.GetNoun(usedCharades);
             return noun;
         }
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, int roundsToPlay)
@@ -145,7 +145,7 @@ namespace Horrible_Charades_ASP
             {
                 GetRuleChangers(team, roundsToPlay);
             }
-            game.CurrentCharade.Noun = GetNoun();
+            game.CurrentCharade.Noun = GetNoun(game.UsedCharades);
             AssignWhosTurn(game);
             return game;
         }
@@ -197,6 +197,7 @@ namespace Horrible_Charades_ASP
             }
 
         }
+
         /// <summary>
         /// Takes in roundsToPlay and subtract two to know how many rulechangers to give
         /// </summary>
@@ -306,7 +307,7 @@ namespace Horrible_Charades_ASP
 
             game.CurrentCharade.Adjective.Clear();
             game.CurrentCharade.Verb.Clear();
-            game.CurrentCharade.Noun = GetNoun();
+            game.CurrentCharade.Noun = GetNoun(game.UsedCharades);
 
             return game;
         }

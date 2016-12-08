@@ -17,6 +17,7 @@ namespace Horrible_Charades_ASP.Models
             Round = 0;
             RoundsToPlay = 3; 
             Winner = new List<Team>();
+            UsedCharades = new List<Charade>();
             
         }
 
@@ -26,6 +27,7 @@ namespace Horrible_Charades_ASP.Models
         public int Round { get; set; }
         public int RoundsToPlay { get; set; }
         public Charade CurrentCharade { get; set; }
+        public List<Charade> UsedCharades { get; set; }
         public Team WhosTurn { get; set; }
         public string GameCode { get; set; }
         public int GameState { get; set; }
@@ -52,6 +54,11 @@ namespace Horrible_Charades_ASP.Models
             }
 
             return gameCode.ToUpper();
+        }
+
+        public void AddToUsedCharades()
+        {
+            UsedCharades.Add(CurrentCharade);
         }
     }
 }
