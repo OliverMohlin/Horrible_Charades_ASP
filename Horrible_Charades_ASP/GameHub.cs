@@ -77,6 +77,7 @@ namespace Horrible_Charades_ASP
         public void GetRuleChanger(string gameCode, int roundsToPlay)
         {
             //TODO: Flytta in hela getRuleChanger in i StartCharade(?) och flytta vissa grejer till start charade från GiveAllTeamsRuleChanger
+
             Game game = GameState.Instance.GiveAllTeamsRuleChanger(Context.ConnectionId, gameCode, roundsToPlay);
             StartCharade(game);
         }
@@ -251,6 +252,14 @@ namespace Horrible_Charades_ASP
                 Clients.Client(game.WhosTurn.ConnectionID).redirectToView(game, "/#/WaitingRoomActor");
             }
 
+        }
+
+        public void ReconnectToGame(string teamName, string gameCode, string currentPage)
+        {
+            Team team = GameState.Instance.GetTeam(teamName, gameCode);
+            Game game = GameState.Instance.GetGame(gameCode);
+
+            Clients.Caller.setTeam(team, game, currentPage);
         }
     }
 }

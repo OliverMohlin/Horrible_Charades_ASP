@@ -18,8 +18,8 @@
 
         //Submit Options
         self.submitOptions = function (rounds) {
-            console.log("Submit options in signalR is called")
-        }
+            console.log("Submit options in signalR is called");
+        };
 
         //Write out the GameCode in CreateTeamHost
         hub.client.printGameCode = function (game) {
@@ -41,6 +41,9 @@
         hub.client.setTeam = function (team, game, nextView) {
             self.team = team;
             hub.client.redirectToView(game, nextView);
+            localStorage.setItem('gameCode', team.GameCode);
+            localStorage.setItem('teamName', team.Name);
+            localStorage.setItem('connectionId', team.ConnectionID);
         };
 
         //Redirects to next view
@@ -129,7 +132,7 @@
                 for (var j = 0; j < alternatives[i].length; j++) {
                     tmpstr += "<li id='" + [i][j] + "'><button class='altButton' name='" +
                     alternatives[i][j].Description + i + "' onclick='checkBtn(event)'>" + alternatives[i][j].Description + "</button> </li>";
-                };
+                }
                 tmpstr += "</ul> </div> </br></br>";
             }
             $('#alternatives').append(tmpstr);

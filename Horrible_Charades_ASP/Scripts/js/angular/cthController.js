@@ -15,7 +15,7 @@
         });
         vm.printGameCode = function () {
             $("#GameCode").append(signalRService.game.GameCode);
-        }
+        };
 
         vm.pressEnter = function (keyEvent) {
             if (keyEvent.which === 13)
@@ -43,5 +43,5 @@
                 hub.server.createTeam($("#GameCode").text(), $("#TeamName").val());
             }
         };
-    };
+    }
 })();

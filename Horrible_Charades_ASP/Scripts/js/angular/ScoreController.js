@@ -26,8 +26,8 @@
             if (vm.timeLeft <= 0 && vm.game.WhosTurn.Name === vm.team.Name) {
                 $interval.cancel(vm.promise);
                 hub.server.redirectToTotalScore(vm.game.GameCode);
-            };
-        };
+            }
+        }
 
-    };
+    }
 })();

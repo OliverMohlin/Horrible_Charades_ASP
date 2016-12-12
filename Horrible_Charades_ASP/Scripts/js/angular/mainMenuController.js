@@ -17,5 +17,5 @@
         vm.createGame = function () {
             hub.server.createGame();
         };
-    };
+    }
 })();

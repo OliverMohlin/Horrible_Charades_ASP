@@ -28,6 +28,7 @@
         };
 
         $.connection.hub.start().done(function () {
+            console.log(vm.team)
         });
 
         function DialogController(signalRService) {

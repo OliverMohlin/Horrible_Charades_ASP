@@ -7,11 +7,13 @@ namespace Horrible_Charades_ASP.Models
 {
     public class Team
     {
-        public Team(string name/*, string hash*/)
+        public Team(string name, string conId, string gameCode)
         {
             Name = name;
             //Hash = hash;
-            Id = Guid.NewGuid().ToString("d");
+            //Id = Guid.NewGuid().ToString("d");
+            ConnectionID = conId;
+            GameCode = gameCode;
             PowerUps = new List<RuleChanger>();
             FunkUps = new List<RuleChanger>();
             //GameState.Instance.GetRuleChangers(this);
@@ -20,7 +22,7 @@ namespace Horrible_Charades_ASP.Models
         }
 
         public string ConnectionID { get; set; }
-        public string Id { get; set; }
+        //public string Id { get; set; }
         public string Name { get; set; }
         public string GameCode { get; set; }
         public string Hash { get; set; }

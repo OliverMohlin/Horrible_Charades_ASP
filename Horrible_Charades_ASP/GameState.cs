@@ -69,9 +69,7 @@ namespace Horrible_Charades_ASP
         public Game CreateTeam(string teamName, string gameCode, string conId, out Team team) //Todo: koppla till connectionstring istället för Teamname?
         {
             Game game = GetGame(gameCode);
-            team = new Team(teamName);
-            team.ConnectionID = conId;
-            team.GameCode = gameCode;
+            team = new Team(teamName, conId, gameCode);
 
             _teams[team.Name] = team;//Todo: Fundera på vad vi ska koppla Team till, GetMD5Hash för att göra en safe connectionId
             game.Teams.Add(team);
@@ -96,7 +94,7 @@ namespace Horrible_Charades_ASP
 
             foreach (Team team in game.Teams)
             {
-                if (team.Id == game.TurnOrder[game.Turn])
+                if (team.ConnectionID == game.TurnOrder[game.Turn])
                 {
                     game.WhosTurn = team;
                 }
@@ -132,6 +130,7 @@ namespace Horrible_Charades_ASP
             Noun noun = _dbUtils.GetNoun(usedCharades);
             return noun;
         }
+
         internal Game GiveAllTeamsRuleChanger(string connectionId, string gameCode, int roundsToPlay)
         {
             Game game = GetGame(gameCode);
@@ -225,10 +224,12 @@ namespace Horrible_Charades_ASP
             }
             return game;
         }
+
         private void ShuffleTurnOrder(Game game)
         {
-            game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.Id).ToArray();
+            game.TurnOrder = game.Teams.OrderBy(t => RandomUtils.rnd.Next()).Select(o => o.ConnectionID).ToArray();
         }
+
         internal Game GetAdjective(string gameCode, string connectionId, int ruleChangerId)
         {
             Game game = GetGame(gameCode);
